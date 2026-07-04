@@ -1,0 +1,160 @@
+﻿"use client";
+
+import { useState } from "react";
+
+const PROJECT_TYPES = [
+  "Custom Neon Signs",
+  "3D Channel Letters / Lighted Words",
+  "Lightbox Signs",
+  "Entire Store / Business Signage Project",
+  "Other / Not Sure",
+];
+
+export function QuoteForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [projectType, setProjectType] = useState("");
+  const [customerType, setCustomerType] = useState<"Individual" | "Business">("Individual");
+
+  if (submitted) {
+    return (
+      <div className="rounded-xl border border-accent/30 bg-accent/5 p-8 text-center">
+        <p className="text-2xl font-bold text-accent">Thank You!</p>
+        <p className="mt-3 text-muted">
+          We&apos;ve received your request. Our senior design team will contact you within 24 hours with a free
+          professional mockup and custom quote.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setSubmitted(true);
+      }}
+      className="space-y-5"
+    >
+      {/* Customer Type */}
+      <div>
+        <label className="block text-sm font-medium mb-2">Customer Type</label>
+        <div className="grid grid-cols-2 gap-3">
+          {(["Individual", "Business"] as const).map((type) => (
+            <button
+              key={type}
+              type="button"
+              onClick={() => setCustomerType(type)}
+              className={`flex items-center justify-center gap-2 rounded-lg border py-3 text-sm font-medium transition ${
+                customerType === type
+                  ? "border-accent bg-accent/10 text-accent"
+                  : "border-card-border bg-background text-muted hover:border-accent/50"
+              }`}
+            >
+              <span>{type === "Individual" ? "👤" : "🏢"}</span>
+              {type}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Name + Email */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium mb-1">Full Name *</label>
+          <input
+            id="name"
+            type="text"
+            required
+            placeholder="Enter your full name"
+            className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
+          />
+        </div>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address *</label>
+          <input
+            id="email"
+            type="email"
+            required
+            placeholder="Enter your email address"
+            className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
+          />
+        </div>
+      </div>
+
+      {/* Company + Country */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="company" className="block text-sm font-medium mb-1">Company Name</label>
+          <input
+            id="company"
+            type="text"
+            placeholder="Enter your company name (optional)"
+            className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
+          />
+        </div>
+        <div>
+          <label htmlFor="country" className="block text-sm font-medium mb-1">Country / Region *</label>
+          <input
+            id="country"
+            type="text"
+            required
+            placeholder="Select your country or region"
+            className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
+          />
+        </div>
+      </div>
+
+      {/* Project Type — pill selector */}
+      <div>
+        <label className="block text-sm font-medium mb-2">
+          Project Type <span className="text-accent font-semibold">*</span>
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {PROJECT_TYPES.map((type) => (
+            <button
+              key={type}
+              type="button"
+              onClick={() => setProjectType(type)}
+              className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
+                projectType === type
+                  ? "border-accent bg-accent text-white"
+                  : "border-card-border bg-background text-muted hover:border-accent/50 hover:text-foreground"
+              }`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+        <input type="hidden" name="projectType" value={projectType} required />
+      </div>
+
+      {/* Project Details */}
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium mb-1">Project Details *</label>
+        <textarea
+          id="message"
+          required
+          rows={4}
+          placeholder="Tell us about your project, size, colors, and installation environment..."
+          className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
+        />
+      </div>
+
+      {/* File upload */}
+      <div>
+        <label className="block text-sm font-medium mb-1">Upload Your Image</label>
+        <input
+          type="file"
+          accept=".jpg,.jpeg,.png,.svg,.pdf,.ai,.dxf,.webp"
+          className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm text-muted file:mr-4 file:rounded file:border-0 file:bg-accent file:px-4 file:py-1.5 file:text-sm file:font-semibold file:text-white"
+        />
+        <p className="mt-1 text-xs text-muted">Supported: JPG, PNG, SVG, PDF, AI, DXF, WEBP</p>
+      </div>
+
+      <button type="submit" className="btn-primary w-full py-4 text-base">
+        Get My Free Quote →
+      </button>
+      <p className="text-center text-xs text-muted">🔒 Your information is secure and will not be shared.</p>
+    </form>
+  );
+}

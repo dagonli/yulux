@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yulux Signs 网站功能验收报告</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #12121a;
+      --border: #2a2a3a;
+      --text: #e8e8f0;
+      --muted: #9898b0;
+      --accent: #a855f7;
+      --accent-dim: rgba(168, 85, 247, 0.15);
+      --pass: #22c55e;
+      --warn: #eab308;
+      --fail: #ef4444;
+      --sidebar-w: 280px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Layout */
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar {
+      position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh;
+      overflow-y: auto; background: var(--card); border-right: 1px solid var(--border);
+      padding: 1.5rem 1rem; z-index: 100;
+    }
+    .sidebar h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 1.25rem 0 0.5rem; }
+    .sidebar h2:first-child { margin-top: 0; }
+    .sidebar a { display: block; padding: 0.35rem 0.5rem; font-size: 0.85rem; color: var(--muted); border-radius: 6px; }
+    .sidebar a:hover { background: var(--accent-dim); color: var(--text); text-decoration: none; }
+    .main { margin-left: var(--sidebar-w); flex: 1; padding: 2rem 2.5rem 4rem; max-width: 960px; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--accent-dim), transparent);
+      border: 1px solid var(--border); border-radius: 16px; padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .hero h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+    .hero .meta { color: var(--muted); font-size: 0.9rem; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .badge {
+      display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 600; border: 1px solid var(--border);
+    }
+    .badge-purple { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+    .badge-green { background: rgba(34,197,94,0.15); color: var(--pass); }
+    .badge-yellow { background: rgba(234,179,8,0.15); color: var(--warn); }
+
+    /* Progress */
+    .progress-bar-wrap {
+      position: sticky; top: 0; z-index: 50; background: var(--bg);
+      border-bottom: 1px solid var(--border); padding: 0.75rem 0; margin-bottom: 2rem;
+    }
+    .progress-bar { height: 8px; background: var(--border); border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #ec4899); width: 0%; transition: width 0.3s; }
+    .progress-text { font-size: 0.85rem; color: var(--muted); margin-top: 0.35rem; }
+
+    /* Sections */
+    section { margin-bottom: 3rem; scroll-margin-top: 1rem; }
+    section > h2 {
+      font-size: 1.35rem; padding-bottom: 0.5rem; margin-bottom: 1rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    section > h3 { font-size: 1.05rem; margin: 1.5rem 0 0.75rem; color: var(--accent); }
+    p, ul, ol { margin-bottom: 0.75rem; }
+    ul, ol { padding-left: 1.25rem; }
+    li { margin-bottom: 0.35rem; }
+
+    /* Cards & callouts */
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.25rem; margin-bottom: 1rem;
+    }
+    .callout {
+      border-left: 4px solid var(--accent); background: var(--accent-dim);
+      padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0;
+    }
+    .callout-warn { border-left-color: var(--warn); background: rgba(234,179,8,0.1); }
+    .callout-info { border-left-color: #3b82f6; background: rgba(59,130,246,0.1); }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1rem 0; }
+    th, td { border: 1px solid var(--border); padding: 0.6rem 0.75rem; text-align: left; vertical-align: top; }
+    th { background: var(--card); font-weight: 600; white-space: nowrap; }
+    tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    code { background: var(--card); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.85em; }
+
+    /* Checklist items */
+    .check-item {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.65rem 0; border-bottom: 1px solid var(--border);
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-item input[type="checkbox"] {
+      width: 18px; height: 18px; margin-top: 3px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0;
+    }
+    .check-item label { cursor: pointer; flex: 1; }
+    .check-item .hint { display: block; font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; }
+    .check-group { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.5rem 1rem; margin-bottom: 1rem; }
+    .check-group-title { font-weight: 600; padding: 0.5rem 0; color: var(--accent); }
+
+    /* Status select */
+    .status-select {
+      padding: 0.2rem 0.5rem; border-radius: 6px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--text); font-size: 0.8rem; cursor: pointer;
+    }
+
+    /* Route map */
+    .route-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; }
+    .route-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem;
+    }
+    .route-card .path { font-family: monospace; font-size: 0.82rem; color: var(--accent); }
+    .route-card .desc { font-size: 0.82rem; color: var(--muted); margin-top: 0.25rem; }
+
+    /* Steps */
+    .steps { counter-reset: step; list-style: none; padding: 0; }
+    .steps li { counter-increment: step; padding-left: 2.5rem; position: relative; margin-bottom: 1rem; }
+    .steps li::before {
+      content: counter(step); position: absolute; left: 0; top: 0;
+      width: 1.75rem; height: 1.75rem; background: var(--accent); color: #000;
+      border-radius: 50%; font-weight: 700; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Sign-off */
+    .signoff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .signoff-field label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem; }
+    .signoff-field input, .signoff-field textarea {
+      width: 100%; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); font-family: inherit;
+    }
+
+    /* Buttons */
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+    button.btn {
+      padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); cursor: pointer; font-size: 0.85rem;
+    }
+    button.btn:hover { border-color: var(--accent); }
+    button.btn-primary { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
+
+    /* Print */
+    @media print {
+      .sidebar, .btn-row, .progress-bar-wrap { display: none; }
+      .main { margin-left: 0; max-width: 100%; }
+      body { background: #fff; color: #000; }
+      .card, .check-group, th, td { border-color: #ccc; }
+    }
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 1rem; }
+      .signoff-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <h2>报告导航</h2>
+    <a href="#overview">1. 验收概述</a>
+    <a href="#prepare">2. 验收准备</a>
+    <a href="#routes">3. 站点路由清单</a>
+    <a href="#global">4. 全局功能</a>
+    <a href="#homepage">5. 首页（9 模块）</a>
+    <a href="#products">6. 产品页（Neon Collections）</a>
+    <a href="#customizer">7. 定制中心</a>
+    <a href="#channel">8. 通道字母</a>
+    <a href="#lightbox">9. 灯箱定制</a>
+    <a href="#signage-lab">10. Signage Lab</a>
+    <a href="#about-gallery">11. About & Gallery</a>
+    <a href="#forms-cart">12. 表单与购物车</a>
+    <a href="#content">13. 文案与图片</a>
+    <a href="#responsive">14. 响应式与交互</a>
+    <a href="#seo">15. SEO 验收</a>
+    <a href="#geo">16. GEO 验收</a>
+    <a href="#known-issues">17. 已知限制</a>
+    <a href="#signoff">18. 签字确认</a>
+  </nav>
+
+  <main class="main">
+    <div class="hero" id="overview">
+      <h1>Yulux Signs 网站功能验收报告</h1>
+      <p class="meta">基于《文案内容以及图片规划.xlsx》总体框架 · 对照当前 Web 项目全部功能点</p>
+      <div class="badge-row">
+        <span class="badge badge-purple">Next.js 16 · App Router</span>
+        <span class="badge badge-purple">27 路由</span>
+        <span class="badge badge-green">静态内容驱动</span>
+        <span class="badge badge-yellow">商务流程为 UI Mock</span>
+      </div>
+      <p style="margin-top:1rem;color:var(--muted);font-size:0.9rem;">
+        版本：v1.0 · 生成日期：2026-06-27 · 适用项目：<code>web/</code> 目录
+      </p>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text"><span id="progressText">验收进度：0 / 0（0%）</span></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="exportProgress()">导出验收进度（JSON）</button>
+      <button class="btn" onclick="resetAll()">重置全部勾选</button>
+      <button class="btn" onclick="window.print()">打印 / 保存 PDF</button>
+    </div>
+
+    <!-- 1. Overview -->
+    <section>
+      <h2>1. 验收概述</h2>
+      <div class="card">
+        <p><strong>验收目的：</strong>确认 Yulux Signs 官网已按实施文档完成全部页面、模块、文案、图片占位及 SEO/GEO 优化，满足需求方可上线使用的标准。</p>
+        <p><strong>验收范围：</strong></p>
+        <ul>
+          <li><strong>页面与路由</strong>：共 27 个有效路由（含 Gallery 分页）</li>
+          <li><strong>功能模块</strong>：导航、定制器、询价表单、购物车 Demo、FAQ 手风琴等</li>
+          <li><strong>内容</strong>：对照 xlsx 文案规划与 <code>content/*.ts</code> 源文件</li>
+          <li><strong>SEO</strong>：Meta 标签、结构化数据、语义化 HTML、内链</li>
+          <li><strong>GEO</strong>：Generative Engine Optimization，面向 AI 搜索/问答引擎的可引用性</li>
+        </ul>
+        <p><strong>验收方式：</strong>逐项勾选本报告检查项 → 填写通过/不通过/备注 → 双方签字确认。</p>
+      </div>
+      <div class="callout callout-info">
+        <strong>如何使用本报告：</strong>左侧导航跳转至对应章节；每项前的复选框会自动保存在浏览器本地（localStorage），刷新不丢失。建议验收人打开网站与报告并排操作。
+      </div>
+    </section>
+
+    <!-- 2. Prepare -->
+    <section id="prepare">
+      <h2>2. 验收准备</h2>
+      <h3>2.1 环境启动</h3>
+      <ol class="steps">
+        <li>进入项目目录：<code>cd web</code></li>
+        <li>安装依赖（若未安装）：<code>npm install</code></li>
+        <li>开发模式验收：<code>npm run dev</code> → 访问 <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></li>
+        <li>生产模式验收（推荐最终验收使用）：<code>npm run build && npm start</code></li>
+        <li>若已部署至服务器，将下方 URL 替换为正式域名（当前配置：<code>https://yuluxsigns.com</code>）</li>
+      </ol>
+
+      <h3>2.2 验收工具清单</h3>
+      <table>
+        <thead><tr><th>工具</th><th>用途</th><th>链接</th></tr></thead>
+        <tbody>
+          <tr><td>Chrome DevTools</td><td>响应式预览、Lighthouse SEO 评分</td><td>F12 打开</td></tr>
+          <tr><td>查看网页源代码</td><td>检查 Meta、JSON-LD</td><td>Ctrl+U / 右键</td></tr>
+          <tr><td>Google Rich Results Test</td><td>结构化数据验证</td><td><a href="https://search.google.com/test/rich-results" target="_blank">search.google.com/test/rich-results</a></td></tr>
+          <tr><td>Schema Markup Validator</td><td>JSON-LD 语法验证</td><td><a href="https://validator.schema.org/" target="_blank">validator.schema.org</a></td></tr>
+          <tr><td>Facebook Sharing Debugger</td><td>Open Graph 预览</td><td><a href="https://developers.facebook.com/tools/debug/" target="_blank">developers.facebook.com/tools/debug</a></td></tr>
+          <tr><td>《文案内容以及图片规划.xlsx》</td><td>文案与图片对照基准</td><td>实施文档目录</td></tr>
+        </tbody>
+      </table>
+
+      <h3>2.3 验收通过标准（总体）</h3>
+      <div class="check-group" data-group="prepare">
+        <div class="check-group-title">准备项</div>
+        <div class="check-item"><input type="checkbox" id="p1" data-check /><label for="p1">网站可正常访问，无白屏或 500 错误<span class="hint">开发/生产环境均可启动</span></label></div>
+        <div class="check-item"><input type="checkbox" id="p2" data-check /><label for="p2">全部 27 个路由均可访问，无 404<span class="hint">见第 3 节路由清单</span></label></div>
+        <div class="check-item"><input type="checkbox" id="p3" data-check /><label for="p3">已准备 xlsx 文案规划文档用于逐页对照<span class="hint">《文案内容以及图片规划.xlsx》</span></label></div>
+        <div class="check-item"><input type="checkbox" id="p4" data-check /><label for="p4">验收人员已在 Desktop + Mobile 两种视口下测试<span class="hint">Chrome DevTools 设备模拟</span></label></div>
+      </div>
+    </section>
+
+    <!-- 3. Routes -->
+    <section id="routes">
+      <h2>3. 站点路由清单（27 路由）</h2>
+      <p>以下路由与 README 及代码 <code>generateStaticParams</code> 一致。验收时请逐一点击访问。</p>
+      <div class="route-grid">
+        <div class="route-card"><div class="path">/</div><div class="desc">首页 · 9 大模块</div></div>
+        <div class="route-card"><div class="path">/about</div><div class="desc">关于我们 · 6 个叙事段落</div></div>
+        <div class="route-card"><div class="path">/products/better-together-wedding-neon-sign</div><div class="desc">产品 PDP · Better Together</div></div>
+        <div class="route-card"><div class="path">/products/good-vibes-only-neon-sign</div><div class="desc">产品 PDP · Good Vibes Only</div></div>
+        <div class="route-card"><div class="path">/products/this-must-be-the-place-neon-sign</div><div class="desc">产品 PDP · This Must Be The Place</div></div>
+        <div class="route-card"><div class="path">/products/cheers-neon-bar-sign</div><div class="desc">产品 PDP · Cheers!</div></div>
+        <div class="route-card"><div class="path">/custom-neon-signs</div><div class="desc">文字霓虹在线定制器</div></div>
+        <div class="route-card"><div class="path">/custom-neon-logo</div><div class="desc">Logo 霓虹询价表单</div></div>
+        <div class="route-card"><div class="path">/channel-letters-logos</div><div class="desc">通道字母 Hub 页</div></div>
+        <div class="route-card"><div class="path">/channel-letters/front-lit</div><div class="desc">Front-Lit 技术详情</div></div>
+        <div class="route-card"><div class="path">/channel-letters/back-lit</div><div class="desc">Back-Lit / Halo 技术详情</div></div>
+        <div class="route-card"><div class="path">/channel-letters/side-lit</div><div class="desc">Side-Lit 技术详情</div></div>
+        <div class="route-card"><div class="path">/channel-letters/full-lit</div><div class="desc">Full-Lit 技术详情</div></div>
+        <div class="route-card"><div class="path">/channel-letters/jelly-lit</div><div class="desc">Jelly-Lit 技术详情</div></div>
+        <div class="route-card"><div class="path">/channel-letters/non-lit</div><div class="desc">Non-Lit 技术详情</div></div>
+        <div class="route-card"><div class="path">/custom-lightbox-signs</div><div class="desc">B2B 灯箱定制页</div></div>
+        <div class="route-card"><div class="path">/signage-lab</div><div class="desc">知识中心 Hub</div></div>
+        <div class="route-card"><div class="path">/signage-lab/installation-guide-custom-business-signs</div><div class="desc">安装指南（HowTo）</div></div>
+        <div class="route-card"><div class="path">/signage-lab/304-vs-316-stainless-steel-outdoor-signs</div><div class="desc">304 vs 316 不锈钢</div></div>
+        <div class="route-card"><div class="path">/signage-lab/front-lit-vs-back-lit-led-custom-signs</div><div class="desc">Front-Lit vs Back-Lit 对比</div></div>
+        <div class="route-card"><div class="path">/signage-lab/ul-ce-rohs-custom-neon-led-lights</div><div class="desc">UL/CE/RoHS 安全标准</div></div>
+        <div class="route-card"><div class="path">/signage-lab/led-sign-repair-maintenance-guide</div><div class="desc">维护与维修指南</div></div>
+        <div class="route-card"><div class="path">/gallery</div><div class="desc">项目画廊 · 第 1 页</div></div>
+        <div class="route-card"><div class="path">/gallery?page=2</div><div class="desc">项目画廊 · 第 2 页（共 14 项，每页 8 项）</div></div>
+        <div class="route-card"><div class="path">/get-a-quote</div><div class="desc">通用询价表单</div></div>
+        <div class="route-card"><div class="path">/get-a-quote?topic=lighting-advice</div><div class="desc">首页 Craftsmanship Lab CTA 带参跳转</div></div>
+      </div>
+      <div class="check-group" data-group="routes">
+        <div class="check-group-title">路由可达性</div>
+        <div class="check-item"><input type="checkbox" id="r-all" data-check /><label for="r-all">以上全部路由返回 200，页面内容正常渲染</label></div>
+        <div class="check-item"><input type="checkbox" id="r-404" data-check /><label for="r-404">无效 slug 返回 404（如 /products/invalid-slug）</label></div>
+      </div>
+    </section>
+
+    <!-- 4. Global -->
+    <section id="global">
+      <h2>4. 全局功能验收</h2>
+      <h3>4.1 顶部导航 Header</h3>
+      <div class="check-group" data-group="header">
+        <div class="check-item"><input type="checkbox" id="h1" data-check /><label for="h1">Logo「Yulux Signs」点击返回首页<span class="hint">sticky 吸顶，半透明背景</span></label></div>
+        <div class="check-item"><input type="checkbox" id="h2" data-check /><label for="h2">Signs 下拉菜单含 4 项：Neon Collections / Custom Neon / Channel Letters / Lightbox Signs</label></div>
+        <div class="check-item"><input type="checkbox" id="h3" data-check /><label for="h3">Customizer → /custom-neon-signs</label></div>
+        <div class="check-item"><input type="checkbox" id="h4" data-check /><label for="h4">The Signage Lab → /signage-lab</label></div>
+        <div class="check-item"><input type="checkbox" id="h5" data-check /><label for="h5">About → /about</label></div>
+        <div class="check-item"><input type="checkbox" id="h6" data-check /><label for="h6">购物车图标可打开侧栏，有商品时显示数量角标</label></div>
+        <div class="check-item"><input type="checkbox" id="h7" data-check /><label for="h7">「Get a Free Quote」按钮 → /get-a-quote</label></div>
+        <div class="check-item"><input type="checkbox" id="h8" data-check /><label for="h8">移动端汉堡菜单展开/收起，含 Signs 子菜单</label></div>
+      </div>
+
+      <h3>4.2 页脚 Footer</h3>
+      <div class="check-group" data-group="footer">
+        <div class="check-item"><input type="checkbox" id="f1" data-check /><label for="f1">Products 列：5 个产品/服务链接均可跳转</label></div>
+        <div class="check-item"><input type="checkbox" id="f2" data-check /><label for="f2">The Signage Lab 列：5 篇 pillar 文章链接均可跳转</label></div>
+        <div class="check-item"><input type="checkbox" id="f3" data-check /><label for="f3">Company 列：About / Gallery / Get a Quote 均可跳转</label></div>
+        <div class="check-item"><input type="checkbox" id="f4" data-check /><label for="f4">版权行显示当前年份 + Yulux Signs</label></div>
+      </div>
+
+      <h3>4.3 全站共享模块</h3>
+      <div class="check-group" data-group="shared">
+        <div class="check-item"><input type="checkbox" id="s1" data-check /><label for="s1">Trust Badges（6 项）：Engineering-Grade / 24h Mockup / Shipping Insurance / 2-Year Warranty / Express / Secure Checkout</label></div>
+        <div class="check-item"><input type="checkbox" id="s2" data-check /><label for="s2">Material Quality（3 项）：LED Neon Flex / Acrylic / Power & Safety</label></div>
+        <div class="check-item"><input type="checkbox" id="s3" data-check /><label for="s3">How It Works（3 步）：Design & Submit → Technical Review → Handcraft & Shipping</label></div>
+        <div class="check-item"><input type="checkbox" id="s4" data-check /><label for="s4">FAQ 手风琴：点击展开/收起，默认首项展开，aria-expanded 正确</label></div>
+        <div class="check-item"><input type="checkbox" id="s5" data-check /><label for="s5">Breadcrumb 面包屑在子页面正确显示</label></div>
+      </div>
+    </section>
+
+    <!-- 5. Homepage -->
+    <section id="homepage">
+      <h2>5. 首页验收（9 模块）</h2>
+      <p>路径：<code>/</code> · 对应 xlsx 首页规划及 <code>content/home.ts</code></p>
+      <table>
+        <thead><tr><th>#</th><th>模块</th><th>关键验收点</th><th>xlsx 对照</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Hero Section</td><td>H1、副标题、双 CTA、信任条、主图 alt</td><td>Hero 文案 + image1</td></tr>
+          <tr><td>2</td><td>Product Finder</td><td>5 张卡片：Custom Neon / Collections / Channel Letters / Lightbox / Logo Neon</td><td>产品入口规划</td></tr>
+          <tr><td>3</td><td>Craftsmanship Lab</td><td>5 种照明技术卡片 + CTA（带 topic 参数）</td><td>工艺实验室</td></tr>
+          <tr><td>4</td><td>Inspiration Gallery</td><td>4 分类筛选 + 8 张灵感图 + View All</td><td>灵感画廊</td></tr>
+          <tr><td>5</td><td>Real-World Projects</td><td>6 个全球案例 + 跳转链接</td><td>真实项目</td></tr>
+          <tr><td>6</td><td>Trust Badges</td><td>6 徽章 + SEO 正文段落</td><td>信任背书</td></tr>
+          <tr><td>7</td><td>FAQ</td><td>5 个问答，手风琴交互</td><td>首页 FAQ</td></tr>
+          <tr><td>8</td><td>Final CTA</td><td>「Ready to Illuminate Your Brand?」+ 询价按钮</td><td>底部 CTA</td></tr>
+          <tr><td>9</td><td>Header/Footer</td><td>全站导航（见第 4 节）</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <div class="check-group" data-group="home">
+        <div class="check-group-title">首页详细检查</div>
+        <div class="check-item"><input type="checkbox" id="home1" data-check /><label for="home1">Hero H1 为「Elevate Your Brand with Precision-Crafted Illumination」</label></div>
+        <div class="check-item"><input type="checkbox" id="home2" data-check /><label for="home2">Primary CTA「Get a Free Quote」→ /get-a-quote</label></div>
+        <div class="check-item"><input type="checkbox" id="home3" data-check /><label for="home3">Secondary CTA「Explore Our Craftsmanship」→ #craftsmanship-lab 锚点</label></div>
+        <div class="check-item"><input type="checkbox" id="home4" data-check /><label for="home4">Product Finder 5 卡片链接与文案正确</label></div>
+        <div class="check-item"><input type="checkbox" id="home5" data-check /><label for="home5">Inspiration Gallery 分类筛选（All / Retail / Corporate / Events / Hospitality）生效</label></div>
+        <div class="check-item"><input type="checkbox" id="home6" data-check /><label for="home6">Real-World Projects 6 项含地点、工艺、跳转</label></div>
+        <div class="check-item"><input type="checkbox" id="home7" data-check /><label for="home7">Trust 区 SEO 正文已渲染（非仅 schema）</label></div>
+        <div class="check-item"><input type="checkbox" id="home8" data-check /><label for="home8">首页 FAQ 5 题内容与 xlsx 一致</label></div>
+        <div class="check-item"><input type="checkbox" id="home9" data-check /><label for="home9">JSON-LD 含 Organization + WebSite + FAQPage + ItemList</label></div>
+      </div>
+    </section>
+
+    <!-- 6. Products -->
+    <section id="products">
+      <h2>6. 产品页验收（Neon Collections · 4 PDP）</h2>
+      <table>
+        <thead><tr><th>Slug</th><th>产品名</th><th>价格</th><th>场景</th></tr></thead>
+        <tbody>
+          <tr><td>better-together-wedding-neon-sign</td><td>Better Together</td><td>$189</td><td>Wedding / Engagement</td></tr>
+          <tr><td>good-vibes-only-neon-sign</td><td>Good Vibes Only</td><td>$169</td><td>Bedroom / Studio</td></tr>
+          <tr><td>this-must-be-the-place-neon-sign</td><td>This Must Be The Place</td><td>$179</td><td>Living Room / Entryway</td></tr>
+          <tr><td>cheers-neon-bar-sign</td><td>Cheers!</td><td>$149</td><td>Home Bar / Man Cave</td></tr>
+        </tbody>
+      </table>
+      <div class="check-group" data-group="products">
+        <div class="check-group-title">每个 PDP 均需检查（4 页 × 以下项）</div>
+        <div class="check-item"><input type="checkbox" id="pd1" data-check /><label for="pd1">产品主图加载，alt 文本描述性且与 xlsx 规划一致</label></div>
+        <div class="check-item"><input type="checkbox" id="pd2" data-check /><label for="pd2">H1 为完整 SEO 标题（含产品关键词）</label></div>
+        <div class="check-item"><input type="checkbox" id="pd3" data-check /><label for="pd3">Hook 段落 + 4 条卖点 bullets 完整</label></div>
+        <div class="check-item"><input type="checkbox" id="pd4" data-check /><label for="pd4">价格显示正确，「Add to Cart」可加入购物车</label></div>
+        <div class="check-item"><input type="checkbox" id="pd5" data-check /><label for="pd5">Technical Specifications（4 项通用规格）</label></div>
+        <div class="check-item"><input type="checkbox" id="pd6" data-check /><label for="pd6">What's in the Box（4 项）</label></div>
+        <div class="check-item"><input type="checkbox" id="pd7" data-check /><label for="pd7">Easy 3-Step Installation</label></div>
+        <div class="check-item"><input type="checkbox" id="pd8" data-check /><label for="pd8">Cross-sell 区块 + 关联系列链接</label></div>
+        <div class="check-item"><input type="checkbox" id="pd9" data-check /><label for="pd9">FAQ 3 题（户外/亮度/记忆功能）</label></div>
+        <div class="check-item"><input type="checkbox" id="pd10" data-check /><label for="pd10">JSON-LD：Product + BreadcrumbList，Rich Results Test 无 Error</label></div>
+        <div class="check-item"><input type="checkbox" id="pd11" data-check /><label for="pd11">独立 metaTitle / metaDescription / keywords 与 xlsx 一致</label></div>
+      </div>
+    </section>
+
+    <!-- 7. Customizer -->
+    <section id="customizer">
+      <h2>7. 定制中心验收</h2>
+      <h3>7.1 文字定制器 /custom-neon-signs</h3>
+      <div class="check-group" data-group="customizer-text">
+        <div class="check-item"><input type="checkbox" id="ct1" data-check /><label for="ct1">Tab 切换：Design Your Text（当前页）/ Upload Your Logo → /custom-neon-logo</label></div>
+        <div class="check-item"><input type="checkbox" id="ct2" data-check /><label for="ct2">Step 1：文字输入，预览区实时更新</label></div>
+        <div class="check-item"><input type="checkbox" id="ct3" data-check /><label for="ct3">Step 2：字体类别 Script / Sans / Retro 可切换</label></div>
+        <div class="check-item"><input type="checkbox" id="ct4" data-check /><label for="ct4">Step 3：12 种霓虹颜色可选，预览发光效果</label></div>
+        <div class="check-item"><input type="checkbox" id="ct5" data-check /><label for="ct5">Step 4：背板 Cut to Shape / Whole Board / Invisible</label></div>
+        <div class="check-item"><input type="checkbox" id="ct6" data-check /><label for="ct6">Step 5：Indoor / Outdoor Waterproof，Outdoor 加价 35%</label></div>
+        <div class="check-item"><input type="checkbox" id="ct7" data-check /><label for="ct7">Instant Pricing 随选项变化（Mock 算法）</label></div>
+        <div class="check-item"><input type="checkbox" id="ct8" data-check /><label for="ct8">Add to Cart 将定制项加入购物车</label></div>
+        <div class="check-item"><input type="checkbox" id="ct9" data-check /><label for="ct9">底部 SEO 正文 CUSTOMIZER_SEO_TEXT 已渲染</label></div>
+        <div class="check-item"><input type="checkbox" id="ct10" data-check /><label for="ct10">Material Quality + How It Works 模块显示</label></div>
+      </div>
+
+      <h3>7.2 Logo 询价 /custom-neon-logo</h3>
+      <div class="check-group" data-group="customizer-logo">
+        <div class="check-item"><input type="checkbox" id="cl1" data-check /><label for="cl1">表单字段：Logo 上传 / 尺寸 / 灯光风格 / 环境 / 截止日期 / 留言 / 姓名 / 邮箱 / 公司 / 国家</label></div>
+        <div class="check-item"><input type="checkbox" id="cl2" data-check /><label for="cl2">必填项校验（HTML required）</label></div>
+        <div class="check-item"><input type="checkbox" id="cl3" data-check /><label for="cl3">提交后显示成功态「24 hours mockup」</label></div>
+        <div class="check-item"><input type="checkbox" id="cl4" data-check /><label for="cl4">Material Quality + How It Works 模块显示</label></div>
+      </div>
+    </section>
+
+    <!-- 8. Channel Letters -->
+    <section id="channel">
+      <h2>8. 通道字母验收</h2>
+      <h3>8.1 Hub 页 /channel-letters-logos</h3>
+      <div class="check-group" data-group="channel-hub">
+        <div class="check-item"><input type="checkbox" id="ch1" data-check /><label for="ch1">H1 + 副标题与 xlsx 一致</label></div>
+        <div class="check-item"><input type="checkbox" id="ch2" data-check /><label for="ch2">6 种技术卡片可跳转至详情页</label></div>
+        <div class="check-item"><input type="checkbox" id="ch3" data-check /><label for="ch3">页内询价表单（QUOTE_FORM_FIELDS）可用</label></div>
+      </div>
+
+      <h3>8.2 技术详情页（6 页）</h3>
+      <table>
+        <thead><tr><th>Slug</th><th>标签</th><th>FAQ 数量</th></tr></thead>
+        <tbody>
+          <tr><td>front-lit</td><td>Front-Lit</td><td>2</td></tr>
+          <tr><td>back-lit</td><td>Back-Lit / Halo-Lit</td><td>1</td></tr>
+          <tr><td>side-lit</td><td>Side-Lit</td><td>1</td></tr>
+          <tr><td>full-lit</td><td>Full-Lit</td><td>1</td></tr>
+          <tr><td>jelly-lit</td><td>Jelly-Lit</td><td>1</td></tr>
+          <tr><td>non-lit</td><td>Non-Lit</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <div class="check-group" data-group="channel-detail">
+        <div class="check-item"><input type="checkbox" id="cd1" data-check /><label for="cd1">每页含 H1、副标题、The Craft、Why Choose 四个区块</label></div>
+        <div class="check-item"><input type="checkbox" id="cd2" data-check /><label for="cd2">CTA：Get a Free Quote + View All Techniques</label></div>
+        <div class="check-item"><input type="checkbox" id="cd3" data-check /><label for="cd3">FAQ 内容与页面可见文本一致</label></div>
+        <div class="check-item"><input type="checkbox" id="cd4" data-check /><label for="cd4">JSON-LD：FAQPage + BreadcrumbList</label></div>
+        <div class="check-item"><input type="checkbox" id="cd5" data-check /><label for="cd5">6 页独立 metaTitle / metaDescription / keywords</label></div>
+      </div>
+    </section>
+
+    <!-- 9. Lightbox -->
+    <section id="lightbox">
+      <h2>9. 灯箱定制页验收 /custom-lightbox-signs</h2>
+      <div class="check-group" data-group="lightbox">
+        <div class="check-item"><input type="checkbox" id="lb1" data-check /><label for="lb1">深色主题布局，Hero 左图右表单</label></div>
+        <div class="check-item"><input type="checkbox" id="lb2" data-check /><label for="lb2">H1「Fully Customized Lightbox & Premium Glowing Signage」</label></div>
+        <div class="check-item"><input type="checkbox" id="lb3" data-check /><label for="lb3">询价表单 8 字段：项目类型 / 形状 / 尺寸 / 文件上传 / 姓名 / 邮箱 / 公司 / 国家</label></div>
+        <div class="check-item"><input type="checkbox" id="lb4" data-check /><label for="lb4">Custom Capabilities Showcase 3 卡片</label></div>
+        <div class="check-item"><input type="checkbox" id="lb5" data-check /><label for="lb5">Technical FAQ 3 题 + JSON-LD FAQPage</label></div>
+      </div>
+    </section>
+
+    <!-- 10. Signage Lab -->
+    <section id="signage-lab">
+      <h2>10. Signage Lab 知识中心验收</h2>
+      <h3>10.1 Hub /signage-lab</h3>
+      <div class="check-group" data-group="lab-hub">
+        <div class="check-item"><input type="checkbox" id="lab1" data-check /><label for="lab1">4 个分类入口卡片跳转正确</label></div>
+        <div class="check-item"><input type="checkbox" id="lab2" data-check /><label for="lab2">5 篇 Featured Pillar Articles 列表</label></div>
+        <div class="check-item"><input type="checkbox" id="lab3" data-check /><label for="lab3">Popular Questions FAQ 4 题</label></div>
+        <div class="check-item"><input type="checkbox" id="lab4" data-check /><label for="lab4">JSON-LD：CollectionPage + ItemList + FAQPage</label></div>
+      </div>
+
+      <h3>10.2 文章详情（5 篇）</h3>
+      <table>
+        <thead><tr><th>Slug</th><th>分类</th><th>特殊 Schema</th></tr></thead>
+        <tbody>
+          <tr><td>installation-guide-custom-business-signs</td><td>Technical Guides</td><td>Article + HowTo</td></tr>
+          <tr><td>304-vs-316-stainless-steel-outdoor-signs</td><td>Material Science</td><td>Article</td></tr>
+          <tr><td>front-lit-vs-back-lit-led-custom-signs</td><td>Design Inspiration</td><td>Article</td></tr>
+          <tr><td>ul-ce-rohs-custom-neon-led-lights</td><td>Technical Guides</td><td>Article</td></tr>
+          <tr><td>led-sign-repair-maintenance-guide</td><td>Maintenance & Repair</td><td>Article</td></tr>
+        </tbody>
+      </table>
+      <div class="check-group" data-group="lab-articles">
+        <div class="check-item"><input type="checkbox" id="la1" data-check /><label for="la1">每篇文章 H1、分类标签、阅读时长显示</label></div>
+        <div class="check-item"><input type="checkbox" id="la2" data-check /><label for="la2">多 section 结构，H2 小标题清晰</label></div>
+        <div class="check-item"><input type="checkbox" id="la3" data-check /><label for="la3">底部 CTA「Get a Free Quote」+ 返回 Hub 链接</label></div>
+        <div class="check-item"><input type="checkbox" id="la4" data-check /><label for="la4">安装指南含 HowTo schema（Rich Results 可识别）</label></div>
+        <div class="check-item"><input type="checkbox" id="la5" data-check /><label for="la5">5 篇文章文案与 xlsx / 实施文档一致</label></div>
+      </div>
+    </section>
+
+    <!-- 11. About & Gallery -->
+    <section id="about-gallery">
+      <h2>11. About & Gallery 验收</h2>
+      <h3>11.1 About /about</h3>
+      <div class="check-group" data-group="about">
+        <div class="check-item"><input type="checkbox" id="ab1" data-check /><label for="ab1">6 个叙事段落：Hook / Gap / Factory / Philosophy / Global / Closing</label></div>
+        <div class="check-item"><input type="checkbox" id="ab2" data-check /><label for="ab2">Factory、Philosophy 段落含配图及 alt</label></div>
+        <div class="check-item"><input type="checkbox" id="ab3" data-check /><label for="ab3">Factory 段落内链：channel letters / lightbox signs</label></div>
+        <div class="check-item"><input type="checkbox" id="ab4" data-check /><label for="ab4">Closing 双 CTA：Explore Craftsmanship / Start Custom Project</label></div>
+      </div>
+
+      <h3>11.2 Gallery /gallery</h3>
+      <div class="check-group" data-group="gallery">
+        <div class="check-item"><input type="checkbox" id="ga1" data-check /><label for="ga1">共 14 个项目（6 Real-World + 8 Inspiration）</label></div>
+        <div class="check-item"><input type="checkbox" id="ga2" data-check /><label for="ga2">每页 8 项，分页导航正常（第 2 页 /gallery?page=2）</label></div>
+        <div class="check-item"><input type="checkbox" id="ga3" data-check /><label for="ga3">每项含标题、副标题、View 链接跳转正确</label></div>
+        <div class="check-item"><input type="checkbox" id="ga4" data-check /><label for="ga4">图片 lazy loading，alt 文本完整</label></div>
+      </div>
+    </section>
+
+    <!-- 12. Forms & Cart -->
+    <section id="forms-cart">
+      <h2>12. 表单与购物车验收</h2>
+      <div class="callout callout-warn">
+        <strong>重要说明：</strong>当前版本商务流程为 <strong>UI Mock</strong>。表单提交不会发送到后端；购物车「Proceed to Checkout」跳转至询价页。验收时确认交互流程完整即可，真实邮件/API 集成不在本期范围。
+      </div>
+      <h3>12.1 通用询价 /get-a-quote</h3>
+      <div class="check-group" data-group="quote">
+        <div class="check-item"><input type="checkbox" id="qf1" data-check /><label for="qf1">字段：姓名 / 邮箱 / 公司 / 国家 / 项目类型 / 项目详情</label></div>
+        <div class="check-item"><input type="checkbox" id="qf2" data-check /><label for="qf2">项目类型下拉含 5 选项</label></div>
+        <div class="check-item"><input type="checkbox" id="qf3" data-check /><label for="qf3">提交成功显示 Thank You 页面</label></div>
+        <div class="check-item"><input type="checkbox" id="qf4" data-check /><label for="qf4">底部链接「Try our neon customizer」→ /custom-neon-signs</label></div>
+      </div>
+
+      <h3>12.2 购物车 Cart Drawer</h3>
+      <div class="check-group" data-group="cart">
+        <div class="check-item"><input type="checkbox" id="ca1" data-check /><label for="ca1">从产品页 / 定制器 Add to Cart 后侧栏打开</label></div>
+        <div class="check-item"><input type="checkbox" id="ca2" data-check /><label for="ca2">显示商品名、数量、单价、合计</label></div>
+        <div class="check-item"><input type="checkbox" id="ca3" data-check /><label for="ca3">Remove 可移除单项</label></div>
+        <div class="check-item"><input type="checkbox" id="ca4" data-check /><label for="ca4">Proceed to Checkout → /get-a-quote，并提示 Demo checkout</label></div>
+        <div class="check-item"><input type="checkbox" id="ca5" data-check /><label for="ca5">点击遮罩或 ✕ 关闭侧栏</label></div>
+      </div>
+    </section>
+
+    <!-- 13. Content -->
+    <section id="content">
+      <h2>13. 文案与图片验收（对照 xlsx）</h2>
+      <p>文案源文件位于 <code>web/content/*.ts</code>，图片规划引用 <code>/images/image1.png</code> ~ <code>image6.png</code>。</p>
+      <table>
+        <thead><tr><th>图片文件</th><th>主要使用位置</th></tr></thead>
+        <tbody>
+          <tr><td>image1.png</td><td>Hero Back-Lit、Corporate 案例、Back-lit 技术</td></tr>
+          <tr><td>image2.png</td><td>Neon Collections、Wedding/Events 案例</td></tr>
+          <tr><td>image3.png</td><td>Channel Letters、Front-Lit、Retail</td></tr>
+          <tr><td>image4.png</td><td>Custom Neon、Logo Neon、About Factory</td></tr>
+          <tr><td>image5.png</td><td>Lightbox、Side-Lit、This Must Be The Place</td></tr>
+          <tr><td>image6.png</td><td>Logo Neon、Cheers、Non-Lit、About Philosophy</td></tr>
+        </tbody>
+      </table>
+      <div class="check-group" data-group="content">
+        <div class="check-item"><input type="checkbox" id="co1" data-check /><label for="co1">逐页对照 xlsx：标题、副标题、正文段落无遗漏、无乱码</label></div>
+        <div class="check-item"><input type="checkbox" id="co2" data-check /><label for="co2">6 张规划图片均已放入 public/images/ 且全站正常显示</label></div>
+        <div class="check-item"><input type="checkbox" id="co3" data-check /><label for="co3">所有图片均有描述性 alt 文本（非空、非泛化「image」）</label></div>
+        <div class="check-item"><input type="checkbox" id="co4" data-check /><label for="co4">品牌名统一为「Yulux Signs」，邮箱 hello@yuluxsigns.com</label></div>
+        <div class="check-item"><input type="checkbox" id="co5" data-check /><label for="co5">英文文案无拼写/语法明显错误（抽查 5 页以上）</label></div>
+      </div>
+    </section>
+
+    <!-- 14. Responsive -->
+    <section id="responsive">
+      <h2>14. 响应式与交互验收</h2>
+      <div class="check-group" data-group="responsive">
+        <div class="check-item"><input type="checkbox" id="re1" data-check /><label for="re1">Desktop（≥1024px）：导航横排、多列网格正常</label></div>
+        <div class="check-item"><input type="checkbox" id="re2" data-check /><label for="re2">Tablet（768px）：布局自适应，无横向滚动条</label></div>
+        <div class="check-item"><input type="checkbox" id="re3" data-check /><label for="re3">Mobile（375px）：汉堡菜单、单列布局、按钮可点击</label></div>
+        <div class="check-item"><input type="checkbox" id="re4" data-check /><label for="re4">定制器预览区在小屏仍可操作</label></div>
+        <div class="check-item"><input type="checkbox" id="re5" data-check /><label for="re5">购物车侧栏在移动端全宽或适配</label></div>
+        <div class="check-item"><input type="checkbox" id="re6" data-check /><label for="re6">Hover 效果（Craftsmanship 定义、Gallery 遮罩）在 Desktop 正常</label></div>
+        <div class="check-item"><input type="checkbox" id="re7" data-check /><label for="re7">全站无 Console 红色 Error（抽查 5 页）</label></div>
+      </div>
+    </section>
+
+    <!-- 15. SEO -->
+    <section id="seo">
+      <h2>15. SEO 验收清单</h2>
+      <div class="callout">
+        SEO 验收分三层：<strong>页面 Meta</strong> → <strong>结构化数据</strong> → <strong>技术 SEO</strong>。建议至少抽查首页 + 1 产品页 + 1 文章页 + 1 通道字母页。
+      </div>
+
+      <h3>15.1 页面 Meta（27 路由）</h3>
+      <table>
+        <thead><tr><th>检查项</th><th>合格标准</th><th>验证方法</th></tr></thead>
+        <tbody>
+          <tr><td>Title</td><td>每页唯一，50–60 字符内，含核心关键词</td><td>浏览器标签 / 源代码 &lt;title&gt;</td></tr>
+          <tr><td>Description</td><td>每页唯一，120–160 字符，含 CTA 意图</td><td>&lt;meta name="description"&gt;</td></tr>
+          <tr><td>Keywords</td><td>核心页有 keywords meta</td><td>源代码（部分页）</td></tr>
+          <tr><td>Canonical</td><td>指向 https://yuluxsigns.com + 路径</td><td>&lt;link rel="canonical"&gt;</td></tr>
+          <tr><td>Open Graph</td><td>og:title / description / url / siteName</td><td>源代码或 FB Debugger</td></tr>
+          <tr><td>Twitter Card</td><td>summary_large_image</td><td>源代码</td></tr>
+          <tr><td>lang</td><td>&lt;html lang="en"&gt;</td><td>源代码</td></tr>
+        </tbody>
+      </table>
+
+      <h3>15.2 结构化数据 JSON-LD</h3>
+      <table>
+        <thead><tr><th>页面</th><th>Schema 类型</th></tr></thead>
+        <tbody>
+          <tr><td>全站 layout</td><td>Organization, WebSite (+ SearchAction)</td></tr>
+          <tr><td>首页 /</td><td>FAQPage, ItemList</td></tr>
+          <tr><td>产品 PDP</td><td>Product, BreadcrumbList</td></tr>
+          <tr><td>通道字母详情</td><td>FAQPage, BreadcrumbList</td></tr>
+          <tr><td>Signage Lab Hub</td><td>CollectionPage, ItemList, FAQPage</td></tr>
+          <tr><td>Signage Lab 文章</td><td>Article, BreadcrumbList, HowTo（安装指南）</td></tr>
+          <tr><td>灯箱页</td><td>FAQPage</td></tr>
+          <tr><td>About</td><td>BreadcrumbList</td></tr>
+        </tbody>
+      </table>
+
+      <h3>15.3 操作步骤（逐页 SEO 验收）</h3>
+      <ol class="steps">
+        <li>打开目标页面 → 右键「查看网页源代码」</li>
+        <li>搜索 <code>application/ld+json</code>，复制 JSON 至 <a href="https://validator.schema.org/" target="_blank">Schema Validator</a></li>
+        <li>确认 <strong>0 Error</strong>（Warning 记录备注）</li>
+        <li>在 Chrome DevTools → Lighthouse → SEO，目标分数 ≥ <strong>90</strong></li>
+        <li>确认页面 H1 唯一，FAQ 可见内容与 FAQPage schema 一致</li>
+      </ol>
+
+      <div class="check-group" data-group="seo">
+        <div class="check-group-title">SEO 验收项</div>
+        <div class="check-item"><input type="checkbox" id="seo1" data-check /><label for="seo1">27 路由均有独立 title + description</label></div>
+        <div class="check-item"><input type="checkbox" id="seo2" data-check /><label for="seo2">全站 canonical URL 使用正式域名 yuluxsigns.com</label></div>
+        <div class="check-item"><input type="checkbox" id="seo3" data-check /><label for="seo3">首页 Rich Results Test：Organization + FAQPage 无 Error</label></div>
+        <div class="check-item"><input type="checkbox" id="seo4" data-check /><label for="seo4">产品页 Rich Results Test：Product 无 Error</label></div>
+        <div class="check-item"><input type="checkbox" id="seo5" data-check /><label for="seo5">安装指南 Rich Results Test：HowTo 无 Error</label></div>
+        <div class="check-item"><input type="checkbox" id="seo6" data-check /><label for="seo6">Lighthouse SEO ≥ 90（首页 / 1 PDP / 1 文章）</label></div>
+        <div class="check-item"><input type="checkbox" id="seo7" data-check /><label for="seo7">全站内链无死链（Header / Footer / 正文 CTA 抽查）</label></div>
+        <div class="check-item"><input type="checkbox" id="seo8" data-check /><label for="seo8">sitemap.xml 已上线并包含全部路由 <span class="hint">⚠ 当前代码未实现，上线前需补充</span></label></div>
+        <div class="check-item"><input type="checkbox" id="seo9" data-check /><label for="seo9">robots.txt 已配置并指向 sitemap <span class="hint">⚠ 当前代码未实现，上线前需补充</span></label></div>
+      </div>
+    </section>
+
+    <!-- 16. GEO -->
+    <section id="geo">
+      <h2>16. GEO 验收清单（Generative Engine Optimization）</h2>
+      <div class="callout callout-info">
+        <strong>GEO 定义：</strong>优化网站内容，使 ChatGPT、Perplexity、Google AI Overview、Copilot 等 AI 搜索引擎能<strong>准确理解、引用、推荐</strong> Yulux Signs 品牌与产品。GEO 效果有延迟，上线后 2–4 周可再做引用监测。
+      </div>
+
+      <h3>16.1 品牌实体清晰度</h3>
+      <div class="check-group" data-group="geo-brand">
+        <div class="check-item"><input type="checkbox" id="geo1" data-check /><label for="geo1">Organization schema 含 name / url / description / email</label></div>
+        <div class="check-item"><input type="checkbox" id="geo2" data-check /><label for="geo2">About 页完整讲述品牌故事、工厂、工程标准</label></div>
+        <div class="check-item"><input type="checkbox" id="geo3" data-check /><label for="geo3">全站品牌名、定位描述一致（custom neon + channel letters + lightbox）</label></div>
+        <div class="check-item"><input type="checkbox" id="geo4" data-check /><label for="geo4">明确 CTA 路径：Get a Quote / 24h Mockup</label></div>
+      </div>
+
+      <h3>16.2 可引用的事实性内容</h3>
+      <p>AI 偏好<strong>结构化、可验证、含具体数据</strong>的内容。以下数字/事实应在页面可见（非仅 schema）：</p>
+      <table>
+        <thead><tr><th>事实点</th><th>出现位置</th></tr></thead>
+        <tbody>
+          <tr><td>1,000+ businesses worldwide</td><td>首页 Hero 信任条</td></tr>
+          <tr><td>10+ Years Engineering Experience</td><td>首页 Hero 信任条</td></tr>
+          <tr><td>2-Year Global Warranty</td><td>Trust Badges / 产品页</td></tr>
+          <tr><td>24h Free Mockup</td><td>Trust Badges / How It Works / 表单成功态</td></tr>
+          <tr><td>50,000+ hour LED lifespan</td><td>Material Quality / FAQ / 文章</td></tr>
+          <tr><td>CE / UL / RoHS certified</td><td>Material Quality / Signage Lab 文章</td></tr>
+          <tr><td>304 / 316 stainless steel</td><td>About / 文章 / Channel Letters</td></tr>
+          <tr><td>DHL/FedEx + 100% Shipping Insurance</td><td>Trust Badges / FAQ</td></tr>
+        </tbody>
+      </table>
+
+      <h3>16.3 问答友好型内容</h3>
+      <div class="check-group" data-group="geo-qa">
+        <div class="check-item"><input type="checkbox" id="geo5" data-check /><label for="geo5">首页 FAQ 5 题覆盖：生产周期 / 配色 / 国际运输 / 损坏处理 / 定制尺寸</label></div>
+        <div class="check-item"><input type="checkbox" id="geo6" data-check /><label for="geo6">Signage Lab FAQ 4 题 + 5 篇深度文章（技术对比、材料、安全、维护）</label></div>
+        <div class="check-item"><input type="checkbox" id="geo7" data-check /><label for="geo7">6 种 Channel Letter 技术各有独立 FAQ 解释术语</label></div>
+        <div class="check-item"><input type="checkbox" id="geo8" data-check /><label for="geo8">Lightbox FAQ 3 题覆盖品牌色匹配 / 图形更换 / 户外耐久</label></div>
+        <div class="check-item"><input type="checkbox" id="geo9" data-check /><label for="geo9">FAQ 页面可见文本与 JSON-LD FAQPage 完全一致</label></div>
+        <div class="check-item"><input type="checkbox" id="geo10" data-check /><label for="geo10">安装指南含 HowTo 步骤结构（AI 可提取操作步骤）</label></div>
+      </div>
+
+      <h3>16.4 AI 引用模拟测试（上线后执行）</h3>
+      <p>在 ChatGPT / Perplexity / Google AI 中输入以下问题，记录是否提及 Yulux 及信息准确性：</p>
+      <table>
+        <thead><tr><th>测试问题</th><th>期望引用内容</th><th>结果</th></tr></thead>
+        <tbody>
+          <tr><td>What is the difference between front-lit and back-lit channel letters?</td><td>Signage Lab 文章 / Channel Letters 页</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
+          <tr><td>304 vs 316 stainless steel for outdoor signs</td><td>Signage Lab 不锈钢文章</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
+          <tr><td>Custom neon sign manufacturer with warranty</td><td>首页 / About / Trust Badges</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
+          <tr><td>UL CE RoHS LED neon sign safety</td><td>Signage Lab 安全标准文章</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
+          <tr><td>Yulux Signs custom channel letters quote</td><td>品牌官网链接</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 17. Known Issues -->
+    <section id="known-issues">
+      <h2>17. 已知限制与上线前待办</h2>
+      <table>
+        <thead><tr><th>项目</th><th>当前状态</th><th>验收建议</th></tr></thead>
+        <tbody>
+          <tr><td>表单提交</td><td>UI Mock，无后端/API</td><td>确认交互流程；真实集成另立项</td></tr>
+          <tr><td>购物车/结账</td><td>Demo，跳转询价页</td><td>确认 Add to Cart + 侧栏流程</td></tr>
+          <tr><td>支付</td><td>未集成</td><td>Trust Badge 文案展示即可</td></tr>
+          <tr><td>sitemap.xml</td><td>未实现</td><td>上线前必须补充</td></tr>
+          <tr><td>robots.txt</td><td>未实现</td><td>上线前必须补充</td></tr>
+          <tr><td>OG Image</td><td>未配置 og:image</td><td>社交分享可补充默认图</td></tr>
+          <tr><td>public/images/</td><td>需确认 6 张 xlsx 规划图已部署</td><td>见第 13 节</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 18. Sign-off -->
+    <section id="signoff">
+      <h2>18. 签字确认</h2>
+      <div class="card">
+        <p>经双方按本报告完成验收，确认结果如下：</p>
+        <div class="signoff-grid" style="margin-top:1rem;">
+          <div class="signoff-field">
+            <label>验收结论</label>
+            <select id="conclusion" class="status-select" style="width:100%;padding:0.5rem;">
+              <option value="">请选择</option>
+              <option>全部通过，同意上线</option>
+              <option>有条件通过（见备注）</option>
+              <option>不通过，需整改</option>
+            </select>
+          </div>
+          <div class="signoff-field">
+            <label>验收日期</label>
+            <input type="date" id="acceptDate" />
+          </div>
+          <div class="signoff-field">
+            <label>需求方验收人</label>
+            <input type="text" id="clientName" placeholder="姓名" />
+          </div>
+          <div class="signoff-field">
+            <label>开发方验收人</label>
+            <input type="text" id="devName" placeholder="姓名" />
+          </div>
+          <div class="signoff-field" style="grid-column:1/-1;">
+            <label>备注 / 待整改项</label>
+            <textarea id="remarks" rows="4" placeholder="列出未通过项及整改计划..."></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);color:var(--muted);font-size:0.85rem;">
+      Yulux Signs Website Acceptance Report · Generated from web/ project source · 2026-06-27
+    </footer>
+  </main>
+</div>
+
+<script>
+  const STORAGE_KEY = 'yulux-acceptance-v1';
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch { return {}; }
+  }
+
+  function saveState(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    updateProgress();
+  }
+
+  function init() {
+    const state = loadState();
+    document.querySelectorAll('[data-check]').forEach(cb => {
+      if (state[cb.id]) cb.checked = true;
+      cb.addEventListener('change', () => {
+        state[cb.id] = cb.checked;
+        saveState(state);
+      });
+    });
+    document.querySelectorAll('[data-status]').forEach((sel, i) => {
+      const key = 'status-' + i;
+      if (state[key]) sel.value = state[key];
+      sel.addEventListener('change', () => {
+        state[key] = sel.value;
+        saveState(state);
+      });
+    });
+    ['conclusion','acceptDate','clientName','devName','remarks'].forEach(id => {
+      const el = document.getElementById(id);
+      if (state[id]) el.value = state[id];
+      el.addEventListener('change', () => { state[id] = el.value; saveState(state); });
+      el.addEventListener('input', () => { state[id] = el.value; saveState(state); });
+    });
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const checks = document.querySelectorAll('[data-check]');
+    const done = [...checks].filter(c => c.checked).length;
+    const total = checks.length;
+    const pct = total ? Math.round(done / total * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `验收进度：${done} / ${total}（${pct}%）`;
+  }
+
+  function resetAll() {
+    if (!confirm('确定重置全部勾选和表单？')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+
+  function exportProgress() {
+    const state = loadState();
+    const checks = document.querySelectorAll('[data-check]');
+    const items = [...checks].map(c => ({
+      id: c.id,
+      label: c.nextElementSibling?.textContent?.trim().slice(0, 80),
+      passed: !!c.checked
+    }));
+    const report = {
+      exportedAt: new Date().toISOString(),
+      progress: document.getElementById('progressText').textContent,
+      items,
+      signoff: {
+        conclusion: document.getElementById('conclusion').value,
+        date: document.getElementById('acceptDate').value,
+        client: document.getElementById('clientName').value,
+        dev: document.getElementById('devName').value,
+        remarks: document.getElementById('remarks').value
+      },
+      rawState: state
+    };
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'yulux-acceptance-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+  }
+
+  init();
+</script>
+</body>
+</html>
