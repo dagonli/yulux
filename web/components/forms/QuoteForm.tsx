@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const PROJECT_TYPES = [
   "Custom Neon Signs",
@@ -14,6 +14,8 @@ export function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
   const [projectType, setProjectType] = useState("");
   const [customerType, setCustomerType] = useState<"Individual" | "Business">("Individual");
+  const [fileName, setFileName] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (submitted) {
     return (
@@ -144,11 +146,23 @@ export function QuoteForm() {
       <div>
         <label className="block text-sm font-medium mb-1">Upload Your Image</label>
         <input
+          ref={fileInputRef}
           type="file"
           accept=".jpg,.jpeg,.png,.svg,.pdf,.ai,.dxf,.webp"
-          className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm text-muted file:mr-4 file:rounded file:border-0 file:bg-accent file:px-4 file:py-1.5 file:text-sm file:font-semibold file:text-white"
+          className="sr-only"
+          onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
         />
-        <p className="mt-1 text-xs text-muted">Supported: JPG, PNG, SVG, PDF, AI, DXF, WEBP</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="rounded bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:bg-accent-hover"
+          >
+            Choose File
+          </button>
+          <span className="text-sm text-muted">{fileName || "No file chosen"}</span>
+        </div>
+        <p className="mt-1 text-xs text-muted">Supported formats: JPG, PNG, SVG, PDF, AI, DXF, WEBP</p>
       </div>
 
       <button type="submit" className="btn-primary w-full py-4 text-base">

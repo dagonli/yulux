@@ -19,7 +19,7 @@ export const ABOUT_SECTIONS = [
     id: "factory",
     headline: "From Our Workbench to Your Facade.",
     body: "We are not just a storefront; we are a collective of master craftsmen, electrical engineers, and design perfectionists. Operating from our own specialized manufacturing facility, we maintain 100% control over every weld, every LED module, and every acrylic cut — from custom channel letters and illuminated lightbox signs to fully bespoke neon installations.\n\nNo Middlemen.\nNo Compromises.\nDirect Engineering Support.",
-    image: "/images/image4.png",
+    image: "/images/image4.webp",
     imageAlt: "Yulux factory workshop with master craftsmen precision welding signage",
     links: [
       { label: "custom channel letters", href: "/channel-letters-logos" },
@@ -30,7 +30,7 @@ export const ABOUT_SECTIONS = [
     id: "philosophy",
     headline: 'The "Engineering-Grade" Standard.',
     body: 'What does "Engineering-Grade" mean to us? It means using 304/316 stainless steel that defies corrosion. It means sourcing Samsung/Cree LED chips rated for 50,000+ hours for every custom LED sign and custom LED light project. It means every custom lightbox undergoes a 24-hour stress test before it earns the Yulux seal of approval. We build for decades, not just for the grand opening.',
-    image: "/images/image6.png",
+    image: "/images/image6.webp",
     imageAlt: "Premium stainless steel and LED components for engineering-grade custom signage",
   },
   {

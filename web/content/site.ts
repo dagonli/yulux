@@ -48,6 +48,8 @@ export const FOOTER_LINKS = {
   company: [
     { label: "About us", href: "/about" },
     { label: "Get a Quote", href: "/get-a-quote" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms" },
   ],
 } as const;
 

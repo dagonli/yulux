@@ -38,7 +38,7 @@ export default function ChannelLettersHubPage() {
                 className="group rounded-xl border border-card-border bg-card overflow-hidden transition hover:border-accent/50"
               >
                 <div className="relative aspect-video bg-gradient-to-br from-neon-purple/20 to-card">
-                  <Image src="/images/image3.png" alt={tech.label} fill className="object-cover opacity-60" sizes="33vw" />
+                  <Image src="/images/image3.webp" alt={tech.label} fill className="object-cover opacity-60" sizes="33vw" />
                 </div>
                 <div className="p-5">
                   <h3 className="font-semibold group-hover:text-accent">{tech.label}</h3>

@@ -7,20 +7,20 @@ import type { Product } from "@/content/products";
 
 const PRODUCT_IMAGES: Record<string, { white: string; pink: string }> = {
   "better-together-wedding-neon-sign": {
-    white: "/images/products/better-together-white-main.png",
-    pink: "/images/products/better-together-pink-main.png",
+    white: "/images/products/better-together-white-main.webp",
+    pink: "/images/products/better-together-pink-main.webp",
   },
   "cheers-neon-bar-sign": {
-    white: "/images/products/cheers-white-main.png",
-    pink: "/images/products/cheers-pink-main.png",
+    white: "/images/products/cheers-white-main.webp",
+    pink: "/images/products/cheers-pink-main.webp",
   },
   "good-vibes-only-neon-sign": {
-    white: "/images/products/good-vibes-white-main.png",
-    pink: "/images/products/good-vibes-pink-main.png",
+    white: "/images/products/good-vibes-white-main.webp",
+    pink: "/images/products/good-vibes-pink-main.webp",
   },
   "this-must-be-the-place-neon-sign": {
-    white: "/images/products/this-must-be-white-main.png",
-    pink: "/images/products/this-must-be-pink-main.png",
+    white: "/images/products/this-must-be-white-main.webp",
+    pink: "/images/products/this-must-be-pink-main.webp",
   },
 };
 

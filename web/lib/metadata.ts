@@ -13,6 +13,7 @@ export function buildMetadata({ title, description, keywords, path = "", ogImage
   const url = `${SITE.url}${path}`;
   const image = ogImage ?? `${SITE.url}/images/og-cover.webp`;
   return {
+    metadataBase: new URL(SITE.url),
     title,
     description,
     keywords,

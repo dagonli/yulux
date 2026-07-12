@@ -17,7 +17,7 @@ export const HERO = {
     { label: "Illuminated Signage", href: "/channel-letters-logos", variant: "secondary" as const },
   ],
   trustStrip: "Trusted by 1,000+ businesses worldwide · 10+ Years of Engineering Experience · 2-Year Warranty",
-  image: "/images/hero-background.png",
+  image: "/images/hero-background.webp",
   imageAlt: "Purple back-lit 3D channel letter signage illuminated at night for luxury retail storefront",
 };
 
@@ -30,7 +30,7 @@ export const PRODUCT_FINDER = {
         "Bring your words to life. Use our online editor to create your personalized neon sign in seconds.",
       cta: "Create Your Own",
       href: "/custom-neon-signs",
-      image: "/images/finder-custom-neon.png",
+      image: "/images/finder-custom-neon.webp",
       alt: "Custom neon business logo sign glowing in modern office",
     },
     {
@@ -39,7 +39,7 @@ export const PRODUCT_FINDER = {
         "Explore our curated sets of artistic neon decor — from wedding quotes to bar and game-room classics, ready to ship.",
       cta: "Shop Collections",
       href: "/shop-neon",
-      image: "/images/finder-neon-collections.png",
+      image: "/images/finder-neon-collections.webp",
       alt: "Better Together pink neon sign for wedding reception decor",
     },
     {
@@ -48,7 +48,7 @@ export const PRODUCT_FINDER = {
         "High-end architectural signage. Choose from Front-Lit, Back-Lit, or Halo-Lit finishes for maximum storefront visibility.",
       cta: "Explore Craft",
       href: "/channel-letters-logos",
-      image: "/images/finder-channel-letters.png",
+      image: "/images/finder-channel-letters.webp",
       alt: "Purple back-lit 3D channel letter sign rendering",
     },
     {
@@ -57,7 +57,7 @@ export const PRODUCT_FINDER = {
         "Slim, even, all-day illumination for storefronts and exhibitions — the reliable workhorse of commercial signage.",
       cta: "View Light Box Signs",
       href: "/custom-lightbox-signs",
-      image: "/images/finder-lightbox.png",
+      image: "/images/finder-lightbox.webp",
       alt: "Custom LED light box sign mounted above retail storefront entrance",
     },
   ],
@@ -74,7 +74,7 @@ export const CRAFTSMANSHIP_LAB = {
       subLabel: "High Visibility",
       definition:
         "Front-Lit letters are illuminated directly from the face, producing a bright, uniform glow that maximizes visibility from a distance — the most common choice for storefront signage.",
-      image: "/images/craft-front-lit.png",
+      image: "/images/craft-front-lit.webp",
       alt: "Front-Lit purple letter Y sample showing direct illumination",
     },
     {
@@ -83,7 +83,7 @@ export const CRAFTSMANSHIP_LAB = {
       subLabel: "Modern Depth",
       definition:
         "Side-Lit letters emit light from the edges only, creating a sleek halo outline around each letter for a refined, modern architectural look.",
-      image: "/images/craft-side-lit.png",
+      image: "/images/craft-side-lit.webp",
       alt: "Side-Lit illuminated lettering for modern business branding",
     },
     {
@@ -92,7 +92,7 @@ export const CRAFTSMANSHIP_LAB = {
       subLabel: "Premium Halo",
       definition:
         "Back-Lit (halo-lit) letters are illuminated from behind, casting a soft glow against the mounting wall — a premium effect favored by upscale brands and hospitality venues.",
-      image: "/images/craft-back-lit.png",
+      image: "/images/craft-back-lit.webp",
       alt: "Premium Back-Lit Halo Effect Signage - Architectural Grade",
     },
     {
@@ -101,7 +101,7 @@ export const CRAFTSMANSHIP_LAB = {
       subLabel: "Luscious Glow",
       definition:
         "Jelly-Lit signs use a translucent acrylic face that diffuses light evenly across the entire surface, giving letters a soft, glossy, 'jelly-like' finish popular in retail and cafe branding.",
-      image: "/images/craft-jelly-lit.png",
+      image: "/images/craft-jelly-lit.webp",
       alt: "Jelly-Lit resin neon sign with luscious glow texture",
     },
     {
@@ -110,7 +110,7 @@ export const CRAFTSMANSHIP_LAB = {
       subLabel: "360° Illumination",
       definition:
         "Full-lit signs combine front and side illumination for a bold, seamless glow. High-grade translucent acrylic on both face and returns creates a voluminous, ultra-bright effect from every angle.",
-      image: "/images/craft-full-lit.png",
+      image: "/images/craft-full-lit.webp",
       alt: "Full-Lit purple Y letter showing 360 degree illumination",
     },
     {
@@ -119,7 +119,7 @@ export const CRAFTSMANSHIP_LAB = {
       subLabel: "Pure Texture",
       definition:
         "Non-Lit letters rely purely on material finish and dimensional form rather than illumination, ideal for daytime branding, interior lobby walls, and budget-conscious projects.",
-      image: "/images/craft-non-lit.png",
+      image: "/images/craft-non-lit.webp",
       alt: "Professional non-lit white letter Y with pure texture",
     },
   ],
@@ -137,14 +137,14 @@ export const INSPIRATION_GALLERY = {
     { id: "hospitality", label: "Hospitality" },
   ],
   items: [
-    { id: "retail-1", category: "retail", alt: "Custom front-lit channel letters for luxury retail storefront", href: "/channel-letters-logos", image: "/images/image3.png" },
-    { id: "retail-2", category: "retail", alt: "Illuminated lightbox sign for boutique retail shop", href: "/custom-lightbox-signs", image: "/images/image5.png" },
-    { id: "corporate-1", category: "corporate", alt: "Backlit company logo sign mounted in modern office reception", href: "/channel-letters-logos", image: "/images/image1.png" },
-    { id: "corporate-2", category: "corporate", alt: "Custom business logo neon for modern office branding", href: "/custom-neon-logo", image: "/images/image4.png" },
-    { id: "events-1", category: "events", alt: "Pink neon Better Together sign displayed at wedding reception table", href: "/products/better-together-wedding-neon-sign", image: "/images/image2.png" },
-    { id: "events-2", category: "events", alt: "Good Vibes Only neon sign for wedding reception decor", href: "/products/good-vibes-only-neon-sign", image: "/images/image2.png" },
-    { id: "hospitality-1", category: "hospitality", alt: "Custom neon bar sign glowing above restaurant counter at night", href: "/products/cheers-neon-bar-sign", image: "/images/image6.png" },
-    { id: "hospitality-2", category: "hospitality", alt: "Side-lit channel letters for boutique hotel entrance", href: "/channel-letters-logos", image: "/images/image5.png" },
+    { id: "retail-1", category: "retail", alt: "Custom front-lit channel letters for luxury retail storefront", href: "/channel-letters-logos", image: "/images/image3.webp" },
+    { id: "retail-2", category: "retail", alt: "Illuminated lightbox sign for boutique retail shop", href: "/custom-lightbox-signs", image: "/images/image5.webp" },
+    { id: "corporate-1", category: "corporate", alt: "Backlit company logo sign mounted in modern office reception", href: "/channel-letters-logos", image: "/images/image1.webp" },
+    { id: "corporate-2", category: "corporate", alt: "Custom business logo neon for modern office branding", href: "/custom-neon-logo", image: "/images/image4.webp" },
+    { id: "events-1", category: "events", alt: "Pink neon Better Together sign displayed at wedding reception table", href: "/products/better-together-wedding-neon-sign", image: "/images/image2.webp" },
+    { id: "events-2", category: "events", alt: "Good Vibes Only neon sign for wedding reception decor", href: "/products/good-vibes-only-neon-sign", image: "/images/image2.webp" },
+    { id: "hospitality-1", category: "hospitality", alt: "Custom neon bar sign glowing above restaurant counter at night", href: "/products/cheers-neon-bar-sign", image: "/images/image6.webp" },
+    { id: "hospitality-2", category: "hospitality", alt: "Side-lit channel letters for boutique hotel entrance", href: "/channel-letters-logos", image: "/images/image5.webp" },
   ],
   viewAll: { label: "View All Projects", href: "/gallery" },
 };
@@ -161,7 +161,7 @@ export const REAL_WORLD_PROJECTS = {
       caption: "Recent project: Custom neon sign for a boutique cafe in Manchester.",
       description: "Precision-engineered back-lit stainless steel signage, creating a sleek halo glow that amplifies brand presence for this boutique Manchester cafe.",
       href: "/channel-letters-logos",
-      image: "/images/image1.png",
+      image: "/images/image1.webp",
       alt: "Back-lit stainless steel channel letter logo sign, Blue Cafe, Manchester UK",
     },
     {
@@ -172,7 +172,7 @@ export const REAL_WORLD_PROJECTS = {
       caption: "Recent project: Front-lit channel letters for a boutique hotel in Austin.",
       description: "Bold front-lit 3D acrylic channel letters delivering maximum daytime and nighttime visibility for this upscale Austin hospitality brand.",
       href: "/channel-letters-logos",
-      image: "/images/image3.png",
+      image: "/images/image3.webp",
       alt: "Front-lit 3D acrylic channel letters for boutique hotel, Austin Texas",
     },
     {
@@ -183,7 +183,7 @@ export const REAL_WORLD_PROJECTS = {
       caption: "Recent project: Custom neon sign for a wedding in Sydney.",
       description: "Romantic bespoke pink LED neon flex sign, hand-crafted to create the perfect warm glow for an unforgettable Sydney wedding backdrop.",
       href: "/products/better-together-wedding-neon-sign",
-      image: "/images/image2.png",
+      image: "/images/image2.webp",
       alt: "Better Together pink LED neon wedding sign, Sydney Australia",
     },
     {
@@ -194,7 +194,7 @@ export const REAL_WORLD_PROJECTS = {
       caption: "Recent project: Neon bar sign for a home bar in Berlin.",
       description: "High-impact LED neon bar sign with vivid color saturation, engineered to elevate the atmosphere of this private Berlin entertainment space.",
       href: "/products/cheers-neon-bar-sign",
-      image: "/images/image6.png",
+      image: "/images/image6.webp",
       alt: "Cheers LED neon bar sign for home bar, Berlin Germany",
     },
     {
@@ -205,7 +205,7 @@ export const REAL_WORLD_PROJECTS = {
       caption: "Recent project: Business logo neon for a tech startup office.",
       description: "Custom-shaped logo neon translating complex brand geometry into a clean, authoritative illuminated statement for a leading San Francisco tech firm.",
       href: "/custom-neon-logo",
-      image: "/images/image4.png",
+      image: "/images/image4.webp",
       alt: "Custom business logo neon sign for tech startup office, San Francisco",
     },
     {
@@ -216,7 +216,7 @@ export const REAL_WORLD_PROJECTS = {
       caption: "Recent project: Custom lightbox sign for luxury retail storefront.",
       description: "Slim-profile LED lightbox delivering flawless, even illumination across this London luxury retailer's storefront — all day, every day.",
       href: "/custom-lightbox-signs",
-      image: "/images/image5.png",
+      image: "/images/image5.webp",
       alt: "Custom illuminated lightbox for luxury retail storefront, London UK",
     },
   ],

@@ -30,7 +30,7 @@ export default function LightboxPage() {
             <div className="lg:col-span-3">
               <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/10">
                 <Image
-                  src="/images/image5.png"
+                  src="/images/image5.webp"
                   alt="Bespoke custom lightbox sign glowing at night for luxury retail storefront"
                   fill
                   priority

@@ -49,7 +49,11 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-card-border px-4 py-6 text-center text-sm text-muted">
-        © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+        <p>© {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
+        <p className="mt-2 flex justify-center gap-4">
+          <Link href="/privacy-policy" className="hover:text-foreground">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-foreground">Terms of Service</Link>
+        </p>
       </div>
     </footer>
   );

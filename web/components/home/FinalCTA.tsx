@@ -7,7 +7,7 @@ export function FinalCTA() {
       className="relative overflow-hidden py-24 text-center"
       aria-label="Ready to Illuminate Your Brand"
       style={{
-        backgroundImage: "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('/images/cta-background.png')",
+        backgroundImage: "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('/images/cta-background.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

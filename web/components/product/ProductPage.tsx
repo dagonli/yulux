@@ -208,7 +208,7 @@ export function ProductPage({ product }: { product: Product }) {
           <div className="mt-8 grid gap-8 md:grid-cols-2 md:items-center">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="/images/product-whats-in-box.png"
+                src="/images/product-whats-in-box.webp"
                 alt="Yulux Signs packaging contents"
                 fill
                 className="object-cover"
@@ -236,9 +236,9 @@ export function ProductPage({ product }: { product: Product }) {
           <h2 className="text-2xl font-bold md:text-3xl">Easy 3-Step Installation</h2>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {[
-              { step: 1, title: "Unpack", desc: "Unbox your neon sign and accessories.", img: "/images/product-install-step1.png" },
-              { step: 2, title: "Mount", desc: "Hang with the included chain or mount with screws (pre-drilled holes included).", img: "/images/product-install-step2.png" },
-              { step: 3, title: "Plug & Play", desc: "Connect the dimmer and power adapter, then enjoy the glow!", img: "/images/product-install-step3.png" },
+              { step: 1, title: "Unpack", desc: "Unbox your neon sign and accessories.", img: "/images/product-install-step1.webp" },
+              { step: 2, title: "Mount", desc: "Hang with the included chain or mount with screws (pre-drilled holes included).", img: "/images/product-install-step2.webp" },
+              { step: 3, title: "Plug & Play", desc: "Connect the dimmer and power adapter, then enjoy the glow!", img: "/images/product-install-step3.webp" },
             ].map((s) => (
               <div key={s.step} className="flex flex-col items-center text-center">
                 <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl">
@@ -292,7 +292,7 @@ function ProductFAQ() {
             </h2>
             <div className="mt-6 relative aspect-[3/4] max-w-[260px] overflow-hidden rounded-xl hidden lg:block">
               <Image
-                src="/images/product-faq-image.png"
+                src="/images/product-faq-image.webp"
                 alt="Yulux Signs quality showcase"
                 fill
                 className="object-cover"

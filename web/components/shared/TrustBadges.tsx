@@ -2,12 +2,12 @@ import Image from "next/image";
 import { TRUST_BADGES } from "@/content/site";
 
 const BADGE_IMAGES = [
-  "/images/trust/badge-design.png",
-  "/images/trust/badge-engineering.png",
-  "/images/trust/badge-quote.png",
-  "/images/trust/badge-revisions.png",
-  "/images/trust/badge-shipping.png",
-  "/images/trust/badge-warranty.png",
+  "/images/trust/badge-design.webp",
+  "/images/trust/badge-engineering.webp",
+  "/images/trust/badge-quote.webp",
+  "/images/trust/badge-revisions.webp",
+  "/images/trust/badge-shipping.webp",
+  "/images/trust/badge-warranty.webp",
 ];
 
 export function TrustBadges({ h2, seoText }: { h2: string; seoText?: string }) {

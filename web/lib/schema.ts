@@ -6,7 +6,7 @@ export function organizationSchema() {
     "@type": "Organization",
     name: SITE.name,
     url: SITE.url,
-    logo: `${SITE.url}/images/logo.png`,
+    logo: `${SITE.url}/images/og-cover.webp`,
     description: "Custom LED neon signs and 3D channel letter signage for global businesses.",
     email: SITE.email,
     sameAs: [
@@ -22,11 +22,6 @@ export function websiteSchema() {
     "@type": "WebSite",
     name: SITE.name,
     url: SITE.url,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE.url}/signage-lab?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 
@@ -65,11 +60,6 @@ export function productSchema(product: {
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
       url: product.url,
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "127",
     },
   };
 }
