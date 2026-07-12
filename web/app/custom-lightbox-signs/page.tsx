@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { FAQ } from "@/components/shared/FAQ";
 import { InquiryForm } from "@/components/forms/InquiryForm";
@@ -29,7 +29,7 @@ export default function LightboxPage() {
           <div className="grid gap-12 lg:grid-cols-5">
             <div className="lg:col-span-3">
               <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/10">
-                <Image
+                <SmartImage
                   src="/images/image5.webp"
                   alt="Bespoke custom lightbox sign glowing at night for luxury retail storefront"
                   fill
@@ -44,6 +44,7 @@ export default function LightboxPage() {
               <p className="mt-4 text-muted">{LIGHTBOX_HERO.h4}</p>
               <div className="mt-8">
                 <InquiryForm
+                  inquiryType="LIGHTBOX"
                   fields={LIGHTBOX_FORM_FIELDS}
                   submitLabel={LIGHTBOX_HERO.cta}
                   dark

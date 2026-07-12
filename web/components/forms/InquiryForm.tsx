@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useRef, useState } from "react";
+import { submitInquiry, type InquiryType } from "@/lib/api";
 
 type Field = {
   id: string;
@@ -11,25 +12,60 @@ type Field = {
   options?: string[];
 };
 
+const COMMON_KEYS = new Set(["name", "email", "company", "country", "message"]);
+
 export function InquiryForm({
+  inquiryType,
   fields,
   submitLabel = "Submit Inquiry",
   onSuccess,
   dark = false,
 }: {
+  inquiryType: InquiryType;
   fields: Field[];
   submitLabel?: string;
   onSuccess?: () => void;
   dark?: boolean;
 }) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [fileNames, setFileNames] = useState<Record<string, string>>({});
   const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    onSuccess?.();
+    setError(null);
+    setSubmitting(true);
+
+    const form = new FormData(e.currentTarget);
+    const common: Record<string, string> = {};
+    const payload: Record<string, string> = {};
+    for (const [key, value] of form.entries()) {
+      // 文件字段本期跳过（等对象存储再处理）
+      if (value instanceof File) continue;
+      if (COMMON_KEYS.has(key)) common[key] = value;
+      else payload[key] = value;
+    }
+
+    try {
+      await submitInquiry({
+        type: inquiryType,
+        name: common.name ?? "",
+        email: common.email ?? "",
+        company: common.company,
+        country: common.country,
+        message: common.message,
+        payload,
+        sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+      });
+      setSubmitted(true);
+      onSuccess?.();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Submission failed. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -53,6 +89,7 @@ export function InquiryForm({
           {field.type === "select" ? (
             <select
               id={field.id}
+              name={field.id}
               required={field.required}
               className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
             >
@@ -64,6 +101,7 @@ export function InquiryForm({
           ) : field.type === "textarea" ? (
             <textarea
               id={field.id}
+              name={field.id}
               required={field.required}
               placeholder={field.placeholder}
               rows={4}
@@ -104,6 +142,18 @@ export function InquiryForm({
                 <p className="mt-1 text-xs text-muted">{field.placeholder}</p>
               )}
             </>
+          ) : field.type === "date" ? (
+            <input
+              id={field.id}
+              name={field.id}
+              type="text"
+              required={field.required}
+              placeholder={field.placeholder ?? "YYYY-MM-DD"}
+              pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+              title="Please enter date as YYYY-MM-DD"
+              autoComplete="off"
+              className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
+            />
           ) : field.type === "radio" ? (
             <div className="flex flex-wrap gap-4" role="radiogroup" aria-labelledby={`${field.id}-label`}>
               {field.options?.map((opt) => (
@@ -123,6 +173,7 @@ export function InquiryForm({
           ) : (
             <input
               id={field.id}
+              name={field.id}
               type={field.type}
               required={field.required}
               placeholder={field.placeholder}
@@ -131,7 +182,14 @@ export function InquiryForm({
           )}
         </div>
       ))}
-      <button type="submit" className="btn-primary w-full">{submitLabel}</button>
+      {error && (
+        <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-center text-sm text-red-400">
+          {error}
+        </p>
+      )}
+      <button type="submit" disabled={submitting} className="btn-primary w-full disabled:opacity-60">
+        {submitting ? "Submitting…" : submitLabel}
+      </button>
     </form>
   );
 }

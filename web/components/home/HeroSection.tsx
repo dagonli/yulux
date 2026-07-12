@@ -1,11 +1,11 @@
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { HERO } from "@/content/home";
 
 export function HeroSection() {
   return (
     <section className="relative min-h-[85vh] flex items-center" aria-label="Yulux Signs - Custom LED Neon Signs and 3D Channel Letters">
-      <Image
+      <SmartImage
         src={HERO.image}
         alt={HERO.imageAlt}
         fill

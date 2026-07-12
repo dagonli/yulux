@@ -11,7 +11,7 @@ const LOGO_FIELDS = [
   { id: "size", label: "Estimated Size", type: "text", required: true, placeholder: "e.g., 50cm, 100cm, 2ft" },
   { id: "lighting", label: "Lighting Style", type: "select", required: true, options: ["Standard Neon Sign", "Front-lit", "Back-lit", "Side-lit"] },
   { id: "environment", label: "Installation Environment", type: "select", required: true, options: ["Indoor", "Outdoor Waterproof"] },
-  { id: "deadline", label: "Required Deadline", type: "date", required: true },
+  { id: "deadline", label: "Required Deadline", type: "date", required: true, placeholder: "YYYY-MM-DD" },
   { id: "message", label: "Message / Specifications", type: "textarea", placeholder: "Specific color matching, backing material requests, wall mounting surface type..." },
   { id: "name", label: "Full Name", type: "text", required: true },
   { id: "email", label: "Email Address", type: "email", required: true },
@@ -38,7 +38,7 @@ export function LogoInquiryPage() {
         </div>
 
         <div className="mt-10 max-w-2xl">
-          <InquiryForm fields={LOGO_FIELDS} submitLabel="Submit Inquiry" />
+          <InquiryForm inquiryType="LOGO" fields={LOGO_FIELDS} submitLabel="Submit Inquiry" />
         </div>
       </div>
       <MaterialQuality />

@@ -6,6 +6,7 @@ import { Providers } from "@/components/layout/Providers";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/metadata";
+import { getSiteImages } from "@/lib/site-images";
 import { HOME_META } from "@/content/home";
 import "./globals.css";
 
@@ -27,16 +28,17 @@ export const metadata: Metadata = buildMetadata({
   path: "/",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteImages = await getSiteImages();
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
-        <Providers>
+        <Providers siteImages={siteImages}>
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

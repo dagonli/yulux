@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Yulux Admin · Inquiries</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}"/>
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">Yulux<span> Admin</span></div>
+    <nav>
+        <a th:href="@{/admin/inquiries}" class="active">Inquiries</a>
+        <a th:href="@{/admin/images}">Site Images</a>
+        <form th:action="@{/admin/logout}" method="post">
+            <button type="submit" class="link">Logout</button>
+        </form>
+    </nav>
+</div>
+
+<div class="container">
+    <h1>Inquiries <span class="muted" th:text="'(' + ${page.total} + ' total)'">(0 total)</span></h1>
+
+    <form class="filters" method="get" th:action="@{/admin/inquiries}">
+        <div>
+            <label>Type</label>
+            <select name="type">
+                <option value="">All</option>
+                <option th:each="t : ${types}" th:value="${t}" th:text="${t}"
+                        th:selected="${t == selectedType}"></option>
+            </select>
+        </div>
+        <div>
+            <label>Status</label>
+            <select name="status">
+                <option value="">All</option>
+                <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"
+                        th:selected="${s == selectedStatus}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn">Filter</button>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Country</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Detail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${records.isEmpty()}">
+            <td colspan="8" class="muted">No inquiries found.</td>
+        </tr>
+        <tr th:each="r : ${records}">
+            <td th:text="${r.id}">1</td>
+            <td th:text="${r.type}">QUOTE</td>
+            <td th:text="${r.name}">Name</td>
+            <td><a th:href="'mailto:' + ${r.email}" th:text="${r.email}">a@b.com</a></td>
+            <td th:text="${r.country}">US</td>
+            <td><span class="badge" th:classappend="'badge-' + ${r.status}" th:text="${r.status}">NEW</span></td>
+            <td th:text="${#temporals.format(r.createdAt, 'yyyy-MM-dd HH:mm')}">2026-01-01</td>
+            <td>
+                <details>
+                    <summary>View</summary>
+                    <div class="kv" th:if="${r.company}"><b>Company:</b> <span th:text="${r.company}"></span></div>
+                    <div class="kv" th:if="${r.sourcePage}"><b>Source:</b> <span th:text="${r.sourcePage}"></span></div>
+                    <div class="kv" th:if="${r.message}"><b>Message:</b> <span th:text="${r.message}"></span></div>
+                    <div class="kv" th:if="${r.payload != null and !r.payload.isEmpty()}">
+                        <b>Fields:</b>
+                        <div th:each="entry : ${r.payload}">
+                            <span th:text="${entry.key}"></span>: <span th:text="${entry.value}"></span>
+                        </div>
+                    </div>
+                </details>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" th:if="${page.pages > 1}">
+        <a th:if="${page.current > 1}"
+           th:href="@{/admin/inquiries(page=${page.current - 1}, size=${page.size}, type=${selectedType}, status=${selectedStatus})}">Prev</a>
+        <span class="current" th:text="${page.current} + ' / ' + ${page.pages}">1 / 1</span>
+        <a th:if="${page.current < page.pages}"
+           th:href="@{/admin/inquiries(page=${page.current + 1}, size=${page.size}, type=${selectedType}, status=${selectedStatus})}">Next</a>
+    </div>
+</div>
+</body>
+</html>

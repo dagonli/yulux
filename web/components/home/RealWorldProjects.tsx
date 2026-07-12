@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { useState } from "react";
 import { REAL_WORLD_PROJECTS } from "@/content/home";
@@ -24,7 +24,7 @@ export function RealWorldProjects() {
                 className="group relative overflow-hidden rounded-xl text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-                  <Image
+                  <SmartImage
                     src={project.image}
                     alt={project.alt}
                     fill
@@ -72,7 +72,7 @@ export function RealWorldProjects() {
               ✕
             </button>
             <div className="relative aspect-video w-full md:aspect-auto md:w-1/2 md:shrink-0">
-              <Image
+              <SmartImage
                 src={selected.image}
                 alt={selected.alt}
                 fill

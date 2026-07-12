@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { useState } from "react";
 import { INSPIRATION_GALLERY } from "@/content/home";
@@ -37,7 +37,7 @@ export function InspirationGallery() {
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((item) => (
             <Link key={item.id} href={item.href} className="group relative aspect-square overflow-hidden rounded-xl">
-              <Image src={item.image} alt={item.alt} fill loading="lazy" className="object-cover transition group-hover:scale-105" sizes="25vw" />
+              <SmartImage src={item.image} alt={item.alt} fill loading="lazy" className="object-cover transition group-hover:scale-105" sizes="25vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 transition group-hover:opacity-100 flex items-end p-4">
                 <p className="text-xs text-white/90">{item.alt}</p>
               </div>

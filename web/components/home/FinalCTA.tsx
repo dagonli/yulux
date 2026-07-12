@@ -1,13 +1,17 @@
-﻿import Link from "next/link";
+﻿"use client";
+
+import Link from "next/link";
 import { FINAL_CTA } from "@/content/home";
+import { useResolvedImage } from "@/lib/site-images-context";
 
 export function FinalCTA() {
+  const bg = useResolvedImage("/images/cta-background.webp");
   return (
     <section
       className="relative overflow-hidden py-24 text-center"
       aria-label="Ready to Illuminate Your Brand"
       style={{
-        backgroundImage: "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('/images/cta-background.webp')",
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('${bg}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

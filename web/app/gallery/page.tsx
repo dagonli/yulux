@@ -1,5 +1,5 @@
 ﻿import type { Metadata } from "next";
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { buildMetadata } from "@/lib/metadata";
@@ -29,7 +29,7 @@ export default async function GalleryPage({ searchParams }: Props) {
           {items.map((item) => (
             <div key={item.id} className="overflow-hidden rounded-xl border border-card-border bg-card">
               <div className="relative aspect-square">
-                <Image src={item.image} alt={item.alt} fill loading="lazy" className="object-cover" sizes="25vw" />
+                <SmartImage src={item.image} alt={item.alt} fill loading="lazy" className="object-cover" sizes="25vw" />
               </div>
               <div className="p-4">
                 <h2 className="font-semibold text-sm">{item.title}</h2>

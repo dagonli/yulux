@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { useState } from "react";
 import type { Product } from "@/content/products";
@@ -42,7 +42,7 @@ export function ShopNeonGrid({ products }: { products: Product[] }) {
               className="group overflow-hidden rounded-xl border border-card-border bg-card transition hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
+                <SmartImage
                   src={getImage(product.slug)}
                   alt={product.alt}
                   fill

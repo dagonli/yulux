@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { CRAFTSMANSHIP_LAB } from "@/content/home";
 
@@ -12,7 +12,7 @@ export function CraftsmanshipLab() {
           {CRAFTSMANSHIP_LAB.techniques.map((tech) => (
             <div key={tech.id} className="group rounded-xl border border-card-border bg-card overflow-hidden">
               <div className="relative aspect-square">
-                <Image src={tech.image} alt={tech.alt} fill loading="lazy" className="object-cover" sizes="20vw" />
+                <SmartImage src={tech.image} alt={tech.alt} fill loading="lazy" className="object-cover" sizes="20vw" />
               </div>
               <div className="p-4">
                 <h3 className="font-semibold">{tech.label}</h3>

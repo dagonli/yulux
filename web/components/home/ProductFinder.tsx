@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { PRODUCT_FINDER } from "@/content/home";
 
@@ -15,7 +15,7 @@ export function ProductFinder() {
               className="group rounded-xl border border-card-border bg-card overflow-hidden transition hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
             >
               <div className="relative aspect-square overflow-hidden">
-                <Image
+                <SmartImage
                   src={card.image}
                   alt={card.alt}
                   fill

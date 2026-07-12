@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { useState } from "react";
 import type { Product } from "@/content/products";
@@ -59,7 +59,7 @@ export function ProductPage({ product }: { product: Product }) {
           {/* Image gallery */}
           <div>
             <div className="relative aspect-square overflow-hidden rounded-xl border border-card-border">
-              <Image src={mainImage} alt={product.alt} fill priority className="object-cover" sizes="50vw" />
+              <SmartImage src={mainImage} alt={product.alt} fill priority className="object-cover" sizes="50vw" />
             </div>
             {images.length > 1 && (
               <div className="mt-3 flex gap-2 overflow-x-auto">
@@ -71,7 +71,7 @@ export function ProductPage({ product }: { product: Product }) {
                       i === activeImageIdx ? "border-accent" : "border-card-border opacity-60 hover:opacity-100"
                     }`}
                   >
-                    <Image src={img} alt={`${product.name} view ${i + 1}`} fill className="object-cover" sizes="64px" />
+                    <SmartImage src={img} alt={`${product.name} view ${i + 1}`} fill className="object-cover" sizes="64px" />
                   </button>
                 ))}
               </div>
@@ -207,7 +207,7 @@ export function ProductPage({ product }: { product: Product }) {
           <h2 className="text-center text-2xl font-bold md:text-3xl">What&apos;s in the Box?</h2>
           <div className="mt-8 grid gap-8 md:grid-cols-2 md:items-center">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-              <Image
+              <SmartImage
                 src="/images/product-whats-in-box.webp"
                 alt="Yulux Signs packaging contents"
                 fill
@@ -242,7 +242,7 @@ export function ProductPage({ product }: { product: Product }) {
             ].map((s) => (
               <div key={s.step} className="flex flex-col items-center text-center">
                 <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl">
-                  <Image src={s.img} alt={`Step ${s.step}: ${s.title}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+                  <SmartImage src={s.img} alt={`Step ${s.step}: ${s.title}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
                 </div>
                 <div className="mt-4">
                   <p className="text-sm font-bold text-accent uppercase tracking-wide">Step {s.step}</p>
@@ -291,7 +291,7 @@ function ProductFAQ() {
               Everything You<br />Need to Know
             </h2>
             <div className="mt-6 relative aspect-[3/4] max-w-[260px] overflow-hidden rounded-xl hidden lg:block">
-              <Image
+              <SmartImage
                 src="/images/product-faq-image.webp"
                 alt="Yulux Signs quality showcase"
                 fill

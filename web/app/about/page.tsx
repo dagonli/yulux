@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -60,7 +60,7 @@ export default function AboutPage() {
             </div>
             {"image" in section && section.image && (
               <div className="relative mt-8 aspect-video overflow-hidden rounded-xl">
-                <Image
+                <SmartImage
                   src={section.image}
                   alt={"imageAlt" in section ? section.imageAlt : ""}
                   fill

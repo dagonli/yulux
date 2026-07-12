@@ -1,5 +1,21 @@
 import type { NextConfig } from "next";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
+let apiOrigin = "";
+let apiRemotePattern: { protocol: "http" | "https"; hostname: string; port?: string; pathname: string } | null = null;
+try {
+  const u = new URL(apiUrl);
+  apiOrigin = u.origin;
+  apiRemotePattern = {
+    protocol: u.protocol.replace(":", "") as "http" | "https",
+    hostname: u.hostname,
+    port: u.port || undefined,
+    pathname: "/uploads/**",
+  };
+} catch {
+  apiRemotePattern = null;
+}
+
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
@@ -18,8 +34,8 @@ const securityHeaders = [
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: blob: https:",
-      "connect-src 'self' https://www.google-analytics.com",
+      `img-src 'self' data: blob: https: http:${apiOrigin ? " " + apiOrigin : ""}`,
+      `connect-src 'self' https://www.google-analytics.com${apiOrigin ? " " + apiOrigin : ""}`,
       "frame-ancestors 'none'",
     ].join("; "),
   },
@@ -29,6 +45,9 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 31536000, // 1 year
+    // 开发环境后台图片在 localhost:8080，需允许本地 IP/主机名
+    dangerouslyAllowLocalIP: true,
+    remotePatterns: apiRemotePattern ? [apiRemotePattern] : [],
   },
   async headers() {
     return [

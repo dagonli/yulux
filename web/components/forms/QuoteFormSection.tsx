@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 
@@ -33,7 +33,7 @@ export function QuoteFormSection() {
             {/* Factory images grid */}
             <div className="grid grid-cols-2 gap-3">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-                <Image
+                <SmartImage
                   src="/images/quote/factory-2.webp"
                   alt="Yulux Signs factory production line"
                   fill
@@ -42,7 +42,7 @@ export function QuoteFormSection() {
                 />
               </div>
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-                <Image
+                <SmartImage
                   src="/images/quote/factory-backview.webp"
                   alt="Yulux Signs factory back view"
                   fill
@@ -51,7 +51,7 @@ export function QuoteFormSection() {
                 />
               </div>
               <div className="relative col-span-2 aspect-[16/7] overflow-hidden rounded-xl">
-                <Image
+                <SmartImage
                   src="/images/quote/project-1.webp"
                   alt="Yulux Signs completed project showcase"
                   fill

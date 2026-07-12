@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { InquiryForm, QUOTE_FORM_FIELDS } from "@/components/forms/InquiryForm";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -38,7 +38,7 @@ export default function ChannelLettersHubPage() {
                 className="group rounded-xl border border-card-border bg-card overflow-hidden transition hover:border-accent/50"
               >
                 <div className="relative aspect-video bg-gradient-to-br from-neon-purple/20 to-card">
-                  <Image src="/images/image3.webp" alt={tech.label} fill className="object-cover opacity-60" sizes="33vw" />
+                  <SmartImage src="/images/image3.webp" alt={tech.label} fill className="object-cover opacity-60" sizes="33vw" />
                 </div>
                 <div className="p-5">
                   <h3 className="font-semibold group-hover:text-accent">{tech.label}</h3>
@@ -55,7 +55,7 @@ export default function ChannelLettersHubPage() {
             <h2 className="text-2xl font-bold">Get a Quote</h2>
             <p className="mt-2 text-muted">Free professional mockup within 24 hours.</p>
           </div>
-          <InquiryForm fields={QUOTE_FORM_FIELDS} submitLabel="Get a Free Quote" />
+          <InquiryForm inquiryType="QUOTE" fields={QUOTE_FORM_FIELDS} submitLabel="Get a Free Quote" />
         </section>
       </div>
     </>

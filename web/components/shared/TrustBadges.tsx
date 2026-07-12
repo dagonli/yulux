@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SmartImage } from "@/components/shared/SmartImage";
 import { TRUST_BADGES } from "@/content/site";
 
 const BADGE_IMAGES = [
@@ -19,7 +19,7 @@ export function TrustBadges({ h2, seoText }: { h2: string; seoText?: string }) {
           {TRUST_BADGES.map((badge, i) => (
             <div key={badge.title} className="flex items-start gap-4 rounded-xl border border-card-border bg-card p-6">
               <div className="relative h-14 w-14 shrink-0">
-                <Image
+                <SmartImage
                   src={BADGE_IMAGES[i]}
                   alt={badge.title}
                   fill

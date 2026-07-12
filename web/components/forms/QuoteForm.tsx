@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useRef } from "react";
+import { submitInquiry } from "@/lib/api";
 
 const PROJECT_TYPES = [
   "Custom Neon Signs",
@@ -15,7 +16,33 @@ export function QuoteForm() {
   const [projectType, setProjectType] = useState("");
   const [customerType, setCustomerType] = useState<"Individual" | "Business">("Individual");
   const [fileName, setFileName] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    setSubmitting(true);
+    const form = new FormData(e.currentTarget);
+    try {
+      await submitInquiry({
+        type: "QUOTE",
+        name: String(form.get("name") ?? ""),
+        email: String(form.get("email") ?? ""),
+        company: String(form.get("company") ?? ""),
+        country: String(form.get("country") ?? ""),
+        message: String(form.get("message") ?? ""),
+        payload: { customerType, projectType },
+        sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Submission failed. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   if (submitted) {
     return (
@@ -30,13 +57,7 @@ export function QuoteForm() {
   }
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
-      className="space-y-5"
-    >
+    <form onSubmit={handleSubmit} className="space-y-5">
       {/* Customer Type */}
       <div>
         <label className="block text-sm font-medium mb-2">Customer Type</label>
@@ -65,6 +86,7 @@ export function QuoteForm() {
           <label htmlFor="name" className="block text-sm font-medium mb-1">Full Name *</label>
           <input
             id="name"
+            name="name"
             type="text"
             required
             placeholder="Enter your full name"
@@ -75,6 +97,7 @@ export function QuoteForm() {
           <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address *</label>
           <input
             id="email"
+            name="email"
             type="email"
             required
             placeholder="Enter your email address"
@@ -89,6 +112,7 @@ export function QuoteForm() {
           <label htmlFor="company" className="block text-sm font-medium mb-1">Company Name</label>
           <input
             id="company"
+            name="company"
             type="text"
             placeholder="Enter your company name (optional)"
             className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
@@ -98,6 +122,7 @@ export function QuoteForm() {
           <label htmlFor="country" className="block text-sm font-medium mb-1">Country / Region *</label>
           <input
             id="country"
+            name="country"
             type="text"
             required
             placeholder="Select your country or region"
@@ -135,6 +160,7 @@ export function QuoteForm() {
         <label htmlFor="message" className="block text-sm font-medium mb-1">Project Details *</label>
         <textarea
           id="message"
+          name="message"
           required
           rows={4}
           placeholder="Tell us about your project, size, colors, and installation environment..."
@@ -165,8 +191,13 @@ export function QuoteForm() {
         <p className="mt-1 text-xs text-muted">Supported formats: JPG, PNG, SVG, PDF, AI, DXF, WEBP</p>
       </div>
 
-      <button type="submit" className="btn-primary w-full py-4 text-base">
-        Get My Free Quote →
+      {error && (
+        <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-center text-sm text-red-400">
+          {error}
+        </p>
+      )}
+      <button type="submit" disabled={submitting} className="btn-primary w-full py-4 text-base disabled:opacity-60">
+        {submitting ? "Submitting…" : "Get My Free Quote →"}
       </button>
       <p className="text-center text-xs text-muted">🔒 Your information is secure and will not be shared.</p>
     </form>

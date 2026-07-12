@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Yulux Admin · Site Images</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}"/>
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">Yulux<span> Admin</span></div>
+    <nav>
+        <a th:href="@{/admin/inquiries}">Inquiries</a>
+        <a th:href="@{/admin/images}" class="active">Site Images</a>
+        <form th:action="@{/admin/logout}" method="post">
+            <button type="submit" class="link">Logout</button>
+        </form>
+    </nav>
+</div>
+
+<div class="container">
+    <h1>Site Images <span class="muted">(upload to replace, auto-converted to WebP)</span></h1>
+
+    <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+    <div class="grid">
+        <div class="img-card" th:each="img : ${images}">
+            <img class="thumb" th:src="${displayUrls[img.imageKey]}" th:alt="${img.altText}" loading="lazy"/>
+            <div class="body">
+                <div class="key" th:text="${img.imageKey}">home.hero.background</div>
+                <div class="alt" th:text="${img.altText}">alt text</div>
+                <form th:action="@{/admin/images/upload}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="imageKey" th:value="${img.imageKey}"/>
+                    <input type="file" name="file" accept="image/*" required/>
+                    <button type="submit" class="btn">Upload &amp; Replace</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
