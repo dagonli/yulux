@@ -28,7 +28,7 @@ export function Header() {
                 {"href" in link && link.href ? (
                   <Link
                     href={link.href}
-                    className="flex items-center gap-1 text-sm text-muted transition hover:text-foreground"
+                    className="flex items-center gap-1 text-sm text-white transition hover:text-[#8B5CF6]"
                   >
                     {link.label}
                     <svg className="h-3 w-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -38,7 +38,7 @@ export function Header() {
                 ) : (
                   <button
                     type="button"
-                    className="flex items-center gap-1 text-sm text-muted transition hover:text-foreground"
+                    className="flex items-center gap-1 text-sm text-white transition hover:text-[#8B5CF6]"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
@@ -53,7 +53,7 @@ export function Header() {
                     <Link
                       key={child.href}
                       href={child.href}
-                      className="block px-4 py-2 text-sm text-muted hover:bg-white/5 hover:text-foreground"
+                      className="block px-4 py-2 text-sm text-white hover:bg-white/5 hover:text-[#8B5CF6]"
                     >
                       {child.label}
                     </Link>
@@ -64,7 +64,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-muted transition hover:text-foreground"
+                className="text-sm text-white transition hover:text-[#8B5CF6]"
               >
                 {link.label}
               </Link>
@@ -75,7 +75,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <button
             onClick={openCart}
-            className="relative rounded-full p-2 text-muted hover:text-foreground"
+            className="relative rounded-full p-2 text-white hover:text-[#8B5CF6]"
             aria-label="Open cart"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -91,7 +91,7 @@ export function Header() {
             Get a Free Quote
           </Link>
           <button
-            className="rounded p-2 text-muted lg:hidden"
+            className="rounded p-2 text-white lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}

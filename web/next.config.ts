@@ -42,6 +42,14 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  output: "standalone",
+  async rewrites() {
+    return [
+      { source: "/api/:path*", destination: "http://backend:8080/api/:path*" },
+      { source: "/admin/:path*", destination: "http://backend:8080/admin/:path*" },
+      { source: "/uploads/:path*", destination: "http://backend:8080/uploads/:path*" },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 31536000, // 1 year

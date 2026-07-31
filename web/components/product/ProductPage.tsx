@@ -282,43 +282,44 @@ function ProductFAQ() {
 
   return (
     <section className="section-padding">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16 lg:items-start">
-          {/* Left: big title */}
-          <div className="lg:sticky lg:top-24">
-            <p className="text-xs font-semibold uppercase tracking-widest text-accent">FAQ</p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight md:text-4xl lg:text-5xl">
-              Everything You<br />Need to Know
-            </h2>
-            <div className="mt-6 relative aspect-[3/4] max-w-[260px] overflow-hidden rounded-xl hidden lg:block">
-              <SmartImage
-                src="/images/product-faq-image.webp"
-                alt="Yulux Signs quality showcase"
-                fill
-                className="object-cover"
-                sizes="260px"
-              />
-            </div>
-            <p className="mt-4 text-xs text-muted hidden lg:block">Premium Quality. Built to Last.</p>
-          </div>
+      <div className="mx-auto max-w-5xl">
+        {/* Centered title */}
+        <h2 className="text-center text-3xl font-bold md:text-4xl">Frequently Asked Questions</h2>
+        <p className="mx-auto mt-4 max-w-2xl text-center text-muted">
+          Get answers to the most common questions about our custom LED neon signs.
+        </p>
 
-          {/* Right: Q&A list */}
-          <div className="divide-y divide-card-border rounded-xl border border-card-border bg-card">
-            {items.map((item, i) => (
-              <div key={i}>
-                <button
-                  className="flex w-full items-center justify-between px-6 py-5 text-left"
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                >
-                  <span className="pr-4 font-semibold text-base">{item.question}</span>
-                  <span className="text-accent text-xl shrink-0">{openIndex === i ? "−" : "+"}</span>
-                </button>
-                {openIndex === i && (
-                  <div className="px-6 pb-5 text-base leading-relaxed text-muted">{item.answer}</div>
-                )}
-              </div>
-            ))}
-          </div>
+        {/* FAQ image */}
+        <div className="mx-auto mt-10 max-w-md overflow-hidden rounded-xl">
+          <SmartImage
+            src="/images/shop-neon-FAQ.jpg"
+            alt="Custom LED neon sign FAQ showcase"
+            width={600}
+            height={400}
+            className="w-full object-cover"
+            sizes="(max-width: 768px) 100vw, 500px"
+          />
+        </div>
+
+        {/* Q&A list */}
+        <div className="mt-10 divide-y divide-card-border rounded-xl border border-card-border bg-card">
+          {items.map((item, i) => (
+            <div key={i}>
+              <button
+                className="flex w-full items-center gap-4 px-6 py-5 text-left"
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              >
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
+                  Q{i + 1}
+                </span>
+                <span className="flex-1 pr-4 font-semibold text-base">{item.question}</span>
+                <span className="text-accent text-xl shrink-0">{openIndex === i ? "−" : "+"}</span>
+              </button>
+              {openIndex === i && (
+                <div className="px-6 pb-5 pl-[4.5rem] text-base leading-relaxed text-muted">{item.answer}</div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </section>

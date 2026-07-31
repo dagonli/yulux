@@ -162,6 +162,21 @@ export const PRODUCT_TEMPLATE = {
       answer:
         "No. The smart dimmer has memory function and retains your preferred brightness setting after power cycles.",
     },
+    {
+      question: "How long is the lifespan of a Yulux custom LED neon sign?",
+      answer:
+        "Our custom LED neon signs are engineered for longevity, featuring high-efficiency LEDs with a lifespan of over 50,000 hours. Unlike traditional glass neon, our LED custom signs are shatter-resistant and maintain consistent brightness for years of commercial use.",
+    },
+    {
+      question: "Can you create a custom neon sign from my business logo?",
+      answer:
+        "Absolutely. As a professional neon sign maker, we specialize in transforming complex business logos into stunning neon art. Simply upload your vector file, and our engineering team will provide a free technical drawing to ensure every detail is captured perfectly.",
+    },
+    {
+      question: "Are Yulux signs energy-efficient and safe for commercial environments?",
+      answer:
+        "Yes. Our factory-direct LED neon signs consume up to 80% less energy than traditional glass neon. They operate on a low-voltage 12V system, making them cool to the touch and safe for high-traffic areas. All power supplies are CE, UL, and RoHS certified.",
+    },
   ],
   crossSell:
     "Didn't find your favorite words? Need a different size, font, or want to light up your own logo?",

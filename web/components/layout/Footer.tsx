@@ -3,7 +3,7 @@ import { FOOTER_LINKS, SITE } from "@/content/site";
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-card-border bg-card">
+    <footer className="mt-auto border-t border-[#222] bg-[#0B0B0C]">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:grid-cols-4 lg:px-8">
         <div>
           <p className="text-lg font-bold">

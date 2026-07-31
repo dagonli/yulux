@@ -30,11 +30,27 @@ export const NEON_COLORS = [
   { id: "ice-blue", label: "Ice Blue", hex: "#67e8f9", class: "neon-glow-cyan" },
 ] as const;
 
-export const FONT_CATEGORIES = {
-  script: ["Pacifico", "Dancing Script", "Great Vibes"],
-  sans: ["Montserrat", "Roboto", "Bebas Neue"],
-  retro: ["Press Start 2P", "Bungee", "Righteous"],
-} as const;
+export const FONTS = [
+  { id: "amsterdam", label: "Amsterdam", family: "'Amsterdam', cursive" },
+  { id: "signatica", label: "Signatica", family: "'Signatica', cursive" },
+  { id: "sacramento", label: "Sacramento", family: "'Sacramento', cursive" },
+  { id: "great-vibes", label: "Great Vibes", family: "'Great Vibes', cursive" },
+  { id: "montserrat", label: "Montserrat", family: "'Montserrat', sans-serif" },
+  { id: "poppins", label: "Poppins", family: "'Poppins', sans-serif" },
+  { id: "oswald", label: "Oswald", family: "'Oswald', sans-serif" },
+  { id: "quicksand", label: "Quicksand", family: "'Quicksand', sans-serif" },
+  { id: "monoton", label: "Monoton", family: "'Monoton', display" },
+  { id: "bungee", label: "Bungee", family: "'Bungee', display" },
+  { id: "pacifico", label: "Pacifico", family: "'Pacifico', cursive" },
+  { id: "righteous", label: "Righteous", family: "'Righteous', display" },
+] as const;
+
+export const PREVIEW_BACKGROUNDS = [
+  { id: "black", label: "Pure Black", class: "bg-black" },
+  { id: "brick", label: "Brick Wall", class: "bg-[#3d2b2b]" },
+  { id: "living", label: "Living Room", class: "bg-[#2d2a26]" },
+  { id: "office", label: "Office", class: "bg-[#1a1f2e]" },
+] as const;
 
 export const BACKING_OPTIONS = [
   { id: "cut-to-shape", label: "Cut to Shape", description: "Recommended — follows text outline" },
