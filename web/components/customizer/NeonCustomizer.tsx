@@ -18,11 +18,12 @@ import { HowItWorks } from "@/components/shared/HowItWorks";
 
 function getDynamicFontSize(text: string): number {
   const len = text.length;
-  if (len <= 5) return 72;
-  if (len <= 10) return 56;
-  if (len <= 20) return 40;
-  if (len <= 40) return 32;
-  return 24;
+  if (len <= 3) return 96;
+  if (len <= 5) return 80;
+  if (len <= 10) return 64;
+  if (len <= 20) return 48;
+  if (len <= 40) return 36;
+  return 28;
 }
 
 export function NeonCustomizer() {
@@ -46,7 +47,8 @@ export function NeonCustomizer() {
       color: color.hex,
       fontFamily: font.family,
       fontSize: `${fontSize}px`,
-      textShadow: `0 0 10px ${color.hex}, 0 0 20px ${color.hex}, 0 0 40px ${color.hex}88`,
+      textShadow: `0 0 10px ${color.hex}, 0 0 20px ${color.hex}, 0 0 40px ${color.hex}, 0 0 80px ${color.hex}88, 0 0 120px ${color.hex}44`,
+      filter: `drop-shadow(0 0 15px ${color.hex}66) drop-shadow(0 0 30px ${color.hex}33)`,
     };
   }, [text, color, font]);
 
@@ -168,7 +170,7 @@ export function NeonCustomizer() {
           </span>
           <Link
             href="/custom-neon-logo"
-            className="rounded-full px-4 py-2 text-sm text-white/80 hover:text-white transition"
+            className="rounded-full px-4 py-2 text-sm text-white hover:text-white transition"
           >
             📤 Upload Your Logo Neon
           </Link>
@@ -181,7 +183,10 @@ export function NeonCustomizer() {
           {/* Preview */}
           <div className="space-y-4">
             <div
-              className={`relative flex min-h-[320px] items-center justify-center rounded-xl border border-card-border p-8 transition ${bg.class}`}
+              className={`relative flex min-h-[320px] items-center justify-center rounded-xl border border-card-border p-8 transition overflow-hidden ${bg.class}`}
+              style={{
+                boxShadow: `inset 0 0 60px ${color.hex}15, 0 0 40px ${color.hex}10`,
+              }}
             >
               <p
                 className="text-center font-bold leading-tight break-words max-w-full"

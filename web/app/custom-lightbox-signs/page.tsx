@@ -14,6 +14,12 @@ import {
   LIGHTBOX_FORM_FIELDS,
 } from "@/content/lightbox";
 
+const CAPABILITY_IMAGES = [
+  "/images/lightbox/yulux_macro_shapes.png",
+  "/images/lightbox/yulux_macro_materials.png",
+  "/images/lightbox/yulux_macro_illumination.png",
+] as const;
+
 export const metadata: Metadata = buildMetadata({
   ...LIGHTBOX_META,
   path: "/custom-lightbox-signs",
@@ -30,7 +36,7 @@ export default function LightboxPage() {
             <div className="lg:col-span-3">
               <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/10">
                 <SmartImage
-                  src="/images/image5.webp"
+                  src="/images/lightbox/yulux_lightbox_frameless.png"
                   alt="Bespoke custom lightbox sign glowing at night for luxury retail storefront"
                   fill
                   priority
@@ -58,10 +64,21 @@ export default function LightboxPage() {
           <div className="mx-auto max-w-7xl">
             <h2 className="text-center text-3xl font-bold">Custom Capabilities Showcase</h2>
             <div className="mt-12 grid gap-8 md:grid-cols-3">
-              {LIGHTBOX_CAPABILITIES.map((cap) => (
-                <div key={cap.title} className="rounded-xl border border-white/10 bg-white/5 p-8">
-                  <h3 className="text-xl font-semibold">{cap.title}</h3>
-                  <p className="mt-4 text-sm leading-relaxed text-muted">{cap.description}</p>
+              {LIGHTBOX_CAPABILITIES.map((cap, i) => (
+                <div key={cap.title} className="rounded-xl border border-white/10 bg-white/5 overflow-hidden">
+                  <div className="relative aspect-video overflow-hidden">
+                    <SmartImage
+                      src={CAPABILITY_IMAGES[i] || "/images/lightbox/yulux_macro_shapes.png"}
+                      alt={cap.title}
+                      fill
+                      className="object-cover"
+                      sizes="33vw"
+                    />
+                  </div>
+                  <div className="p-8">
+                    <h3 className="text-xl font-semibold">{cap.title}</h3>
+                    <p className="mt-4 text-sm leading-relaxed text-muted">{cap.description}</p>
+                  </div>
                 </div>
               ))}
             </div>

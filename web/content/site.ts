@@ -25,7 +25,14 @@ export const NAV_LINKS = [
       { label: "Upload Your Logo Neon", href: "/custom-neon-logo" },
     ],
   },
-  { label: "Business Signs", href: "/channel-letters-logos" },
+  {
+    label: "Business Signs",
+    href: "/channel-letters-logos",
+    children: [
+      { label: "Channel Letters", href: "/channel-letters-logos" },
+      { label: "Light Box", href: "/custom-lightbox-signs" },
+    ],
+  },
   { label: "About us", href: "/about" },
   { label: "The Signage Lab", href: "/signage-lab" },
 ] as const;

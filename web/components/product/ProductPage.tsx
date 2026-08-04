@@ -292,7 +292,7 @@ function ProductFAQ() {
         {/* FAQ image */}
         <div className="mx-auto mt-10 max-w-md overflow-hidden rounded-xl">
           <SmartImage
-            src="/images/shop-neon-FAQ.jpg"
+            src="/images/shop-neon-FAQ2.jpg"
             alt="Custom LED neon sign FAQ showcase"
             width={600}
             height={400}
