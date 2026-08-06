@@ -45,9 +45,9 @@ const nextConfig: NextConfig = {
   output: "standalone",
   async rewrites() {
     return [
-      { source: "/api/:path*", destination: "http://backend:8080/api/:path*" },
-      { source: "/admin/:path*", destination: "http://backend:8080/admin/:path*" },
-      { source: "/uploads/:path*", destination: "http://backend:8080/uploads/:path*" },
+      { source: "/api/:path*", destination: `${apiUrl}/api/:path*` },
+      { source: "/admin/:path*", destination: `${apiUrl}/admin/:path*` },
+      { source: "/uploads/:path*", destination: `${apiUrl}/uploads/:path*` },
     ];
   },
   images: {
