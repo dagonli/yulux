@@ -21,6 +21,10 @@ public class ImageUrlResolver {
         if (url.startsWith("http://") || url.startsWith("https://")) {
             return url;
         }
+        // 本地开发或 ngrok 访问时，返回相对路径，让浏览器根据当前 host 加载
+        if (!StringUtils.hasText(frontendBaseUrl) || frontendBaseUrl.contains("localhost")) {
+            return url.startsWith("/") ? url : "/" + url;
+        }
         String base = frontendBaseUrl.endsWith("/")
                 ? frontendBaseUrl.substring(0, frontendBaseUrl.length() - 1)
                 : frontendBaseUrl;
