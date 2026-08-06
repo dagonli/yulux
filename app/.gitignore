@@ -26,3 +26,7 @@ target/
 
 ### Uploaded images ###
 uploads/
+
+### H2 Database ###
+*.mv.db
+*.trace.db
