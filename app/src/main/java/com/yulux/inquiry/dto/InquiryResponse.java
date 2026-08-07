@@ -24,6 +24,9 @@ public class InquiryResponse {
     private Map<String, Object> payload;
     private String sourcePage;
     private InquiryStatus status;
+    private String attachmentFilename;
+    private String attachmentPath;
+    private String attachmentContentType;
     private LocalDateTime createdAt;
 
     public static InquiryResponse from(Inquiry inquiry) {
@@ -38,6 +41,9 @@ public class InquiryResponse {
         r.setPayload(inquiry.getPayload());
         r.setSourcePage(inquiry.getSourcePage());
         r.setStatus(inquiry.getStatus());
+        r.setAttachmentFilename(inquiry.getAttachmentFilename());
+        r.setAttachmentPath(inquiry.getAttachmentPath());
+        r.setAttachmentContentType(inquiry.getAttachmentContentType());
         r.setCreatedAt(inquiry.getCreatedAt());
         return r;
     }

@@ -25,6 +25,7 @@ export function QuoteForm() {
     setError(null);
     setSubmitting(true);
     const form = new FormData(e.currentTarget);
+    const file = fileInputRef.current?.files?.[0] ?? null;
     try {
       await submitInquiry({
         type: "QUOTE",
@@ -35,8 +36,11 @@ export function QuoteForm() {
         message: String(form.get("message") ?? ""),
         payload: { customerType, projectType },
         sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+        file,
       });
       setSubmitted(true);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      setFileName("");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Submission failed. Please try again.");
     } finally {

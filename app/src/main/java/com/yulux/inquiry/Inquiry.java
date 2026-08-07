@@ -45,5 +45,14 @@ public class Inquiry {
 
     private String userAgent;
 
+    /** 附件原始文件名 */
+    private String attachmentFilename;
+
+    /** 附件在 uploads 目录下的相对路径 */
+    private String attachmentPath;
+
+    /** 附件 MIME 类型 */
+    private String attachmentContentType;
+
     private LocalDateTime createdAt;
 }

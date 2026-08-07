@@ -1,6 +1,7 @@
 package com.yulux.admin;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.yulux.inquiry.Inquiry;
 import com.yulux.inquiry.InquiryService;
 import com.yulux.inquiry.InquiryStatus;
 import com.yulux.inquiry.InquiryType;
@@ -8,15 +9,28 @@ import com.yulux.inquiry.dto.InquiryResponse;
 import com.yulux.siteimage.ImageUrlResolver;
 import com.yulux.siteimage.SiteImage;
 import com.yulux.siteimage.SiteImageService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * 后台页面（Thymeleaf 服务端渲染）
@@ -27,6 +41,9 @@ public class AdminViewController {
     private final InquiryService inquiryService;
     private final SiteImageService siteImageService;
     private final ImageUrlResolver imageUrlResolver;
+
+    @Value("${yulux.upload-dir}")
+    private String uploadDir;
 
     public AdminViewController(InquiryService inquiryService, SiteImageService siteImageService,
                                ImageUrlResolver imageUrlResolver) {
@@ -55,6 +72,46 @@ public class AdminViewController {
         model.addAttribute("types", InquiryType.values());
         model.addAttribute("statuses", InquiryStatus.values());
         return "inquiries";
+    }
+
+    /**
+     * 下载询盘附件（需后台登录，session 鉴权）
+     */
+    @GetMapping("/admin/inquiries/{id}/attachment")
+    @ResponseBody
+    public ResponseEntity<Resource> downloadAttachment(@PathVariable Long id) {
+        Inquiry inquiry = inquiryService.getById(id);
+        if (inquiry == null || !StringUtils.hasText(inquiry.getAttachmentPath())) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // 防目录穿越：规范化后必须仍在 upload-dir 之内
+        Path base = Paths.get(uploadDir).toAbsolutePath().normalize();
+        Path file = base.resolve(inquiry.getAttachmentPath()).normalize();
+        if (!file.startsWith(base) || !file.toFile().isFile()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Resource resource = new FileSystemResource(file.toFile());
+        String filename = StringUtils.hasText(inquiry.getAttachmentFilename())
+                ? inquiry.getAttachmentFilename()
+                : "attachment";
+        String encoded = URLEncoder.encode(filename, StandardCharsets.UTF_8).replace("+", "%20");
+
+        MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
+        if (StringUtils.hasText(inquiry.getAttachmentContentType())) {
+            try {
+                mediaType = MediaType.parseMediaType(inquiry.getAttachmentContentType());
+            } catch (Exception ignored) {
+                // 非法 content-type 时回退为二进制流
+            }
+        }
+
+        return ResponseEntity.ok()
+                .contentType(mediaType)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + encoded + "\"; filename*=UTF-8''" + encoded)
+                .body(resource);
     }
 
     @GetMapping("/admin/images")

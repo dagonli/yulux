@@ -7,7 +7,9 @@ import com.yulux.inquiry.dto.InquiryRequest;
 import com.yulux.inquiry.dto.InquiryResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,15 +17,17 @@ import java.util.stream.Collectors;
 public class InquiryService {
 
     private final InquiryMapper inquiryMapper;
+    private final AttachmentStorageService attachmentStorageService;
 
-    public InquiryService(InquiryMapper inquiryMapper) {
+    public InquiryService(InquiryMapper inquiryMapper, AttachmentStorageService attachmentStorageService) {
         this.inquiryMapper = inquiryMapper;
+        this.attachmentStorageService = attachmentStorageService;
     }
 
     /**
-     * 保存前端表单提交，返回新记录 id
+     * 保存前端表单提交（含可选附件），返回新记录 id
      */
-    public Long create(InquiryRequest request, String ipAddress, String userAgent) {
+    public Long create(InquiryRequest request, MultipartFile file, String ipAddress, String userAgent) throws IOException {
         Inquiry inquiry = new Inquiry();
         inquiry.setType(request.getType());
         inquiry.setName(request.getName());
@@ -36,6 +40,14 @@ public class InquiryService {
         inquiry.setStatus(InquiryStatus.NEW);
         inquiry.setIpAddress(ipAddress);
         inquiry.setUserAgent(truncate(userAgent, 512));
+
+        AttachmentStorageService.StoredAttachment attachment = attachmentStorageService.store(file);
+        if (attachment != null) {
+            inquiry.setAttachmentFilename(truncate(attachment.getOriginalFilename(), 255));
+            inquiry.setAttachmentPath(attachment.getRelativePath());
+            inquiry.setAttachmentContentType(truncate(attachment.getContentType(), 128));
+        }
+
         inquiryMapper.insert(inquiry);
         return inquiry.getId();
     }
@@ -63,6 +75,13 @@ public class InquiryService {
         Page<InquiryResponse> converted = new Page<>(result.getCurrent(), result.getSize(), result.getTotal());
         converted.setRecords(records);
         return converted;
+    }
+
+    /**
+     * 按 id 查询实体（后台下载附件用）
+     */
+    public Inquiry getById(Long id) {
+        return inquiryMapper.selectById(id);
     }
 
     private String truncate(String s, int max) {

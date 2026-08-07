@@ -78,6 +78,12 @@
                             <span th:text="${entry.key}"></span>: <span th:text="${entry.value}"></span>
                         </div>
                     </div>
+                    <div class="kv" th:if="${r.attachmentFilename != null}">
+                        <b>Attachment:</b>
+                        <a th:href="@{'/admin/inquiries/' + ${r.id} + '/attachment'}"
+                           th:text="${r.attachmentFilename}">file</a>
+                        <span class="muted" th:text="'(' + ${r.attachmentContentType} + ')'"></span>
+                    </div>
                 </details>
             </td>
         </tr>

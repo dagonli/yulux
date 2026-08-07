@@ -41,9 +41,13 @@ export function InquiryForm({
     const form = new FormData(e.currentTarget);
     const common: Record<string, string> = {};
     const payload: Record<string, string> = {};
+    let file: File | null = null;
     for (const [key, value] of form.entries()) {
-      // 文件字段本期跳过（等对象存储再处理）
-      if (value instanceof File) continue;
+      if (value instanceof File) {
+        // 取第一个有效文件作为附件
+        if (!file && value.size > 0) file = value;
+        continue;
+      }
       if (COMMON_KEYS.has(key)) common[key] = value;
       else payload[key] = value;
     }
@@ -58,6 +62,7 @@ export function InquiryForm({
         message: common.message,
         payload,
         sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+        file,
       });
       setSubmitted(true);
       onSuccess?.();

@@ -35,6 +35,7 @@ export function ChannelLettersInquiryForm() {
     const form = new FormData(e.currentTarget);
     const common: Record<string, string> = {};
     const payload: Record<string, string> = {};
+    const file = fileInputRef.current?.files?.[0] ?? null;
 
     for (const [key, value] of form.entries()) {
       if (value instanceof File) continue;
@@ -57,6 +58,7 @@ export function ChannelLettersInquiryForm() {
         country: common.country,
         payload,
         sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+        file,
       });
       setSubmitted(true);
     } catch (err) {

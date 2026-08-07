@@ -15,6 +15,8 @@ export type InquiryPayload = {
   /** 各表单私有字段 */
   payload?: Record<string, unknown>;
   sourcePage?: string;
+  /** 可选附件（图片 / PDF / 设计稿等），随表单一起上传 */
+  file?: File | null;
 };
 
 type ApiResult<T> = {
@@ -24,15 +26,27 @@ type ApiResult<T> = {
 };
 
 /**
- * 提交询盘/表单到后端。文件字段本期不处理。
+ * 提交询盘/表单到后端（multipart/form-data）。
+ * data 部分为 JSON 字符串，file 为可选附件；后端落盘保存并可在后管下载。
  */
 export async function submitInquiry(
   data: InquiryPayload
 ): Promise<{ id: number }> {
+  const { file, ...fields } = data;
+
+  const form = new FormData();
+  form.append(
+    "data",
+    new Blob([JSON.stringify(fields)], { type: "application/json" })
+  );
+  if (file) {
+    form.append("file", file, file.name);
+  }
+
   const res = await fetch(`${API_BASE}/api/inquiries`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    // 不手动设置 Content-Type，浏览器会自动带 multipart boundary
+    body: form,
   });
 
   let body: ApiResult<{ id: number }> | null = null;
