@@ -8,8 +8,7 @@ import { MaterialSpecifications } from "@/components/shared/MaterialSpecificatio
 import { HowItWorks } from "@/components/shared/HowItWorks";
 import { PrecisionManufacturing } from "@/components/shared/PrecisionManufacturing";
 import { LogisticsInstallation } from "@/components/shared/LogisticsInstallation";
-import { B2BEngineeringFAQ } from "@/components/shared/B2BEngineeringFAQ";
-import { CtaBanner } from "@/components/shared/CtaBanner";
+import { ScrollCta } from "@/components/shared/ScrollCta";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildMetadata } from "@/lib/metadata";
 import { faqSchema } from "@/lib/schema";
@@ -49,8 +48,10 @@ export default function LightboxPage() {
         <section id="get-a-quote" className="mx-auto max-w-7xl px-4 py-16 lg:px-8 scroll-mt-24">
           <div className="grid gap-12 lg:grid-cols-5">
             <div className="lg:col-span-3">
-              <div className="relative aspect-[16/10] lg:h-full lg:min-h-[560px]">
-                <AutoScrollGallery images={GALLERY_IMAGES} />
+              <div className="relative aspect-[16/10] lg:aspect-auto lg:h-full">
+                <div className="absolute inset-0">
+                  <AutoScrollGallery images={GALLERY_IMAGES} />
+                </div>
               </div>
             </div>
             <div className="lg:col-span-2">
@@ -97,11 +98,10 @@ export default function LightboxPage() {
         <HowItWorks />
         <PrecisionManufacturing />
         <LogisticsInstallation />
-        <B2BEngineeringFAQ />
 
         <FAQ h2="Technical FAQ" items={LIGHTBOX_FAQ} />
 
-        <CtaBanner h2={LIGHTBOX_CTA.h2} cta={LIGHTBOX_CTA.cta} ariaLabel="Get free design" />
+        <ScrollCta h2={LIGHTBOX_CTA.h2} label={LIGHTBOX_CTA.cta.label} />
       </div>
     </>
   );

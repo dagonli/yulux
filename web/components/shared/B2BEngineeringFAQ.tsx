@@ -96,12 +96,13 @@ export function B2BEngineeringFAQ() {
         </div>
 
         <div className="mt-12 text-center">
+          <h3 className="text-2xl font-bold md:text-3xl">Ready to bring your brand to light?</h3>
           <Link
             href="#get-a-quote"
             onClick={scrollToQuote}
             className="mt-6 inline-block rounded-lg bg-accent px-8 py-3.5 text-base font-bold text-white transition hover:bg-accent-hover"
           >
-            Ready to bring your brand to light? Get Free Design
+            Get Free Design
           </Link>
         </div>
       </div>

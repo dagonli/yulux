@@ -71,6 +71,6 @@ export const LIGHTBOX_FORM_FIELDS = [
 ];
 
 export const LIGHTBOX_CTA = {
-  h2: "Ready to bring your brand to light? Get Free Design",
-  cta: { label: "Get Free Design", href: "/get-a-quote" },
+  h2: "Ready to bring your brand to light?",
+  cta: { label: "Get Free Design", href: "#get-a-quote" },
 };
