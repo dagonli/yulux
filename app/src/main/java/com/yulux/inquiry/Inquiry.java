@@ -31,6 +31,12 @@ public class Inquiry {
 
     private String country;
 
+    /** 联系电话 */
+    private String phone;
+
+    /** 收货地址 */
+    private String address;
+
     private String message;
 
     /** 各表单私有字段，JSON 存储 */

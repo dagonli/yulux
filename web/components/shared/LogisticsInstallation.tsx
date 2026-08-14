@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { SmartImage } from "@/components/shared/SmartImage";
 
 export function LogisticsInstallation() {
@@ -44,15 +43,6 @@ export function LogisticsInstallation() {
               </p>
             </div>
           </div>
-        </div>
-
-        <div className="mt-10 text-center">
-          <Link
-            href="/get-a-quote"
-            className="btn-secondary inline-flex"
-          >
-            Request Crating Photos for Your Order
-          </Link>
         </div>
       </div>
     </section>

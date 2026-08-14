@@ -48,7 +48,8 @@
             <th>Type</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Country</th>
+            <th>Phone</th>
+            <th>Address</th>
             <th>Status</th>
             <th>Created</th>
             <th>Detail</th>
@@ -56,20 +57,22 @@
         </thead>
         <tbody>
         <tr th:if="${records.isEmpty()}">
-            <td colspan="8" class="muted">No inquiries found.</td>
+            <td colspan="10" class="muted">No inquiries found.</td>
         </tr>
         <tr th:each="r : ${records}">
             <td th:text="${r.id}">1</td>
             <td th:text="${r.type}">QUOTE</td>
             <td th:text="${r.name}">Name</td>
             <td><a th:href="'mailto:' + ${r.email}" th:text="${r.email}">a@b.com</a></td>
-            <td th:text="${r.country}">US</td>
+            <td th:text="${r.phone}"></td>
+            <td th:text="${r.address}"></td>
             <td><span class="badge" th:classappend="'badge-' + ${r.status}" th:text="${r.status}">NEW</span></td>
             <td th:text="${#temporals.format(r.createdAt, 'yyyy-MM-dd HH:mm')}">2026-01-01</td>
             <td>
                 <details>
                     <summary>View</summary>
                     <div class="kv" th:if="${r.company}"><b>Company:</b> <span th:text="${r.company}"></span></div>
+                    <div class="kv" th:if="${r.country}"><b>Country:</b> <span th:text="${r.country}"></span></div>
                     <div class="kv" th:if="${r.sourcePage}"><b>Source:</b> <span th:text="${r.sourcePage}"></span></div>
                     <div class="kv" th:if="${r.message}"><b>Message:</b> <span th:text="${r.message}"></span></div>
                     <div class="kv" th:if="${r.payload != null and !r.payload.isEmpty()}">

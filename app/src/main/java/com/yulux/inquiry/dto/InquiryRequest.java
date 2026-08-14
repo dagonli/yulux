@@ -33,6 +33,12 @@ public class InquiryRequest {
     @Size(max = 100, message = "country too long")
     private String country;
 
+    @Size(max = 50, message = "phone too long")
+    private String phone;
+
+    @Size(max = 500, message = "address too long")
+    private String address;
+
     private String message;
 
     /** 各表单私有字段 */

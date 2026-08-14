@@ -34,6 +34,8 @@ public class InquiryService {
         inquiry.setEmail(request.getEmail());
         inquiry.setCompany(request.getCompany());
         inquiry.setCountry(request.getCountry());
+        inquiry.setPhone(request.getPhone());
+        inquiry.setAddress(request.getAddress());
         inquiry.setMessage(request.getMessage());
         inquiry.setPayload(request.getPayload());
         inquiry.setSourcePage(request.getSourcePage());

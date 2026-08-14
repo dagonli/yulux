@@ -7,16 +7,14 @@ import { HowItWorks } from "@/components/shared/HowItWorks";
 import { InquiryForm } from "@/components/forms/InquiryForm";
 
 const LOGO_FIELDS = [
-  { id: "logo", label: "Upload Your Logo/Design", type: "file", required: true },
   { id: "size", label: "Estimated Size", type: "text", required: true, placeholder: "e.g., 50cm, 100cm, 2ft" },
-  { id: "lighting", label: "Lighting Style", type: "select", required: true, options: ["Standard Neon Sign", "Front-lit", "Back-lit", "Side-lit"] },
   { id: "environment", label: "Installation Environment", type: "select", required: true, options: ["Indoor", "Outdoor Waterproof"] },
-  { id: "deadline", label: "Required Deadline", type: "date", required: true, placeholder: "YYYY-MM-DD" },
-  { id: "message", label: "Message / Specifications", type: "textarea", placeholder: "Specific color matching, backing material requests, wall mounting surface type..." },
+  { id: "message", label: "Message / Specifications", type: "textarea", placeholder: "Specific color matching, backing material requests, wall mounting surface type...", fullWidth: true },
   { id: "name", label: "Full Name", type: "text", required: true },
   { id: "email", label: "Email Address", type: "email", required: true },
-  { id: "company", label: "Company Name", type: "text" },
-  { id: "country", label: "Country/Region", type: "text", required: true },
+  { id: "phone", label: "Mobile Phone", type: "tel", placeholder: "e.g., +1 555 123 4567" },
+  { id: "address", label: "Delivery Address", type: "textarea", required: true, placeholder: "Street, city, state/province, postal code, country", fullWidth: true },
+  { id: "logo", label: "Upload Your Logo/Design", type: "file", required: true, fullWidth: true },
 ];
 
 export function LogoInquiryPage() {
@@ -37,8 +35,8 @@ export function LogoInquiryPage() {
           <p className="text-lg font-semibold text-accent">Get a Free Quote within 24h</p>
         </div>
 
-        <div className="mt-10 max-w-2xl">
-          <InquiryForm inquiryType="LOGO" fields={LOGO_FIELDS} submitLabel="Submit Inquiry" />
+        <div className="mt-10 mx-auto max-w-4xl">
+          <InquiryForm inquiryType="LOGO" fields={LOGO_FIELDS} submitLabel="Submit Inquiry" twoColumn centerSubmit />
         </div>
       </div>
       <MaterialQuality />

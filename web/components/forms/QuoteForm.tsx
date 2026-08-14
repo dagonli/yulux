@@ -178,7 +178,7 @@ export function QuoteForm() {
         <input
           ref={fileInputRef}
           type="file"
-          accept=".jpg,.jpeg,.png,.svg,.pdf,.ai,.dxf,.webp"
+          accept=".jpg,.jpeg,.png,.tiff,.ai,.pdf"
           className="sr-only"
           onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
         />
@@ -192,7 +192,7 @@ export function QuoteForm() {
           </button>
           <span className="text-sm text-muted">{fileName || "No file chosen"}</span>
         </div>
-        <p className="mt-1 text-xs text-muted">Supported formats: JPG, PNG, SVG, PDF, AI, DXF, WEBP</p>
+        <p className="mt-1 text-xs text-muted">Supported formats: JPG, PNG, JPEG, TIFF, AI, PDF</p>
       </div>
 
       {error && (

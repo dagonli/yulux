@@ -289,18 +289,6 @@ function ProductFAQ() {
           Get answers to the most common questions about our custom LED neon signs.
         </p>
 
-        {/* FAQ image */}
-        <div className="mx-auto mt-10 max-w-md overflow-hidden rounded-xl">
-          <SmartImage
-            src="/images/shop-neon-FAQ2.jpg"
-            alt="Custom LED neon sign FAQ showcase"
-            width={600}
-            height={400}
-            className="w-full object-cover"
-            sizes="(max-width: 768px) 100vw, 500px"
-          />
-        </div>
-
         {/* Q&A list */}
         <div className="mt-10 divide-y divide-card-border rounded-xl border border-card-border bg-card">
           {items.map((item, i) => (

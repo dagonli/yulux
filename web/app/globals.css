@@ -77,3 +77,17 @@ body {
 .btn-secondary {
   @apply inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10;
 }
+
+/* 灯箱页左侧图片纵向自动滚动轮播 */
+@keyframes lightbox-marquee {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.lightbox-marquee {
+  animation: lightbox-marquee var(--lightbox-marquee-duration, 24s) linear infinite;
+}

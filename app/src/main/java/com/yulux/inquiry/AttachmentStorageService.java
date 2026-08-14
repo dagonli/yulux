@@ -11,9 +11,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Set;
 
 /**
- * 询盘附件存储：原样保存上传文件（图片 / PDF / AI / DXF 等），不做压缩或转码。
+ * 询盘附件存储：原样保存上传文件（图片 / PDF / AI 等），不做压缩或转码。
  * 落盘到 {upload-dir}/inquiries/ 子目录，文件名脱敏 + 时间戳防覆盖。
  */
 @Service
@@ -21,6 +22,10 @@ public class AttachmentStorageService {
 
     /** 询盘附件在 upload-dir 下的子目录 */
     private static final String SUB_DIR = "inquiries";
+
+    /** 允许上传的附件扩展名白名单（与前端 accept 保持一致） */
+    private static final Set<String> ALLOWED_EXTENSIONS = Set.of(
+            ".jpg", ".jpeg", ".png", ".tiff", ".tif", ".ai", ".pdf");
 
     @Value("${yulux.upload-dir}")
     private String uploadDir;
@@ -37,6 +42,10 @@ public class AttachmentStorageService {
                 ? file.getOriginalFilename()
                 : "attachment";
         String extension = extractExtension(originalFilename);
+        if (!ALLOWED_EXTENSIONS.contains(extension.toLowerCase())) {
+            throw new IllegalArgumentException(
+                    "Unsupported file type: " + extension + ". Allowed: jpg, jpeg, png, tiff, ai, pdf.");
+        }
         String baseName = sanitize(stripExtension(originalFilename));
 
         Path dir = Paths.get(uploadDir).resolve(SUB_DIR);

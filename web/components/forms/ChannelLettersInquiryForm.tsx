@@ -39,15 +39,12 @@ export function ChannelLettersInquiryForm() {
 
     for (const [key, value] of form.entries()) {
       if (value instanceof File) continue;
-      if (["name", "email", "phone", "country"].includes(key)) common[key] = value;
+      if (["name", "email", "phone", "address"].includes(key)) common[key] = value;
       else payload[key] = value;
     }
 
     if (selectedTech.length > 0) {
       payload.technology = selectedTech.join(", ");
-    }
-    if (common.phone) {
-      payload.phone = common.phone;
     }
 
     try {
@@ -55,7 +52,8 @@ export function ChannelLettersInquiryForm() {
         type: "QUOTE",
         name: common.name ?? "",
         email: common.email ?? "",
-        country: common.country,
+        phone: common.phone,
+        address: common.address,
         payload,
         sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
         file,
@@ -81,19 +79,6 @@ export function ChannelLettersInquiryForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-card-border bg-card p-6">
-      {/* Customer Type */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Customer Type *</label>
-        <div className="flex flex-wrap gap-4" role="radiogroup">
-          {["Individual", "Business"].map((opt) => (
-            <label key={opt} className="flex cursor-pointer items-center gap-2 text-sm">
-              <input name="customerType" type="radio" value={opt} required className="h-4 w-4 accent-accent" />
-              {opt}
-            </label>
-          ))}
-        </div>
-      </div>
-
       {/* Upload Image */}
       <div>
         <label className="block text-sm font-medium mb-1">Upload Your Image</label>
@@ -101,7 +86,7 @@ export function ChannelLettersInquiryForm() {
           ref={fileInputRef}
           name="image"
           type="file"
-          accept=".jpg,.jpeg,.png,.svg,.pdf,.ai,.dxf,.webp"
+          accept=".jpg,.jpeg,.png,.tiff,.ai,.pdf"
           className="sr-only"
           onChange={(e) => setFileName(e.target.files?.[0]?.name ?? "")}
         />
@@ -117,19 +102,6 @@ export function ChannelLettersInquiryForm() {
         </div>
       </div>
 
-      {/* Size */}
-      <div>
-        <label htmlFor="size" className="block text-sm font-medium mb-1">Size *</label>
-        <input
-          id="size"
-          name="size"
-          type="text"
-          required
-          placeholder="e.g., 50cm, 100cm, 2ft"
-          className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
-        />
-      </div>
-
       {/* Quantity */}
       <div>
         <label htmlFor="quantity" className="block text-sm font-medium mb-1">Quantity *</label>
@@ -140,19 +112,6 @@ export function ChannelLettersInquiryForm() {
           required
           min={1}
           placeholder="e.g., 1, 5, 10"
-          className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
-        />
-      </div>
-
-      {/* Project Time */}
-      <div>
-        <label htmlFor="projectTime" className="block text-sm font-medium mb-1">Project Time *</label>
-        <input
-          id="projectTime"
-          name="projectTime"
-          type="text"
-          required
-          placeholder="e.g., Urgent (1-2 weeks), Standard (3-4 weeks)"
           className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
         />
       </div>
@@ -238,19 +197,20 @@ export function ChannelLettersInquiryForm() {
             />
           </div>
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone</label>
+            <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone *</label>
             <input
               id="phone"
               name="phone"
               type="tel"
+              required
               className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
             />
           </div>
           <div>
-            <label htmlFor="country" className="block text-sm font-medium mb-1">Country *</label>
+            <label htmlFor="address" className="block text-sm font-medium mb-1">Delivery Address *</label>
             <input
-              id="country"
-              name="country"
+              id="address"
+              name="address"
               type="text"
               required
               className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"

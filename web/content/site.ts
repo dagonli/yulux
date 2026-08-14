@@ -19,7 +19,7 @@ export const NAV_LINKS = [
     ],
   },
   {
-    label: "Design Your Own",
+    label: "Design Your Own Neon",
     children: [
       { label: "Design Your Text Neon", href: "/custom-neon-signs" },
       { label: "Upload Your Logo Neon", href: "/custom-neon-logo" },
@@ -59,33 +59,6 @@ export const FOOTER_LINKS = {
     { label: "Terms of Service", href: "/terms" },
   ],
 } as const;
-
-export const TRUST_BADGES = [
-  {
-    title: "Engineering-Grade Quality",
-    description: "Premium materials & precision-crafted 3D channel letters.",
-  },
-  {
-    title: "1-on-1 Design Support",
-    description: "Work directly with our experts to perfect your vision.",
-  },
-  {
-    title: "24h Professional Quote",
-    description: "Get a detailed technical drawing and quote within 24 hours.",
-  },
-  {
-    title: "Unlimited Revisions",
-    description: "We don't stop until you are 100% in love with your design.",
-  },
-  {
-    title: "2-Year Global Warranty",
-    description: "Comprehensive protection for your investment, worldwide.",
-  },
-  {
-    title: "Secure Global Shipping",
-    description: "Fully insured express delivery with professional packaging.",
-  },
-] as const;
 
 export const MATERIAL_QUALITY = [
   {

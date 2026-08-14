@@ -30,29 +30,47 @@ export const LIGHTBOX_CAPABILITIES = [
 
 export const LIGHTBOX_FAQ = [
   {
-    question: "We have strict corporate branding guidelines. Can you match custom colors and dual-layer graphics?",
+    question: "How do you design custom lightboxes to withstand extreme outdoor weather and prevent water ingress?",
     answer:
-      "Absolutely. We use certified Pantone/RAL color-matching for all metal framework powder-coating. For the illuminated graphic face, we apply industrial dual-layer UV printing on high-diffusion acrylic or utilize premium translucent architectural vinyl films to ensure your corporate palette remains flawless and vibrant, day and night.",
+      "Our outdoor lightboxes feature IP65/IP67 weather-sealed structural enclosures crafted from marine-grade 304/316 stainless steel or powder-coated heavy-duty extruded aluminum. We engineer internal condensation drainage channels, UV-resistant EPDM gaskets, and high-diffusion acrylic/polycarbonate faces that resist yellowing, thermal expansion, and wind loads up to hurricane-rated specifications.",
   },
   {
-    question: "Since your lightboxes are 100% custom, how do we handle graphics replacement in the future?",
+    question: "How do you handle graphic/poster replacements for custom-shaped or projecting lightboxes?",
     answer:
-      "We engineer long-term versatility into every sign. Our custom lightboxes feature engineered slide-out panels or hidden mechanical snap-frames. If your branding changes, we can ship you a new precision-cut acrylic face that inserts into your existing heavy-duty framework in under 5 minutes — no professional tools required.",
+      "We engineer multiple structural closure systems depending on your application: toolless magnetic/snap-frame profiles for frequent indoor artwork swaps, or concealed heavy-duty stainless steel side-lock fasteners for secure, tamper-resistant outdoor signage. All graphics are printed with industrial dual-layer UV-cured inks to prevent sun fading.",
   },
   {
-    question: "How do you ensure a completely custom-shaped lightbox survives extreme outdoor weather?",
+    question: "How do you ensure flawless, hotspot-free illumination across large or ultra-slim lightbox faces?",
     answer:
-      "Every custom structure undergoes digital wind-load simulation. We utilize internally reinforced structural framing, integrated internal water-drainage tracks, and fully potted IP67 waterproof MeanWell power drivers. Whether it's coastal high-salinity air or gale-force winds, our lightboxes are built to endure.",
+      "We use optical-grade lattice LED backlighting or high-index edge-lit Light Guide Plates (LGP) paired with high-diffusion matte acrylic faces. LED module depth-to-spacing ratios are algorithmically calculated using ray-tracing software to guarantee 100% edge-to-edge luminosity without hot spots or shadowing.",
+  },
+  {
+    question: "Do your lightbox electrical components meet North American (UL) and European (CE) safety standards?",
+    answer:
+      "Yes. All LED modules, drivers, and transformers are pre-certified with UL Listed (Class 2), CE, RoHS, or UKCA standards. We provide pre-wired waterproof junction boxes and universal wide-voltage power supplies (100V–277V AC) to ensure seamless, inspector-approved electrical hookups anywhere in the world.",
+  },
+  {
+    question: "Can you precisely match corporate brand colors for both day-view and night-lit states?",
+    answer:
+      "Yes. Metal frames are powder-coated to match precise Pantone (PMS) or RAL color codes. For illuminated graphics, we utilize multi-pass UV printing with double-strike white layers (Day/Night printing) or premium translucent vinyls to guarantee color consistency whether the lightbox is switched off during the day or fully illuminated at night.",
+  },
+  {
+    question: "What mounting hardware and engineering documentation do you provide for installation?",
+    answer:
+      "Every custom lightbox includes 1:1 scale mounting templates, structural mounting brackets (projection, wall-recessed, or ceiling-hung), and detailed wiring diagrams. For large-scale architectural projects, we can provide structural load calculations and CAD/BIM shop drawings prior to production.",
   },
 ];
 
 export const LIGHTBOX_FORM_FIELDS = [
-  { id: "projectType", label: "Project Type", type: "select", options: ["Commercial Retail", "Corporate HQ", "Hotel & F&B", "Outdoor Engineering"], required: true },
-  { id: "shape", label: "Custom Shape Requirement", type: "text", placeholder: "e.g., Circular, irregular geometric, 3D curved, or dynamic ultra-thin...", required: true },
-  { id: "dimensions", label: "Dimensions / Spatial Limits", type: "text", placeholder: "Tell us your estimated size or wall space available...", required: true },
-  { id: "artwork", label: "Upload Your Vector Artwork/Inspiration", type: "file", required: false },
-  { id: "name", label: "Full Name", type: "text", required: true },
-  { id: "email", label: "Email Address", type: "email", required: true },
-  { id: "company", label: "Company Name", type: "text", required: false },
-  { id: "country", label: "Country/Region", type: "text", required: true },
+  { id: "artwork", label: "Upload Artwork", type: "file", placeholder: "Supported formats: JPG, PNG, JPEG, TIFF, AI, PDF", required: false },
+  { id: "name", label: "Name", type: "text", required: true },
+  { id: "email", label: "Email", type: "email", required: true },
+  { id: "mobile", label: "Mobile Phone", type: "text", required: true },
+  { id: "address", label: "Delivery Address", type: "text", required: true },
+  { id: "message", label: "Message", type: "textarea", required: false },
 ];
+
+export const LIGHTBOX_CTA = {
+  h2: "Ready to bring your brand to light? Get Free Design",
+  cta: { label: "Get Free Design", href: "/get-a-quote" },
+};

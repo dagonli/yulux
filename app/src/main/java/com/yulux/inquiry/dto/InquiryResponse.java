@@ -20,6 +20,8 @@ public class InquiryResponse {
     private String email;
     private String company;
     private String country;
+    private String phone;
+    private String address;
     private String message;
     private Map<String, Object> payload;
     private String sourcePage;
@@ -37,6 +39,8 @@ public class InquiryResponse {
         r.setEmail(inquiry.getEmail());
         r.setCompany(inquiry.getCompany());
         r.setCountry(inquiry.getCountry());
+        r.setPhone(inquiry.getPhone());
+        r.setAddress(inquiry.getAddress());
         r.setMessage(inquiry.getMessage());
         r.setPayload(inquiry.getPayload());
         r.setSourcePage(inquiry.getSourcePage());

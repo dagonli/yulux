@@ -12,7 +12,7 @@ export const HERO = {
   subhead:
     "From high-end 3D channel letters to bespoke neon art, Yulux Signs delivers durable, engineering-grade signage solutions for global businesses and creative spaces.",
   ctas: [
-    { label: "Design Your Own", href: "/custom-neon-signs", variant: "primary" as const },
+    { label: "Design Your Own Neon", href: "/custom-neon-signs", variant: "primary" as const },
     { label: "Get a Free Quote", href: "/get-a-quote", variant: "secondary" as const },
     { label: "Illuminated Signage", href: "/channel-letters-logos", variant: "secondary" as const },
   ],
@@ -123,7 +123,7 @@ export const CRAFTSMANSHIP_LAB = {
       alt: "Professional non-lit white letter Y with pure texture",
     },
   ],
-  cta: { label: "Get a free quote in 24h", href: "/get-a-quote" },
+  cta: { label: "Get a free quote in 24h", href: "/channel-letters-logos" },
 };
 
 export const INSPIRATION_GALLERY = {
@@ -223,12 +223,6 @@ export const REAL_WORLD_PROJECTS = {
   viewAll: { label: "View All Projects", href: "/gallery" },
 };
 
-export const HOME_TRUST = {
-  h2: "Why Global Brands Choose Yulux Signs",
-  seoText:
-    "As a leading provider of custom LED neon signs and 3D channel letters, Yulux Signs combines architectural-grade engineering with artistic design. Whether you need a business logo neon or large-scale outdoor signage, our team ensures every project meets the highest standards of durability and brilliance.",
-};
-
 export const HOME_FAQ = {
   h2: "Frequently Asked Questions",
   items: [
@@ -256,6 +250,26 @@ export const HOME_FAQ = {
       question: "Do you offer custom sizing for different spaces?",
       answer:
         "Yes. Every sign is made to order. Simply share your space dimensions during the quote process, and our team will recommend the optimal size for maximum visual impact.",
+    },
+    {
+      question: "What is the typical lead time for a custom project?",
+      answer:
+        "Our streamlined process ensures production in 3-5 business days. With global express shipping, most clients receive their custom signs within 10-14 days from design approval.",
+    },
+    {
+      question: "Is professional installation required?",
+      answer:
+        "No. Our signs are designed for “Plug-and-Play” simplicity. Each unit comes with a 1:1 installation template and a complete mounting kit (screws or hanging wires) for effortless setup.",
+    },
+    {
+      question: "Can you provide weatherproofing for outdoor environments?",
+      answer:
+        "Absolutely. We offer IP67-rated waterproofing for all our neon and channel letter products. Simply specify “Outdoor Use” during customization or in your inquiry.",
+    },
+    {
+      question: "Do you offer bulk discounts for corporate or wholesale orders?",
+      answer:
+        "Yes. We specialize in B2B partnerships and offer competitive tiered pricing for bulk orders, franchise rollouts, and wholesale distributions.",
     },
   ],
 };

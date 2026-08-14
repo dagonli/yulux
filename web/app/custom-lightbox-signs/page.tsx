@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import { SmartImage } from "@/components/shared/SmartImage";
+import { AutoScrollGallery } from "@/components/shared/AutoScrollGallery";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { FAQ } from "@/components/shared/FAQ";
 import { InquiryForm } from "@/components/forms/InquiryForm";
+import { MaterialSpecifications } from "@/components/shared/MaterialSpecifications";
+import { HowItWorks } from "@/components/shared/HowItWorks";
+import { PrecisionManufacturing } from "@/components/shared/PrecisionManufacturing";
+import { LogisticsInstallation } from "@/components/shared/LogisticsInstallation";
+import { B2BEngineeringFAQ } from "@/components/shared/B2BEngineeringFAQ";
+import { CtaBanner } from "@/components/shared/CtaBanner";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildMetadata } from "@/lib/metadata";
 import { faqSchema } from "@/lib/schema";
@@ -12,6 +19,7 @@ import {
   LIGHTBOX_CAPABILITIES,
   LIGHTBOX_FAQ,
   LIGHTBOX_FORM_FIELDS,
+  LIGHTBOX_CTA,
 } from "@/content/lightbox";
 
 const CAPABILITY_IMAGES = [
@@ -19,6 +27,13 @@ const CAPABILITY_IMAGES = [
   "/images/lightbox/yulux_macro_materials.png",
   "/images/lightbox/yulux_macro_illumination.png",
 ] as const;
+
+const GALLERY_IMAGES = [
+  { src: "/images/lightbox/yulux_lightbox_frameless.png", alt: "Bespoke custom lightbox sign glowing at night for luxury retail storefront" },
+  { src: "/images/lightbox/yulux_macro_shapes.png", alt: "Custom lightbox macro detail — architectural shapes" },
+  { src: "/images/lightbox/yulux_macro_materials.png", alt: "Custom lightbox macro detail — premium materials" },
+  { src: "/images/lightbox/yulux_macro_illumination.png", alt: "Custom lightbox macro detail — illumination aesthetics" },
+];
 
 export const metadata: Metadata = buildMetadata({
   ...LIGHTBOX_META,
@@ -31,18 +46,11 @@ export default function LightboxPage() {
       <JsonLd data={faqSchema(LIGHTBOX_FAQ)} />
       <Breadcrumb items={[{ label: "Custom Lightbox Signs" }]} />
       <div className="bg-[#050508]">
-        <section className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+        <section id="get-a-quote" className="mx-auto max-w-7xl px-4 py-16 lg:px-8 scroll-mt-24">
           <div className="grid gap-12 lg:grid-cols-5">
             <div className="lg:col-span-3">
-              <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/10">
-                <SmartImage
-                  src="/images/lightbox/yulux_lightbox_frameless.png"
-                  alt="Bespoke custom lightbox sign glowing at night for luxury retail storefront"
-                  fill
-                  priority
-                  className="object-cover"
-                  sizes="60vw"
-                />
+              <div className="relative aspect-[16/10] lg:h-full lg:min-h-[560px]">
+                <AutoScrollGallery images={GALLERY_IMAGES} />
               </div>
             </div>
             <div className="lg:col-span-2">
@@ -85,7 +93,15 @@ export default function LightboxPage() {
           </div>
         </section>
 
+        <MaterialSpecifications />
+        <HowItWorks />
+        <PrecisionManufacturing />
+        <LogisticsInstallation />
+        <B2BEngineeringFAQ />
+
         <FAQ h2="Technical FAQ" items={LIGHTBOX_FAQ} />
+
+        <CtaBanner h2={LIGHTBOX_CTA.h2} cta={LIGHTBOX_CTA.cta} ariaLabel="Get free design" />
       </div>
     </>
   );

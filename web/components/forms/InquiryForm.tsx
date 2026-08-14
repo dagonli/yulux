@@ -10,9 +10,11 @@ type Field = {
   required?: boolean;
   placeholder?: string;
   options?: string[];
+  /** 双列表单布局下是否独占整行（默认占一列） */
+  fullWidth?: boolean;
 };
 
-const COMMON_KEYS = new Set(["name", "email", "company", "country", "message"]);
+const COMMON_KEYS = new Set(["name", "email", "company", "country", "phone", "address", "message"]);
 
 export function InquiryForm({
   inquiryType,
@@ -20,12 +22,18 @@ export function InquiryForm({
   submitLabel = "Submit Inquiry",
   onSuccess,
   dark = false,
+  twoColumn = false,
+  centerSubmit = false,
 }: {
   inquiryType: InquiryType;
   fields: Field[];
   submitLabel?: string;
   onSuccess?: () => void;
   dark?: boolean;
+  /** 是否启用响应式双列布局（短字段并排，fullWidth 字段独占整行） */
+  twoColumn?: boolean;
+  /** 提交按钮是否居中（默认占满整行） */
+  centerSubmit?: boolean;
 }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -59,6 +67,8 @@ export function InquiryForm({
         email: common.email ?? "",
         company: common.company,
         country: common.country,
+        phone: common.phone,
+        address: common.address,
         message: common.message,
         payload,
         sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
@@ -85,9 +95,9 @@ export function InquiryForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`space-y-4 rounded-xl border p-6 ${dark ? "border-card-border bg-card/80" : "border-card-border bg-card"}`}>
+    <form onSubmit={handleSubmit} className={`${twoColumn ? "grid grid-cols-1 gap-4 sm:grid-cols-2" : "space-y-4"} rounded-xl border p-6 ${dark ? "border-card-border bg-card/80" : "border-card-border bg-card"}`}>
       {fields.map((field) => (
-        <div key={field.id}>
+        <div key={field.id} className={twoColumn && field.fullWidth ? "sm:col-span-2" : undefined}>
           <label htmlFor={field.id} id={field.type === "radio" ? `${field.id}-label` : undefined} className="block text-sm font-medium mb-1">
             {field.label}{field.required && " *"}
           </label>
@@ -121,7 +131,7 @@ export function InquiryForm({
                 id={field.id}
                 name={field.id}
                 type="file"
-                accept=".jpg,.jpeg,.png,.svg,.pdf,.ai,.dxf,.webp"
+                accept=".jpg,.jpeg,.png,.tiff,.ai,.pdf"
                 className="sr-only"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
@@ -192,9 +202,13 @@ export function InquiryForm({
           {error}
         </p>
       )}
-      <button type="submit" disabled={submitting} className="btn-primary w-full disabled:opacity-60">
-        {submitting ? "Submitting…" : submitLabel}
-      </button>
+      <div className={twoColumn ? "sm:col-span-2" : undefined}>
+        <div className={centerSubmit ? "flex justify-center" : ""}>
+          <button type="submit" disabled={submitting} className={`btn-primary disabled:opacity-60 ${centerSubmit ? "" : "w-full"}`}>
+            {submitting ? "Submitting…" : submitLabel}
+          </button>
+        </div>
+      </div>
     </form>
   );
 }
@@ -229,6 +243,6 @@ export const QUOTE_FORM_FIELDS: Field[] = [
     id: "image",
     label: "Upload Your Image",
     type: "file",
-    placeholder: "Supported formats: JPG, PNG, SVG, PDF, AI, DXF, and WEBP",
+    placeholder: "Supported formats: JPG, PNG, JPEG, TIFF, AI, PDF",
   },
 ];

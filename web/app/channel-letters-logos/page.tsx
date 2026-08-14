@@ -32,6 +32,26 @@ export default function ChannelLettersHubPage() {
         <h1 className="text-4xl font-bold md:text-5xl">{HUB_CONTENT.h1}</h1>
         <p className="mt-4 max-w-3xl text-lg text-muted">{HUB_CONTENT.subhead}</p>
 
+        {/* Quote Form */}
+        <section id="get-a-quote" className="mt-16 grid gap-10 lg:grid-cols-2 scroll-mt-24">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-xl lg:aspect-auto">
+            <SmartImage
+              src="/images/lightbox/yulux_lightbox_frameless.png"
+              alt="Yulux channel letters craftsmanship"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">Get a Quote</h2>
+            <p className="mt-2 text-muted">Free professional mockup within 24 hours.</p>
+            <div className="mt-6">
+              <ChannelLettersInquiryForm />
+            </div>
+          </div>
+        </section>
+
         {/* Craftsmanship Lab - 6 cards without links */}
         <section className="mt-16">
           <h2 className="text-2xl font-bold">The Craftsmanship Lab</h2>
@@ -56,26 +76,6 @@ export default function ChannelLettersHubPage() {
                 </div>
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* Quote Form */}
-        <section className="mt-16 grid gap-10 lg:grid-cols-2">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-xl lg:aspect-auto">
-            <SmartImage
-              src="/images/lightbox/yulux_lightbox_frameless.png"
-              alt="Yulux channel letters craftsmanship"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold">Get a Quote</h2>
-            <p className="mt-2 text-muted">Free professional mockup within 24 hours.</p>
-            <div className="mt-6">
-              <ChannelLettersInquiryForm />
-            </div>
           </div>
         </section>
       </div>

@@ -11,6 +11,8 @@ export type InquiryPayload = {
   email: string;
   company?: string;
   country?: string;
+  phone?: string;
+  address?: string;
   message?: string;
   /** 各表单私有字段 */
   payload?: Record<string, unknown>;

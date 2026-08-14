@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 const B2B_FAQ_ITEMS = [
   {
@@ -55,6 +56,17 @@ const B2B_FAQ_ITEMS = [
 export function B2BEngineeringFAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+  const scrollToQuote = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // 手动滚动而非依赖浏览器锚点跳转：当 URL 已含 #get-a-quote 时，
+    // 原生锚点不会再次触发滚动，这里每次点击都强制定位到表单。
+    e.preventDefault();
+    const el = document.getElementById("get-a-quote");
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="section-padding">
       <div className="mx-auto max-w-3xl">
@@ -81,6 +93,16 @@ export function B2BEngineeringFAQ() {
               )}
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link
+            href="#get-a-quote"
+            onClick={scrollToQuote}
+            className="mt-6 inline-block rounded-lg bg-accent px-8 py-3.5 text-base font-bold text-white transition hover:bg-accent-hover"
+          >
+            Ready to bring your brand to light? Get Free Design
+          </Link>
         </div>
       </div>
     </section>
