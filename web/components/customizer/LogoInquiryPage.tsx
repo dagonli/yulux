@@ -1,9 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { CUSTOMIZER_HEADER } from "@/content/customizer";
+import { CUSTOMIZER_HEADER, CUSTOM_NEON_FAQ } from "@/content/customizer";
 import { MaterialQuality } from "@/components/shared/MaterialQuality";
 import { HowItWorks } from "@/components/shared/HowItWorks";
+import { YuluxAdvantage } from "@/components/shared/YuluxAdvantage";
+import { FAQ } from "@/components/shared/FAQ";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { faqSchema } from "@/lib/schema";
 import { InquiryForm } from "@/components/forms/InquiryForm";
 
 const LOGO_FIELDS = [
@@ -41,6 +45,9 @@ export function LogoInquiryPage() {
       </div>
       <MaterialQuality />
       <HowItWorks />
+      <YuluxAdvantage />
+      <FAQ h2={CUSTOM_NEON_FAQ.h2} items={CUSTOM_NEON_FAQ.items} />
+      <JsonLd data={[faqSchema(CUSTOM_NEON_FAQ.items)]} />
     </>
   );
 }
