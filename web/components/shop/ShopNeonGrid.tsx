@@ -66,15 +66,12 @@ export function ShopNeonGrid({ products }: { products: Product[] }) {
                 </div>
               </div>
               <div className="p-5">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-bold">{product.name}</h2>
-                  <span className="text-xl font-bold text-accent">${product.price}</span>
-                </div>
+                <h2 className="text-lg font-bold">{product.name}</h2>
                 <Link
                   href={`/products/${product.slug}`}
                   className="mt-4 block w-full rounded-lg bg-accent py-3 text-center text-sm font-bold text-white transition hover:bg-accent-hover"
                 >
-                  SHOP NOW
+                  View Details
                 </Link>
               </div>
             </div>
@@ -95,7 +92,7 @@ export function ShopNeonGrid({ products }: { products: Product[] }) {
           <input
             type="email"
             required
-            placeholder="请输入您的邮箱"
+            placeholder="Enter your email"
             className="w-full max-w-xs rounded-lg border border-card-border bg-background px-4 py-3 text-sm focus:border-accent focus:outline-none sm:w-72"
           />
           <button

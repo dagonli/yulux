@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Page Not Found | Yulux Signs",
+  title: "Page Not Found | Yulux Sign",
   robots: { index: false },
 };
 

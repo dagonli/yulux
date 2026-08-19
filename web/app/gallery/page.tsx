@@ -6,8 +6,8 @@ import { buildMetadata } from "@/lib/metadata";
 import { getGalleryPage } from "@/content/gallery";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Project Gallery | Yulux Signs",
-  description: "Browse real-world custom neon signs, channel letters, and lightbox projects from Yulux Signs worldwide.",
+  title: "Project Gallery | Yulux Sign",
+  description: "Browse real-world custom neon signs, channel letters, and lightbox projects from Yulux Sign worldwide.",
   path: "/gallery",
 });
 

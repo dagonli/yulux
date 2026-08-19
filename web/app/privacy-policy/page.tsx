@@ -4,9 +4,9 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Privacy Policy | Yulux Signs",
+  title: "Privacy Policy | Yulux Sign",
   description:
-    "Learn how Yulux Signs collects, uses, and protects your personal information when you use our website and services.",
+    "Learn how Yulux Sign collects, uses, and protects your personal information when you use our website and services.",
   path: "/privacy-policy",
 });
 
@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2>1. Who We Are</h2>
             <p>
-              Yulux Signs (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) operates the website at{" "}
+              Yulux Sign (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) operates the website at{" "}
               <a href={SITE.url} className="text-accent underline">{SITE.url}</a>. We manufacture and supply
               custom LED neon signs and 3D channel letter signage for clients worldwide. For any
               privacy-related inquiries, contact us at{" "}
@@ -121,7 +121,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2>9. International Transfers</h2>
             <p>
-              Yulux Signs operates globally. Your information may be processed in countries outside your own.
+              Yulux Sign operates globally. Your information may be processed in countries outside your own.
               We take appropriate safeguards to ensure your data is treated in accordance with this policy
               and applicable data protection laws.
             </p>

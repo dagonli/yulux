@@ -12,7 +12,7 @@ export function Footer() {
           <p className="mt-3 text-sm text-muted">{SITE.description}</p>
         </div>
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wider">Shop Neon</h3>
+          <h3 className="text-sm font-semibold uppercase tracking-wider">Neon Collection</h3>
           <ul className="mt-4 space-y-2">
             {FOOTER_LINKS.products.map((link) => (
               <li key={link.href}>

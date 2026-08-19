@@ -1,22 +1,22 @@
 export const HOME_META = {
-  title: "Custom LED Neon Signs & 3D Channel Letters | Yulux Signs",
+  title: "Custom LED Neon Signs & 3D Channel Letters | Yulux Sign",
   description:
     "Elevate your brand with precision-crafted 3D channel letters & custom neon signs. Engineering-grade signage solutions for global businesses. 1,000+ real-world projects. Get a free quote!",
   keywords:
     "custom neon signs, 3D channel letters, business logo neon, illuminated signs, custom led signs, light box sign",
-  ogImage: "https://www.yuluxsigns.com/images/og-cover.webp",
+  ogImage: "https://www.yuluxsign.com/images/og-cover.webp",
 };
 
 export const HERO = {
   h1: "Elevate Your Brand with Precision-Crafted Illumination",
   subhead:
-    "From high-end 3D channel letters to bespoke neon art, Yulux Signs delivers durable, engineering-grade signage solutions for global businesses and creative spaces.",
+    "From high-end 3D channel letters to bespoke neon art, Yulux Signs delivers durable, custom-built signage solutions for sign companies, contractors, exhibition builders, businesses, and commercial spaces.",
   ctas: [
     { label: "Design Your Own Neon", href: "/custom-neon-signs", variant: "primary" as const },
     { label: "Get a Free Quote", href: "/get-a-quote", variant: "secondary" as const },
     { label: "Illuminated Signage", href: "/channel-letters-logos", variant: "secondary" as const },
   ],
-  trustStrip: "Trusted by 1,000+ businesses worldwide · 10+ Years of Engineering Experience · 2-Year Warranty",
+  trustStrip: "Trusted by 1,000+ businesses worldwide · 10+ Years of Engineering Experience · 2-Year Limited Warranty",
   image: "/images/hero-background.webp",
   imageAlt: "Purple back-lit 3D channel letter signage illuminated at night for luxury retail storefront",
 };
@@ -150,7 +150,7 @@ export const INSPIRATION_GALLERY = {
 };
 
 export const REAL_WORLD_PROJECTS = {
-  h2: "Real-World Projects: Our Global Footprint",
+  h2: "Real-World Projects: Our Work",
   subhead: "From factory floor to global storefront — authentic craftsmanship, delivered worldwide.",
   projects: [
     {
@@ -181,7 +181,7 @@ export const REAL_WORLD_PROJECTS = {
       craft: "Custom LED Neon",
       location: "London, UK",
       caption: "Recent project: Artistic neon installation for a creative agency lobby.",
-      description: "Architectural-grade neon art featuring intricate curves and custom color gradients. Engineered for 50,000+ hours of continuous operation while maintaining consistent brightness and hue.",
+      description: "Commercial-grade neon art featuring intricate curves and custom color gradients. Engineered for 50,000+ hours of continuous operation while maintaining consistent brightness and hue.",
       href: "/custom-neon-signs",
       image: "/images/projects/project-neon-12.jpg",
       alt: "Artistic LED neon installation in London creative agency lobby",

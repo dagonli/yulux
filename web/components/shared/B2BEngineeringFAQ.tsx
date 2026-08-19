@@ -102,7 +102,7 @@ export function B2BEngineeringFAQ() {
             onClick={scrollToQuote}
             className="mt-6 inline-block rounded-lg bg-accent px-8 py-3.5 text-base font-bold text-white transition hover:bg-accent-hover"
           >
-            Get Free Design
+            Get a Free Quote
           </Link>
         </div>
       </div>

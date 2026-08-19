@@ -2,14 +2,17 @@
 
 import { useRef, useState } from "react";
 import { submitInquiry, type InquiryType } from "@/lib/api";
+import { SmartImage } from "@/components/shared/SmartImage";
 
-type Field = {
+export type Field = {
   id: string;
   label: string;
   type: string;
   required?: boolean;
   placeholder?: string;
   options?: string[];
+  /** 预填默认值（select 选其中某个 option，input 填入文本） */
+  defaultValue?: string;
   /** 双列表单布局下是否独占整行（默认占一列） */
   fullWidth?: boolean;
 };
@@ -24,6 +27,8 @@ export function InquiryForm({
   dark = false,
   twoColumn = false,
   centerSubmit = false,
+  productSummary,
+  bare = false,
 }: {
   inquiryType: InquiryType;
   fields: Field[];
@@ -34,6 +39,10 @@ export function InquiryForm({
   twoColumn?: boolean;
   /** 提交按钮是否居中（默认占满整行） */
   centerSubmit?: boolean;
+  /** 表单顶部展示的商品摘要（商品名 + 图片），用于下单表单 */
+  productSummary?: { name: string; image: string };
+  /** 无边框无背景（用于已自带容器/弹窗的场景，避免卡片套卡片） */
+  bare?: boolean;
 }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -95,7 +104,23 @@ export function InquiryForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`${twoColumn ? "grid grid-cols-1 gap-4 sm:grid-cols-2" : "space-y-4"} rounded-xl border p-6 ${dark ? "border-card-border bg-card/80" : "border-card-border bg-card"}`}>
+    <form
+      onSubmit={handleSubmit}
+      className={`${twoColumn ? "grid grid-cols-1 gap-4 sm:grid-cols-2" : "space-y-4"} ${
+        bare ? "" : "rounded-xl border p-6 "
+      }${dark ? "border-card-border bg-card/80" : bare ? "" : "border-card-border bg-card"}`}
+    >
+      {productSummary && (
+        <div className={`${twoColumn ? "sm:col-span-2" : ""} flex items-center gap-4 rounded-lg border border-card-border bg-background/60 p-3`}>
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md border border-card-border">
+            <SmartImage src={productSummary.image} alt={productSummary.name} fill className="object-cover" sizes="64px" />
+          </div>
+          <div>
+            <p className="text-xs uppercase tracking-wide text-muted">Ordering</p>
+            <p className="text-sm font-semibold">{productSummary.name}</p>
+          </div>
+        </div>
+      )}
       {fields.map((field) => (
         <div key={field.id} className={twoColumn && field.fullWidth ? "sm:col-span-2" : undefined}>
           <label htmlFor={field.id} id={field.type === "radio" ? `${field.id}-label` : undefined} className="block text-sm font-medium mb-1">
@@ -106,6 +131,7 @@ export function InquiryForm({
               id={field.id}
               name={field.id}
               required={field.required}
+              defaultValue={field.defaultValue ?? ""}
               className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
             >
               <option value="">Select...</option>
@@ -192,6 +218,7 @@ export function InquiryForm({
               type={field.type}
               required={field.required}
               placeholder={field.placeholder}
+              defaultValue={field.defaultValue}
               className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
             />
           )}

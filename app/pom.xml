@@ -15,7 +15,7 @@
     <artifactId>yulux-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>yulux-backend</name>
-    <description>Yulux Signs backend service for storing website inquiries</description>
+    <description>Yulux Sign backend service for storing website inquiries</description>
 
     <properties>
         <java.version>8</java.version>

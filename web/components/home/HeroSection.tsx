@@ -4,7 +4,7 @@ import { HERO } from "@/content/home";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[85vh] flex items-center" aria-label="Yulux Signs - Custom LED Neon Signs and 3D Channel Letters">
+    <section className="relative min-h-[85vh] flex items-center" aria-label="Yulux Sign - Custom LED Neon Signs and 3D Channel Letters">
       <SmartImage
         src={HERO.image}
         alt={HERO.imageAlt}

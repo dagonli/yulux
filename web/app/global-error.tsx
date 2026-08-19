@@ -21,7 +21,7 @@ export default function GlobalError({
         <p className="mt-3 max-w-md text-[#9ca3af]">
           A critical error occurred. Please try again or visit{" "}
           <a href="/" className="text-[#a855f7] underline">
-            yuluxsigns.com
+            yuluxsign.com
           </a>
           .
         </p>

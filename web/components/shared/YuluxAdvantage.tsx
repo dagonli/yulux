@@ -3,9 +3,9 @@ import { SmartImage } from "@/components/shared/SmartImage";
 const ADVANTAGES = [
   {
     icon: "/images/icons/yulux_icon_quality.png",
-    title: "Engineering-Grade Quality",
+    title: "Built to Your Specifications",
     description:
-      "100% handcrafted using premium 12V flexible LED technology. CE & RoHS compliant, low-heat, and eco-friendly for maximum safety.",
+      "Custom-built using quality materials and professional 12V LED technology, with careful attention to dimensions, finish, illumination, and installation requirements.",
   },
   {
     icon: "/images/icons/yulux_icon_shipping.png",
@@ -21,9 +21,9 @@ const ADVANTAGES = [
   },
   {
     icon: "/images/icons/yulux_icon_warranty.png",
-    title: "2-Year Comprehensive Warranty",
+    title: "2-Year Limited Warranty",
     description:
-      "Enjoy total peace of mind with our 2-year hassle-free warranty covering all indoor and outdoor signage components.",
+      "2-Year Limited Warranty covering manufacturing defects and LED failures under normal operating conditions. Terms and exclusions apply.",
   },
 ] as const;
 
@@ -31,7 +31,7 @@ export function YuluxAdvantage() {
   return (
     <section className="section-padding">
       <div className="mx-auto max-w-7xl">
-        <h2 className="text-center text-3xl font-bold md:text-4xl">Why Industry Leaders Choose Yulux Signs</h2>
+        <h2 className="text-center text-3xl font-bold md:text-4xl">Why Industry Leaders Choose Yulux Sign</h2>
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {ADVANTAGES.map((item) => (
             <div key={item.title} className="flex flex-col items-center text-center">

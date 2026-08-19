@@ -35,9 +35,9 @@ export const PRODUCTS: Product[] = [
       "Adjustable Radiance: Features a free smart dimmer to adjust brightness from a soft, intimate glow to vibrant party lighting.",
       "Safe & Durable: Powered by low voltage 12V LED technology, remaining completely cool to the touch with zero noise or risk of breakage.",
     ],
-    metaTitle: "Better Together Wedding Neon Sign | Yulux Signs",
+    metaTitle: "Better Together Wedding Neon Sign | Yulux Sign",
     metaDescription:
-      'Shop our "Better Together" neon sign. Perfect for weddings, engagement parties & home decor. Premium LED, 2-year warranty, free global shipping. Order now!',
+      'Shop our "Better Together" neon sign. Perfect for weddings, engagement parties & home decor. Premium LED, 2-year limited warranty, free global shipping. Order now!',
     keywords: "wedding neon sign, wedding quotes, led wedding signs, wedding signage, personalized neon",
     price: 189,
     scene: "Wedding / Engagement",
@@ -79,7 +79,7 @@ export const PRODUCTS: Product[] = [
       "Energy Efficient & Quiet: Enjoy 50,000+ hours of bright, energy-saving light with zero buzzing or overheating — perfect as a nightlight.",
       "Ready Out of the Box: Pre-drilled holes and complete hanging hardware make installation on any wall quick and effortless.",
     ],
-    metaTitle: "Good Vibes Only Neon Sign | Yulux Signs",
+    metaTitle: "Good Vibes Only Neon Sign | Yulux Sign",
     metaDescription:
       'Brighten your space with a "Good Vibes Only" neon sign. Ideal for bedrooms, studios & gifts. Dimmable LED, safe & durable. Get yours with free shipping!',
     keywords: "good vibes only neon sign, neon signs for bedroom, neon lights for bedroom, led neon sign, aesthetic room decor",
@@ -123,7 +123,7 @@ export const PRODUCTS: Product[] = [
       "Crystal Clear Acrylic Backing: Cut-to-shape transparent acrylic backing blends seamlessly into any wall color or wallpaper.",
       "Smart Dimming Control: Easily lower the brightness for a cozy movie night or turn it up to full power to brighten the entire room.",
     ],
-    metaTitle: "This Must Be The Place Neon Sign | Yulux Signs",
+    metaTitle: "This Must Be The Place Neon Sign | Yulux Sign",
     metaDescription:
       'Elevate your home with "This Must Be The Place" neon sign. A timeless statement piece for living rooms & entryways. Premium quality LED neon. Shop today!',
     keywords: "neon signs for home, custom neon signs for home decor, living room wall decor, aesthetic neon light",
@@ -165,7 +165,7 @@ export const PRODUCTS: Product[] = [
       "100% Safe LED Technology: No fragile glass, no toxic gases, and no heat — making it safe to leave turned on all night next to your drinks.",
       "Plug and Play: Comes with a global 12V power adapter and hanging chain so you can start the happy hour celebrations immediately.",
     ],
-    metaTitle: "Cheers! Neon Bar Sign | Yulux Signs",
+    metaTitle: "Cheers! Neon Bar Sign | Yulux Sign",
     metaDescription:
       'Get the party started with a "Cheers!" neon sign. Perfect for home bars, kitchens & man caves. High-impact, energy-efficient LED neon. Fast global delivery.',
     keywords: "bar signs, bar sign, neon bar signs, neon bar sign, custom home bar sign",

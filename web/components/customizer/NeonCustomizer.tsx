@@ -10,11 +10,13 @@ import {
   CUSTOMIZER_SEO_TEXT,
   FONTS,
   PREVIEW_BACKGROUNDS,
+  CUSTOM_NEON_QUOTE_FIELDS,
+  CUSTOM_NEON_QUOTE_NOTE,
+  CUSTOM_NEON_QUOTE_SUCCESS,
 } from "@/content/customizer";
-import { calculateMockPrice } from "@/lib/pricing-mock";
-import { useCart } from "@/lib/cart-context";
 import { MaterialQuality } from "@/components/shared/MaterialQuality";
 import { HowItWorks } from "@/components/shared/HowItWorks";
+import { InquiryForm, type Field } from "@/components/forms/InquiryForm";
 
 function getDynamicFontSize(text: string): number {
   const len = text.length;
@@ -34,12 +36,22 @@ export function NeonCustomizer() {
   const [environmentId, setEnvironmentId] = useState<"indoor" | "outdoor">("indoor");
   const [bgId, setBgId] = useState("black");
   const [openStep, setOpenStep] = useState<number | null>(1);
-  const { addItem } = useCart();
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const color = NEON_COLORS.find((c) => c.id === colorId) ?? NEON_COLORS[0];
   const font = FONTS.find((f) => f.id === fontId) ?? FONTS[0];
   const bg = PREVIEW_BACKGROUNDS.find((b) => b.id === bgId) ?? PREVIEW_BACKGROUNDS[0];
-  const price = calculateMockPrice({ text, fontCategory: "script", colorId, backingId, environmentId });
+
+  // 询价表单字段 = 联系方式字段 + 隐藏的设计选项（落入后端 payload）
+  const quoteFields: Field[] = [
+    ...CUSTOM_NEON_QUOTE_FIELDS,
+    { id: "customText", label: "", type: "hidden", defaultValue: text },
+    { id: "fontId", label: "", type: "hidden", defaultValue: fontId },
+    { id: "colorId", label: "", type: "hidden", defaultValue: colorId },
+    { id: "backingId", label: "", type: "hidden", defaultValue: backingId },
+    { id: "environmentId", label: "", type: "hidden", defaultValue: environmentId },
+  ];
 
   const previewStyle = useMemo(() => {
     const fontSize = getDynamicFontSize(text || "Your Text");
@@ -239,19 +251,18 @@ export function NeonCustomizer() {
             ))}
 
             <div className="rounded-xl border border-accent/30 bg-accent/5 p-6">
-              <p className="text-sm text-muted">Instant Pricing</p>
-              <p className="text-3xl font-bold text-accent">${price}</p>
+              <p className="text-sm font-semibold text-accent">Custom Pricing</p>
+              <p className="mt-3 text-sm text-foreground">
+                <span className="font-medium">No payment required.</span> We&apos;ll confirm your options and final price by email.
+              </p>
+              <p className="mt-2 text-sm text-muted">
+                Price depends on size, design, color, backing and shipping destination.
+              </p>
               <button
                 className="btn-primary mt-4 w-full"
-                onClick={() =>
-                  addItem({
-                    id: `custom-${text}-${colorId}`,
-                    name: `Custom Neon: "${text}"`,
-                    price,
-                  })
-                }
+                onClick={() => setShowQuoteModal(true)}
               >
-                Add to Cart
+                Get a Free Quote
               </button>
             </div>
           </div>
@@ -261,6 +272,77 @@ export function NeonCustomizer() {
       </div>
       <MaterialQuality />
       <HowItWorks />
+
+      {/* Quote form modal */}
+      {showQuoteModal && !showThankYou && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="quote-modal-title"
+          onClick={() => setShowQuoteModal(false)}
+        >
+          <div
+            className="flex max-h-[90vh] w-full max-w-lg flex-col rounded-2xl border border-card-border bg-card shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex shrink-0 items-center justify-between border-b border-card-border px-6 py-4">
+              <h2 id="quote-modal-title" className="text-xl font-bold">Get a Free Quote</h2>
+              <button
+                type="button"
+                onClick={() => setShowQuoteModal(false)}
+                className="text-muted hover:text-foreground text-2xl leading-none"
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
+              <InquiryForm
+                inquiryType="CUSTOM_NEON"
+                fields={quoteFields}
+                submitLabel="Submit Request"
+                twoColumn
+                bare
+                onSuccess={() => {
+                  setShowThankYou(true);
+                }}
+              />
+            </div>
+            <p className="shrink-0 border-t border-card-border px-6 py-3 text-center text-xs text-muted">{CUSTOM_NEON_QUOTE_NOTE}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Thank you modal */}
+      {showThankYou && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="quote-thankyou-title"
+        >
+          <div className="w-full max-w-md rounded-2xl border border-card-border bg-card p-8 text-center shadow-xl">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent">
+              <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            </div>
+            <h2 id="quote-thankyou-title" className="text-xl font-bold">{CUSTOM_NEON_QUOTE_SUCCESS.title}</h2>
+            <p className="mt-3 text-sm text-muted">{CUSTOM_NEON_QUOTE_SUCCESS.message}</p>
+            <button
+              type="button"
+              onClick={() => {
+                setShowThankYou(false);
+                setShowQuoteModal(false);
+              }}
+              className="btn-primary mt-6 w-full"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

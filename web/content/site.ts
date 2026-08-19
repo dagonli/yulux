@@ -1,15 +1,15 @@
 export const SITE = {
-  name: "Yulux Signs",
-  url: "https://yuluxsigns.com",
+  name: "Yulux Sign",
+  url: "https://yuluxsign.com",
   description:
     "Precision-crafted 3D channel letters & custom LED neon signs for global businesses.",
-  email: "hello@yuluxsigns.com",
+  email: "hello@yuluxsign.com",
 } as const;
 
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   {
-    label: "Shop Neon",
+    label: "Neon Collection",
     href: "/shop-neon",
     children: [
       { label: "Better Together", href: "/products/better-together-wedding-neon-sign" },
@@ -66,14 +66,14 @@ export const MATERIAL_QUALITY = [
     description:
       "We use premium, UV-stabilized flexible LED tubing that ensures a 100% uniform glow without any hot spots. Engineered for longevity, our neon flex is rated for 50,000+ hours of brilliance, remaining cool to the touch even after 24/7 operation.",
     tags: ["Uniform Glow", "UV-Stabilized", "50,000+ Hours Lifespan"],
-    alt: "High-efficiency UV-stabilized LED neon flex tubing - Yulux Signs",
+    alt: "High-efficiency UV-stabilized LED neon flex tubing - Yulux Sign",
   },
   {
-    title: "Architectural-Grade Acrylic",
+    title: "Commercial-Grade Acrylic",
     description:
-      "Every sign is mounted on a high-density, 5mm-8mm architectural-grade acrylic backboard. Precision laser-cut for smooth, polished edges, our backboards are available in crystal clear, sleek black, or custom tinted finishes.",
+      "Every sign is mounted on a high-density, 5mm-8mm commercial-grade acrylic backboard. Precision laser-cut for smooth, polished edges, our backboards are available in crystal clear, sleek black, or custom tinted finishes.",
     tags: ["5mm-8mm Thickness", "Laser-Cut Precision", "Multiple Finishes"],
-    alt: "5mm architectural-grade clear acrylic backboard for custom signs",
+    alt: "5mm commercial-grade clear acrylic backboard for custom signs",
   },
   {
     title: "Certified Power & Safety Systems",

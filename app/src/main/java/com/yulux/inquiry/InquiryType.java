@@ -11,5 +11,7 @@ public enum InquiryType {
     /** 灯箱标识询盘 */
     LIGHTBOX,
     /** 在线定制霓虹（加购/询价） */
-    CUSTOM_NEON
+    CUSTOM_NEON,
+    /** 商品下单询盘（Order Request） */
+    ORDER_REQUEST
 }

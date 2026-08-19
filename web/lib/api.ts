@@ -3,7 +3,7 @@ const API_BASE =
     ? (process.env.API_URL ?? "http://localhost:8080")
     : (process.env.NEXT_PUBLIC_API_URL ?? "");
 
-export type InquiryType = "QUOTE" | "LOGO" | "LIGHTBOX" | "CUSTOM_NEON";
+export type InquiryType = "QUOTE" | "LOGO" | "LIGHTBOX" | "CUSTOM_NEON" | "ORDER_REQUEST";
 
 export type InquiryPayload = {
   type: InquiryType;

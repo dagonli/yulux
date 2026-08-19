@@ -1,4 +1,4 @@
-# Yulux Signs 后端服务
+# Yulux Sign 后端服务
 
 存储网站表单提交（询盘）的 Spring Boot 服务。
 

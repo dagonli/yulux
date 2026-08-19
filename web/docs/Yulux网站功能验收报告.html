@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yulux Signs 网站功能验收报告</title>
+  <title>Yulux Sign 网站功能验收报告</title>
   <style>
     :root {
       --bg: #0a0a0f;
@@ -194,7 +194,7 @@
 
   <main class="main">
     <div class="hero" id="overview">
-      <h1>Yulux Signs 网站功能验收报告</h1>
+      <h1>Yulux Sign 网站功能验收报告</h1>
       <p class="meta">基于《文案内容以及图片规划.xlsx》总体框架 · 对照当前 Web 项目全部功能点</p>
       <div class="badge-row">
         <span class="badge badge-purple">Next.js 16 · App Router</span>
@@ -222,7 +222,7 @@
     <section>
       <h2>1. 验收概述</h2>
       <div class="card">
-        <p><strong>验收目的：</strong>确认 Yulux Signs 官网已按实施文档完成全部页面、模块、文案、图片占位及 SEO/GEO 优化，满足需求方可上线使用的标准。</p>
+        <p><strong>验收目的：</strong>确认 Yulux Sign 官网已按实施文档完成全部页面、模块、文案、图片占位及 SEO/GEO 优化，满足需求方可上线使用的标准。</p>
         <p><strong>验收范围：</strong></p>
         <ul>
           <li><strong>页面与路由</strong>：共 27 个有效路由（含 Gallery 分页）</li>
@@ -247,7 +247,7 @@
         <li>安装依赖（若未安装）：<code>npm install</code></li>
         <li>开发模式验收：<code>npm run dev</code> → 访问 <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></li>
         <li>生产模式验收（推荐最终验收使用）：<code>npm run build && npm start</code></li>
-        <li>若已部署至服务器，将下方 URL 替换为正式域名（当前配置：<code>https://yuluxsigns.com</code>）</li>
+        <li>若已部署至服务器，将下方 URL 替换为正式域名（当前配置：<code>https://yuluxsign.com</code>）</li>
       </ol>
 
       <h3>2.2 验收工具清单</h3>
@@ -317,7 +317,7 @@
       <h2>4. 全局功能验收</h2>
       <h3>4.1 顶部导航 Header</h3>
       <div class="check-group" data-group="header">
-        <div class="check-item"><input type="checkbox" id="h1" data-check /><label for="h1">Logo「Yulux Signs」点击返回首页<span class="hint">sticky 吸顶，半透明背景</span></label></div>
+        <div class="check-item"><input type="checkbox" id="h1" data-check /><label for="h1">Logo「Yulux Sign」点击返回首页<span class="hint">sticky 吸顶，半透明背景</span></label></div>
         <div class="check-item"><input type="checkbox" id="h2" data-check /><label for="h2">Signs 下拉菜单含 4 项：Neon Collections / Custom Neon / Channel Letters / Lightbox Signs</label></div>
         <div class="check-item"><input type="checkbox" id="h3" data-check /><label for="h3">Customizer → /custom-neon-signs</label></div>
         <div class="check-item"><input type="checkbox" id="h4" data-check /><label for="h4">The Signage Lab → /signage-lab</label></div>
@@ -332,7 +332,7 @@
         <div class="check-item"><input type="checkbox" id="f1" data-check /><label for="f1">Products 列：5 个产品/服务链接均可跳转</label></div>
         <div class="check-item"><input type="checkbox" id="f2" data-check /><label for="f2">The Signage Lab 列：5 篇 pillar 文章链接均可跳转</label></div>
         <div class="check-item"><input type="checkbox" id="f3" data-check /><label for="f3">Company 列：About / Gallery / Get a Quote 均可跳转</label></div>
-        <div class="check-item"><input type="checkbox" id="f4" data-check /><label for="f4">版权行显示当前年份 + Yulux Signs</label></div>
+        <div class="check-item"><input type="checkbox" id="f4" data-check /><label for="f4">版权行显示当前年份 + Yulux Sign</label></div>
       </div>
 
       <h3>4.3 全站共享模块</h3>
@@ -568,7 +568,7 @@
         <div class="check-item"><input type="checkbox" id="co1" data-check /><label for="co1">逐页对照 xlsx：标题、副标题、正文段落无遗漏、无乱码</label></div>
         <div class="check-item"><input type="checkbox" id="co2" data-check /><label for="co2">6 张规划图片均已放入 public/images/ 且全站正常显示</label></div>
         <div class="check-item"><input type="checkbox" id="co3" data-check /><label for="co3">所有图片均有描述性 alt 文本（非空、非泛化「image」）</label></div>
-        <div class="check-item"><input type="checkbox" id="co4" data-check /><label for="co4">品牌名统一为「Yulux Signs」，邮箱 hello@yuluxsigns.com</label></div>
+        <div class="check-item"><input type="checkbox" id="co4" data-check /><label for="co4">品牌名统一为「Yulux Sign」，邮箱 hello@yuluxsign.com</label></div>
         <div class="check-item"><input type="checkbox" id="co5" data-check /><label for="co5">英文文案无拼写/语法明显错误（抽查 5 页以上）</label></div>
       </div>
     </section>
@@ -601,7 +601,7 @@
           <tr><td>Title</td><td>每页唯一，50–60 字符内，含核心关键词</td><td>浏览器标签 / 源代码 &lt;title&gt;</td></tr>
           <tr><td>Description</td><td>每页唯一，120–160 字符，含 CTA 意图</td><td>&lt;meta name="description"&gt;</td></tr>
           <tr><td>Keywords</td><td>核心页有 keywords meta</td><td>源代码（部分页）</td></tr>
-          <tr><td>Canonical</td><td>指向 https://yuluxsigns.com + 路径</td><td>&lt;link rel="canonical"&gt;</td></tr>
+          <tr><td>Canonical</td><td>指向 https://yuluxsign.com + 路径</td><td>&lt;link rel="canonical"&gt;</td></tr>
           <tr><td>Open Graph</td><td>og:title / description / url / siteName</td><td>源代码或 FB Debugger</td></tr>
           <tr><td>Twitter Card</td><td>summary_large_image</td><td>源代码</td></tr>
           <tr><td>lang</td><td>&lt;html lang="en"&gt;</td><td>源代码</td></tr>
@@ -635,7 +635,7 @@
       <div class="check-group" data-group="seo">
         <div class="check-group-title">SEO 验收项</div>
         <div class="check-item"><input type="checkbox" id="seo1" data-check /><label for="seo1">27 路由均有独立 title + description</label></div>
-        <div class="check-item"><input type="checkbox" id="seo2" data-check /><label for="seo2">全站 canonical URL 使用正式域名 yuluxsigns.com</label></div>
+        <div class="check-item"><input type="checkbox" id="seo2" data-check /><label for="seo2">全站 canonical URL 使用正式域名 yuluxsign.com</label></div>
         <div class="check-item"><input type="checkbox" id="seo3" data-check /><label for="seo3">首页 Rich Results Test：Organization + FAQPage 无 Error</label></div>
         <div class="check-item"><input type="checkbox" id="seo4" data-check /><label for="seo4">产品页 Rich Results Test：Product 无 Error</label></div>
         <div class="check-item"><input type="checkbox" id="seo5" data-check /><label for="seo5">安装指南 Rich Results Test：HowTo 无 Error</label></div>
@@ -650,7 +650,7 @@
     <section id="geo">
       <h2>16. GEO 验收清单（Generative Engine Optimization）</h2>
       <div class="callout callout-info">
-        <strong>GEO 定义：</strong>优化网站内容，使 ChatGPT、Perplexity、Google AI Overview、Copilot 等 AI 搜索引擎能<strong>准确理解、引用、推荐</strong> Yulux Signs 品牌与产品。GEO 效果有延迟，上线后 2–4 周可再做引用监测。
+        <strong>GEO 定义：</strong>优化网站内容，使 ChatGPT、Perplexity、Google AI Overview、Copilot 等 AI 搜索引擎能<strong>准确理解、引用、推荐</strong> Yulux Sign 品牌与产品。GEO 效果有延迟，上线后 2–4 周可再做引用监测。
       </div>
 
       <h3>16.1 品牌实体清晰度</h3>
@@ -696,7 +696,7 @@
           <tr><td>304 vs 316 stainless steel for outdoor signs</td><td>Signage Lab 不锈钢文章</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
           <tr><td>Custom neon sign manufacturer with warranty</td><td>首页 / About / Trust Badges</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
           <tr><td>UL CE RoHS LED neon sign safety</td><td>Signage Lab 安全标准文章</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
-          <tr><td>Yulux Signs custom channel letters quote</td><td>品牌官网链接</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
+          <tr><td>Yulux Sign custom channel letters quote</td><td>品牌官网链接</td><td><select class="status-select" data-status><option value="">—</option><option>已引用且准确</option><option>已引用但不准确</option><option>未引用</option><option>待测</option></select></td></tr>
         </tbody>
       </table>
     </section>
@@ -754,7 +754,7 @@
     </section>
 
     <footer style="margin-top:3rem;padding-top:1rem;border-top:1px solid var(--border);color:var(--muted);font-size:0.85rem;">
-      Yulux Signs Website Acceptance Report · Generated from web/ project source · 2026-06-27
+      Yulux Sign Website Acceptance Report · Generated from web/ project source · 2026-06-27
     </footer>
   </main>
 </div>

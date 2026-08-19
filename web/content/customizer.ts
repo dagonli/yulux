@@ -1,11 +1,13 @@
+import type { Field } from "@/components/forms/InquiryForm";
+
 export const CUSTOMIZER_META = {
-  title: "Custom Neon Signs | Design Online or Upload Your Logo | Yulux Signs",
+  title: "Custom Neon Signs | Design Online or Upload Your Logo | Yulux Sign",
   description:
     "Create your custom neon sign in seconds with our online designer or upload your business logo for a professional quote. Engineering-grade quality, 24h response, and global shipping.",
 };
 
 export const LOGO_META = {
-  title: "Custom Neon Logo & Business Neon Sign Quote | Yulux Signs",
+  title: "Custom Neon Logo & Business Neon Sign Quote | Yulux Sign",
   description:
     "Upload your business logo for a professional neon sign quote. Engineering-grade quality, 24h response, and global shipping.",
 };
@@ -70,6 +72,57 @@ export const LOGO_FORM_FIELDS = {
   successTitle: "Thank You — We've Received Your Request",
   successMessage:
     "Our senior design team will contact you within 24 hours with a free professional mockup and custom quote.",
+};
+
+/**
+ * 定制霓虹询价弹窗表单字段。
+ *
+ * 字段分流（见 InquiryForm 的 COMMON_KEYS）：
+ * - name / email / country / address / message → 顶级 InquiryRequest 列
+ *   （address = Delivery Address，message = Additional Requirements，phone = Mobile Phone）
+ * - 设计选项（customText / fontId / colorId / backingId / environmentId）由 NeonCustomizer
+ *   注入隐藏字段，落入 payload JSON。
+ *
+ * 字段顺序与用户指定一致：Your Name、email、country、Delivery address、additional requirements、mobile phone。
+ */
+export const CUSTOM_NEON_QUOTE_FIELDS: Field[] = [
+  { id: "name", label: "Your Name", type: "text", required: true },
+  { id: "email", label: "Email", type: "email", required: true },
+  { id: "country", label: "Country", type: "text", required: true },
+  {
+    id: "address",
+    label: "Delivery Address",
+    type: "text",
+    required: true,
+    fullWidth: true,
+    placeholder: "Street address, city, state/province, postal code",
+  },
+  {
+    id: "message",
+    label: "Additional Requirements",
+    type: "textarea",
+    required: false,
+    fullWidth: true,
+    placeholder: "Tell us about size, mounting, deadline, or any special requests (optional)",
+  },
+  {
+    id: "phone",
+    label: "Mobile Phone",
+    type: "text",
+    required: false,
+    placeholder: "Optional",
+  },
+];
+
+/** 提交按钮下方的小字 */
+export const CUSTOM_NEON_QUOTE_NOTE =
+  "We'll review your request and contact you within 24 hours.";
+
+/** 提交成功后 Thank You Modal 的文案 */
+export const CUSTOM_NEON_QUOTE_SUCCESS = {
+  title: "We've received your request.",
+  message:
+    "Our design team will review your custom neon options and contact you within 24 hours to confirm the design and final price.",
 };
 
 export const CUSTOM_NEON_FAQ = {

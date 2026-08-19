@@ -4,9 +4,9 @@ import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { SITE } from "@/content/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Terms of Service | Yulux Signs",
+  title: "Terms of Service | Yulux Sign",
   description:
-    "Read the Terms of Service for Yulux Signs. Understand your rights and responsibilities when using our website and ordering custom signage.",
+    "Read the Terms of Service for Yulux Sign. Understand your rights and responsibilities when using our website and ordering custom signage.",
   path: "/terms",
 });
 
@@ -25,7 +25,7 @@ export default function TermsPage() {
           <section>
             <h2>1. Acceptance of Terms</h2>
             <p>
-              By accessing or using the Yulux Signs website at{" "}
+              By accessing or using the Yulux Sign website at{" "}
               <a href={SITE.url} className="text-accent underline">{SITE.url}</a>, you agree to be bound by
               these Terms of Service. If you do not agree, please do not use our website.
             </p>
@@ -34,7 +34,7 @@ export default function TermsPage() {
           <section>
             <h2>2. Our Services</h2>
             <p>
-              Yulux Signs provides custom LED neon signs and 3D channel letter signage. Products are made to
+              Yulux Sign provides custom LED neon signs and 3D channel letter signage. Products are made to
               order based on customer specifications. The website serves as a showcase and inquiry platform;
               final orders are confirmed via direct communication with our team.
             </p>
@@ -65,7 +65,7 @@ export default function TermsPage() {
             <ul>
               <li>Standard production time is 7–10 business days after design approval and payment confirmation.</li>
               <li>Shipping is via DHL or FedEx express, fully insured.</li>
-              <li>Delivery times are estimates; Yulux Signs is not responsible for carrier delays.</li>
+              <li>Delivery times are estimates; Yulux Sign is not responsible for carrier delays.</li>
               <li>Customers are responsible for import duties and taxes in their country.</li>
             </ul>
           </section>
@@ -73,7 +73,7 @@ export default function TermsPage() {
           <section>
             <h2>6. Warranty</h2>
             <p>
-              Yulux Signs provides a 2-year limited warranty covering manufacturing defects and LED failures
+              Yulux Sign provides a 2-year limited warranty covering manufacturing defects and LED failures
               under normal operating conditions. This warranty does not cover:
             </p>
             <ul>
@@ -101,14 +101,14 @@ export default function TermsPage() {
             </p>
             <p className="mt-3">
               By submitting design files or logos for a custom order, you confirm you have the rights to use
-              those materials and grant Yulux Signs a license to use them solely for producing your order.
+              those materials and grant Yulux Sign a license to use them solely for producing your order.
             </p>
           </section>
 
           <section>
             <h2>9. Limitation of Liability</h2>
             <p>
-              To the maximum extent permitted by law, Yulux Signs shall not be liable for any indirect,
+              To the maximum extent permitted by law, Yulux Sign shall not be liable for any indirect,
               incidental, special, or consequential damages arising from the use of our products or website.
               Our total liability shall not exceed the amount paid for the specific order in question.
             </p>

@@ -2,18 +2,16 @@
 
 import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { Product } from "@/content/products";
 import { PRODUCT_TEMPLATE } from "@/content/site";
-import { useCart } from "@/lib/cart-context";
 
-const SIZES = [
-  { label: "Small", size: "50cm / 20\"" },
-  { label: "Medium", size: "75cm / 30\"" },
-  { label: "Large", size: "100cm / 40\"" },
-];
+const SIZES = ["40cm", "60cm", "80cm"];
 
-const TUBE_TYPES = ["White Tube", "Color Matching Tube"];
+const TUBE_TYPES = ["White Tube", "Color matching Tube"];
+
+const POWER_SUPPLIES = ["US", "EU", "UK"];
 
 function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -34,12 +32,13 @@ function Accordion({ title, children }: { title: string; children: React.ReactNo
 const SHIPPING_COPY = `We ship worldwide via DHL / FedEx express, fully insured. Production takes 7–10 business days, delivery 3–5 days after dispatch. International orders are welcome — the plug type will match your destination country. If you need a specific delivery date, contact our team and we'll do our best to accommodate.`;
 
 export function ProductPage({ product }: { product: Product }) {
-  const { addItem } = useCart();
+  const router = useRouter();
   const [selectedColor, setSelectedColor] = useState<"Warm White" | "Pink">(
     (product.variants?.[0]?.color ?? "Warm White") as "Warm White" | "Pink"
   );
-  const [selectedSize, setSelectedSize] = useState("Medium");
+  const [selectedSize, setSelectedSize] = useState("60cm");
   const [selectedTube, setSelectedTube] = useState("White Tube");
+  const [selectedPowerSupply, setSelectedPowerSupply] = useState("US");
   const [activeImageIdx, setActiveImageIdx] = useState(0);
 
   const currentVariant = product.variants?.find((v) => v.color === selectedColor);
@@ -83,7 +82,6 @@ export function ProductPage({ product }: { product: Product }) {
             <p className="text-sm text-accent uppercase tracking-wide">{product.scene}</p>
             <h1 className="mt-2 text-3xl font-bold md:text-4xl">{product.title}</h1>
             <p className="mt-4 text-lg text-muted">{product.hook}</p>
-            <p className="mt-6 text-3xl font-bold text-accent">${product.price}</p>
 
             {/* Color selector */}
             {product.variants && product.variants.length > 0 && (
@@ -117,21 +115,20 @@ export function ProductPage({ product }: { product: Product }) {
             {/* Size selector */}
             <div className="mt-5">
               <p className="text-sm font-medium mb-2">
-                Size: <span className="text-accent">{SIZES.find((s) => s.label === selectedSize)?.size}</span>
+                Size: <span className="text-accent">{selectedSize}</span>
               </p>
               <div className="flex flex-wrap gap-2">
                 {SIZES.map((s) => (
                   <button
-                    key={s.label}
-                    onClick={() => setSelectedSize(s.label)}
+                    key={s}
+                    onClick={() => setSelectedSize(s)}
                     className={`rounded-lg border px-4 py-2 text-sm font-medium transition ${
-                      selectedSize === s.label
+                      selectedSize === s
                         ? "border-accent bg-accent/10 text-accent"
                         : "border-card-border text-muted hover:border-accent/50"
                     }`}
                   >
-                    {s.label}
-                    <span className="ml-1 text-xs opacity-70">({s.size})</span>
+                    {s}
                   </button>
                 ))}
               </div>
@@ -157,21 +154,43 @@ export function ProductPage({ product }: { product: Product }) {
               </div>
             </div>
 
-            {/* Add to cart */}
+            {/* Power supply */}
+            <div className="mt-5">
+              <p className="text-sm font-medium mb-2">Power Supply: <span className="text-accent">{selectedPowerSupply}</span></p>
+              <div className="flex flex-wrap gap-2">
+                {POWER_SUPPLIES.map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => setSelectedPowerSupply(p)}
+                    className={`rounded-lg border px-4 py-2 text-sm font-medium transition ${
+                      selectedPowerSupply === p
+                        ? "border-accent bg-accent/10 text-accent"
+                        : "border-card-border text-muted hover:border-accent/50"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Order */}
             <button
               className="btn-primary mt-6 w-full sm:w-auto"
-              onClick={() =>
-                addItem({
-                  id: product.slug,
-                  name: product.name,
-                  price: product.price,
-                  href: `/products/${product.slug}`,
-                })
-              }
+              onClick={() => {
+                const query = new URLSearchParams({
+                  product: product.slug,
+                  color: selectedColor,
+                  size: selectedSize,
+                  tube: selectedTube,
+                  powerSupply: selectedPowerSupply,
+                }).toString();
+                router.push(`/order-request?${query}`);
+              }}
             >
-              Add to Cart
+              Order This Sign
             </button>
-            <p className="mt-2 text-xs text-muted">Delivered in 7-10 business days · Free global shipping · 2-Year Warranty</p>
+            <p className="mt-2 text-xs text-muted">Delivered in 7-10 business days · Free global shipping · 2-Year Limited Warranty</p>
 
             {/* Accordion specs below cart */}
             <div className="mt-8 border-t border-card-border">
@@ -209,7 +228,7 @@ export function ProductPage({ product }: { product: Product }) {
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <SmartImage
                 src="/images/product-whats-in-box.webp"
-                alt="Yulux Signs packaging contents"
+                alt="Yulux Sign packaging contents"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"

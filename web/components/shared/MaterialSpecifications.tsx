@@ -32,7 +32,7 @@ export function MaterialSpecifications() {
     <section className="section-padding bg-card/30">
       <div className="mx-auto max-w-7xl">
         <h2 className="text-center text-3xl font-bold md:text-4xl">
-          Engineering-Grade Materials for Uncompromising Quality
+          Quality Materials. Built for Your Project.
         </h2>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {MATERIAL_SPECS.map((item) => (

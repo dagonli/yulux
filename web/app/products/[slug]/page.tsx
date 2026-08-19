@@ -40,18 +40,17 @@ export default async function ProductDetailPage({ params }: Props) {
           productSchema({
             name: product.name,
             description: product.hook,
-            price: product.price,
             image: product.image,
             url,
           }),
           breadcrumbSchema([
             { name: "Home", url: SITE.url },
-            { name: "Shop Neon", url: `${SITE.url}/shop-neon` },
+            { name: "Neon Collection", url: `${SITE.url}/shop-neon` },
             { name: product.name, url },
           ]),
         ]}
       />
-      <Breadcrumb items={[{ label: "Shop Neon", href: "/shop-neon" }, { label: product.name }]} />
+      <Breadcrumb items={[{ label: "Neon Collection", href: "/shop-neon" }, { label: product.name }]} />
       <ProductPage product={product} />
     </>
   );

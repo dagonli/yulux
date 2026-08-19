@@ -10,8 +10,8 @@ export function organizationSchema() {
     description: "Custom LED neon signs and 3D channel letter signage for global businesses.",
     email: SITE.email,
     sameAs: [
-      "https://www.instagram.com/yuluxsigns",
-      "https://www.facebook.com/yuluxsigns",
+      "https://www.instagram.com/yuluxsign",
+      "https://www.facebook.com/yuluxsign",
     ],
   };
 }
@@ -43,10 +43,19 @@ export function faqSchema(items: { question: string; answer: string }[]) {
 export function productSchema(product: {
   name: string;
   description: string;
-  price: number;
+  price?: number;
   image: string;
   url: string;
 }) {
+  const offers: Record<string, unknown> = {
+    "@type": "Offer",
+    priceCurrency: "USD",
+    availability: "https://schema.org/InStock",
+    url: product.url,
+  };
+  if (product.price != null) {
+    offers.price = product.price;
+  }
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -54,13 +63,7 @@ export function productSchema(product: {
     description: product.description,
     image: `${SITE.url}${product.image}`,
     brand: { "@type": "Brand", name: SITE.name },
-    offers: {
-      "@type": "Offer",
-      price: product.price,
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-      url: product.url,
-    },
+    offers,
   };
 }
 

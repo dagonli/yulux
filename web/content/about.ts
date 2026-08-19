@@ -8,7 +8,7 @@ export const ABOUT_SECTIONS = [
   {
     id: "hook",
     headline: "Beyond Signage. We Engineer Light.",
-    body: "At Yulux, we believe a sign is more than just a name on a wall—it is the luminous heartbeat of a brand. In an era where visual identity defines success, we don't just \"make\" signs; we develop architectural-grade lighting solutions that bridge the gap between creative vision and technical reality.",
+    body: "At Yulux, we believe a sign is more than just a name on a wall—it is the luminous heartbeat of a brand. In an era where visual identity defines success, we don't just \"make\" signs; we develop commercial-grade lighting solutions that bridge the gap between creative vision and technical reality.",
   },
   {
     id: "gap",
@@ -28,8 +28,8 @@ export const ABOUT_SECTIONS = [
   },
   {
     id: "philosophy",
-    headline: 'The "Engineering-Grade" Standard.',
-    body: 'What does "Engineering-Grade" mean to us? It means using 304/316 stainless steel that defies corrosion. It means sourcing Samsung/Cree LED chips rated for 50,000+ hours for every custom LED sign and custom LED light project. It means every custom lightbox undergoes a 24-hour stress test before it earns the Yulux seal of approval. We build for decades, not just for the grand opening.',
+    headline: "The Custom-Built Standard",
+    body: 'What does our quality standard mean to us?\nIt means selecting 304/316 stainless steel where the project requires enhanced corrosion resistance, and using quality LED components selected according to the application and performance requirements. Every custom sign is carefully inspected and tested before shipment for illumination, finish, and functionality. We focus on building signage that is made for reliable long-term use—not just for the grand opening.',
     image: "/images/image6.webp",
     imageAlt: "Premium stainless steel and LED components for engineering-grade custom signage",
   },

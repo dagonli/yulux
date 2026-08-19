@@ -12,7 +12,7 @@ export type Technique = {
 };
 
 export const HUB_META = {
-  title: "Custom Channel Letters & Business Signage Solutions | Yulux Signs",
+  title: "Custom Channel Letters & Business Signage Solutions | Yulux Sign",
   description:
     "Engineering-grade custom channel letters and logo signs. Front-lit, back-lit, side-lit and more. Get a free 24h quote for your business signage project.",
 };
@@ -20,7 +20,7 @@ export const HUB_META = {
 export const HUB_CONTENT = {
   h1: "Custom Channel Letters & Logo Signs",
   subhead:
-    "Engineering-grade architectural signage for retail, corporate, and luxury brands. Explore our Craftsmanship Lab and get a free quote within 24 hours.",
+    "Custom-built architectural signage tailored to retail, corporate, and luxury spaces. Explore our Craftsmanship Lab and get a free quote within 24 hours.",
 };
 
 export const TECHNIQUES: Technique[] = [

@@ -1,6 +1,6 @@
-# Yulux Signs — Frontend Website
+# Yulux Sign — Frontend Website
 
-Next.js App Router site for Yulux Signs (custom LED neon signs & 3D channel letters), built from the Yulux website development documentation.
+Next.js App Router site for Yulux Sign (custom LED neon signs & 3D channel letters), built from the Yulux website development documentation.
 
 ## Stack
 

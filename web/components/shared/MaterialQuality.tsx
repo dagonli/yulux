@@ -3,7 +3,7 @@ import { MATERIAL_QUALITY } from "@/content/site";
 
 const ICON_MAP: Record<string, string> = {
   "High-Efficiency LED Neon Flex": "/images/icons/yulux_icon_neon_flex.png",
-  "Architectural-Grade Acrylic": "/images/icons/yulux_icon_acrylic.png",
+  "Commercial-Grade Acrylic": "/images/icons/yulux_icon_acrylic.png",
   "Certified Power & Safety Systems": "/images/icons/yulux_icon_safety.png",
 };
 
@@ -13,7 +13,7 @@ export function MaterialQuality() {
       <div className="mx-auto max-w-7xl">
         <h2 className="text-center text-3xl font-bold md:text-4xl">Material & Quality</h2>
         <p className="mx-auto mt-4 max-w-2xl text-center text-muted">
-          Engineering-grade materials that justify every investment in your brand.
+          Quality materials selected for every custom-built project.
         </p>
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {MATERIAL_QUALITY.map((item) => (

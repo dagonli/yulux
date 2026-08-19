@@ -1,5 +1,5 @@
 export const LIGHTBOX_META = {
-  title: "Bespoke Lightbox & Custom Glowing Signage Systems | Yulux Signs",
+  title: "Bespoke Lightbox & Custom Glowing Signage Systems | Yulux Sign",
   description:
     "Engineering-grade, fully customized architectural lightboxes & premium glowing storefront signage. 100% tailored to your brand specifications. Get a free 24h custom quote.",
 };
@@ -7,7 +7,7 @@ export const LIGHTBOX_META = {
 export const LIGHTBOX_HERO = {
   h1: "Fully Customized Lightbox & Premium Glowing Signage",
   h4: "No templates. No standard sizes. Every single lightbox is custom-engineered from scratch to precisely replicate your architectural vision and brand identity.",
-  cta: "Request 1:1 Engineering Design & Quote (Free within 24h)",
+  cta: "Get a free quote",
 };
 
 export const LIGHTBOX_CAPABILITIES = [
@@ -72,5 +72,5 @@ export const LIGHTBOX_FORM_FIELDS = [
 
 export const LIGHTBOX_CTA = {
   h2: "Ready to bring your brand to light?",
-  cta: { label: "Get Free Design", href: "#get-a-quote" },
+  cta: { label: "Get a Free Quote", href: "#get-a-quote" },
 };

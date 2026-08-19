@@ -27,12 +27,12 @@ export default function ShopNeonPage() {
         data={[
           breadcrumbSchema([
             { name: "Home", url: SITE.url },
-            { name: "Shop Neon", url: `${SITE.url}/shop-neon` },
+            { name: "Neon Collection", url: `${SITE.url}/shop-neon` },
           ]),
           itemListSchema(listItems),
         ]}
       />
-      <Breadcrumb items={[{ label: "Shop Neon" }]} />
+      <Breadcrumb items={[{ label: "Neon Collection" }]} />
       <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
         <h1 id="shop-neon" className="text-4xl font-bold md:text-5xl">{SHOP_NEON_HERO.h1}</h1>
         <p className="mt-4 max-w-3xl text-lg text-muted">{SHOP_NEON_HERO.subhead}</p>

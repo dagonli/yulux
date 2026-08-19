@@ -2,14 +2,8 @@ import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 
-const STATS = [
-  { value: "10,000+", label: "Custom Signs Delivered" },
-  { value: "50+", label: "Countries Served" },
-  { value: "10+", label: "Years of Experience" },
-];
-
 const TRUST_ITEMS = [
-  { icon: "🛡️", label: "3-Year Warranty" },
+  { icon: "🛡️", label: "2-Year Warranty" },
   { icon: "✈️", label: "Worldwide Express Shipping" },
   { icon: "⚡", label: "CE / UL Certified Power Supply" },
 ];
@@ -22,7 +16,7 @@ export function QuoteFormSection() {
           {/* Left column — trust & factory */}
           <div className="space-y-8">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-widest text-accent">Yulux Signs</p>
+              <p className="text-sm font-semibold uppercase tracking-widest text-accent">Yulux Sign</p>
               <h2 className="mt-2 text-3xl font-bold md:text-4xl">Premium Quality.<br />Global Delivery.</h2>
               <p className="mt-4 text-muted leading-relaxed">
                 Over 10,000 custom signs delivered to businesses worldwide. Our factory combines precision engineering
@@ -35,7 +29,7 @@ export function QuoteFormSection() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
                 <SmartImage
                   src="/images/quote/factory-2.webp"
-                  alt="Yulux Signs factory production line"
+                  alt="Yulux Sign factory production line"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 50vw, 25vw"
@@ -44,7 +38,7 @@ export function QuoteFormSection() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
                 <SmartImage
                   src="/images/quote/factory-backview.webp"
-                  alt="Yulux Signs factory back view"
+                  alt="Yulux Sign factory back view"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 50vw, 25vw"
@@ -53,22 +47,12 @@ export function QuoteFormSection() {
               <div className="relative col-span-2 aspect-[16/7] overflow-hidden rounded-xl">
                 <SmartImage
                   src="/images/quote/project-1.webp"
-                  alt="Yulux Signs completed project showcase"
+                  alt="Yulux Sign completed project showcase"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
-            </div>
-
-            {/* Stats */}
-            <div className="flex gap-6">
-              {STATS.map((s) => (
-                <div key={s.label}>
-                  <p className="text-2xl font-bold text-accent">{s.value}</p>
-                  <p className="text-xs text-muted">{s.label}</p>
-                </div>
-              ))}
             </div>
 
             {/* Trust badges */}
@@ -84,7 +68,7 @@ export function QuoteFormSection() {
             {/* Testimonial */}
             <blockquote className="rounded-xl border border-card-border bg-card p-5">
               <p className="text-sm leading-relaxed text-muted italic">
-                &ldquo;Yulux Signs delivered beyond our expectations. Outstanding quality, professional service, and
+                &ldquo;Yulux Sign delivered beyond our expectations. Outstanding quality, professional service, and
                 fast delivery. Our go-to partner for global sign solutions.&rdquo;
               </p>
               <footer className="mt-3 flex items-center gap-3">
