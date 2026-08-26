@@ -27,8 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -96,7 +96,13 @@ public class AdminViewController {
         String filename = StringUtils.hasText(inquiry.getAttachmentFilename())
                 ? inquiry.getAttachmentFilename()
                 : "attachment";
-        String encoded = URLEncoder.encode(filename, StandardCharsets.UTF_8).replace("+", "%20");
+        String encoded;
+        try {
+            encoded = URLEncoder.encode(filename, "UTF-8").replace("+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            // UTF-8 始终可用，理论上不会走到这里
+            throw new IllegalStateException(e);
+        }
 
         MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
         if (StringUtils.hasText(inquiry.getAttachmentContentType())) {

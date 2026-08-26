@@ -11,6 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -24,8 +27,9 @@ public class AttachmentStorageService {
     private static final String SUB_DIR = "inquiries";
 
     /** 允许上传的附件扩展名白名单（与前端 accept 保持一致） */
-    private static final Set<String> ALLOWED_EXTENSIONS = Set.of(
-            ".jpg", ".jpeg", ".png", ".tiff", ".tif", ".ai", ".pdf");
+    private static final Set<String> ALLOWED_EXTENSIONS = Collections.unmodifiableSet(
+            new HashSet<>(Arrays.asList(
+                    ".jpg", ".jpeg", ".png", ".tiff", ".tif", ".ai", ".pdf")));
 
     @Value("${yulux.upload-dir}")
     private String uploadDir;
