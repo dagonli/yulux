@@ -41,7 +41,7 @@ export const ABOUT_SECTIONS = [
   {
     id: "closing",
     headline: "Let's Build Something Brilliant Together.",
-    body: 'Whether you are a startup looking for your first "Good Vibes" neon or a global franchise requiring a thousand channel letters, our mission remains the same: to provide the most reliable, beautiful, and technically superior signage on the planet.',
+    body: 'Whether you are a startup looking for your first "Good Vibes" neon or ordering a single custom sign or planning signage for multiple locations, our mission remains the same: to provide the most reliable, beautiful, and technically superior signage on the planet.',
     ctas: [
       { label: "Explore Our Craftsmanship", href: "/channel-letters-logos" },
       { label: "Start Your Custom Project", href: "/get-a-quote" },
