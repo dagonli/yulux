@@ -8,15 +8,15 @@ export const HOME_META = {
 };
 
 export const HERO = {
-  h1: "Elevate Your Brand with Precision-Crafted Illumination",
+  h1: "Custom Illuminated Signage, Built for International Projects",
   subhead:
-    "From high-end 3D channel letters to bespoke neon art, Yulux Signs delivers durable, custom-built signage solutions for sign companies, contractors, exhibition builders, businesses, and commercial spaces.",
+    "From 3D channel letters and illuminated logos to custom LED neon and light boxes, Yulux Signs works with businesses, sign companies, contractors and exhibition builders to deliver custom signage from China.",
   ctas: [
     { label: "Design Your Own Neon", href: "/custom-neon-signs", variant: "primary" as const },
     { label: "Get a Free Quote", href: "/get-a-quote", variant: "secondary" as const },
     { label: "Illuminated Signage", href: "/channel-letters-logos", variant: "secondary" as const },
   ],
-  trustStrip: "Trusted by 1,000+ businesses worldwide · 10+ Years of Engineering Experience · 2-Year Limited Warranty",
+  trustStrip: "Built for Businesses, Brands & Creative Spaces · 11+ Years of International Exhibition Experience · 2-Year Limited Warranty",
   image: "/images/hero-background.webp",
   imageAlt: "Purple back-lit 3D channel letter signage illuminated at night for luxury retail storefront",
 };
@@ -244,7 +244,7 @@ export const HOME_FAQ = {
     {
       question: "What happens if my sign arrives damaged?",
       answer:
-        "Every order ships fully insured. If your sign arrives damaged, contact our team within 48 hours with photos and we will arrange a free replacement or repair at no extra cost.",
+        "If your sign arrives damaged, contact us with photos and we'll work with you on a repair or replacement solution.",
     },
     {
       question: "Do you offer custom sizing for different spaces?",

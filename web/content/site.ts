@@ -101,9 +101,9 @@ export const HOW_IT_WORKS = [
   },
   {
     step: 3,
-    title: "Handcraft & Global Express",
+    title: "Handcrafted Production & Global Express",
     description:
-      "Once approved, our master craftsmen begin the 100% handmade production process. After a rigorous 24-hour light test, your sign is securely packaged and shipped via DHL/FedEx express with full insurance.",
+      "Once approved, our skilled production team begins the handcrafted manufacturing process. Each sign undergoes a 8-hour lighting test before being securely packaged and shipped via DHL or FedEx express, with shipping insurance available.",
     highlight: "100% Handcrafted & Insured Express Shipping",
   },
 ] as const;
@@ -145,7 +145,7 @@ export const PRODUCT_TEMPLATE = {
     {
       question: "How long is the lifespan of a Yulux custom LED neon sign?",
       answer:
-        "Our custom LED neon signs are engineered for longevity, featuring high-efficiency LEDs with a lifespan of over 50,000 hours. Unlike traditional glass neon, our LED custom signs are shatter-resistant and maintain consistent brightness for years of commercial use.",
+        "Our custom LED neon signs are designed for long-lasting performance, featuring high-efficiency LEDs with a rated lifespan of over 50,000 hours. Unlike traditional glass neon, LED neon is lightweight, durable, and less prone to breakage, making it a practical choice for exhibitions, retail spaces, and other commercial applications.",
     },
     {
       question: "Can you create a custom neon sign from my business logo?",
@@ -155,7 +155,7 @@ export const PRODUCT_TEMPLATE = {
     {
       question: "Are Yulux signs energy-efficient and safe for commercial environments?",
       answer:
-        "Yes. Our factory-direct LED neon signs consume up to 80% less energy than traditional glass neon. They operate on a low-voltage 12V system, making them cool to the touch and safe for high-traffic areas. All power supplies are CE, UL, and RoHS certified.",
+        "Our factory-direct LED neon signs are designed to provide energy-efficient illumination compared with traditional glass neon. They operate on a low-voltage 12V system and are well-suited for exhibitions, retail spaces, and other commercial environments. UL-listed power supplies are available for US applications, with CE and RoHS-compliant options available for other markets.",
     },
   ],
   crossSell:

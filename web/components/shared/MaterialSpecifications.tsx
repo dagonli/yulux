@@ -16,13 +16,13 @@ const MATERIAL_SPECS = [
   {
     title: "Certified LED Modules",
     description:
-      "Equipped with top-tier LED chips boasting 50,000+ hours lifespan, superior brightness. Ensuring your storefront stays zero-maintenance for 5+ years.",
+      "Equipped with high-quality LED modules rated for 50,000+ hours of operation, providing bright and reliable illumination for long-term commercial use.",
     image: "/images/lightbox/yulux_macro_illumination.png",
   },
   {
     title: "Globally Certified Power Supplies",
     description:
-      "All power components are CE, UL, and RoHS certified, providing stable, safe, and flicker-free operation in any environment.",
+      "Power supply options are available with CE, UL, and RoHS compliance, providing stable and reliable operation for commercial and exhibition applications.",
     image: "/images/lightbox/yulux_lightbox_frameless.png",
   },
 ] as const;

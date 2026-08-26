@@ -17,7 +17,7 @@ const ADVANTAGES = [
     icon: "/images/icons/yulux_icon_response.png",
     title: "24-Hour Rapid Technical Response",
     description:
-      "Our design team provides free professional mockups and detailed quotes within 24 hours for all custom logo inquiries.",
+      "For most complete custom inquiries, we'll review your requirements and respond with a professional mockup and quotation within 24 hours.",
   },
   {
     icon: "/images/icons/yulux_icon_warranty.png",

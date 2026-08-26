@@ -36,7 +36,7 @@ export const ABOUT_SECTIONS = [
   {
     id: "global",
     headline: "A Global Partner for Local Icons.",
-    body: "From boutique cafes in Paris to corporate headquarters in New York, Yulux signs glow in every corner of the globe. We understand the complexities of international shipping and local electrical standards. When you partner with Yulux as a trusted custom sign company, you aren't just buying a product; you are gaining a technical consultant dedicated to making your brand shine, wherever you are.",
+    body: "Designed for Global Projects / Built for International Delivery. We understand the complexities of international shipping and local electrical standards. When you partner with Yulux as a trusted custom sign company, you aren't just buying a product; you are gaining a technical consultant dedicated to making your brand shine, wherever you are.",
   },
   {
     id: "closing",

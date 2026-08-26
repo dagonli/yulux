@@ -26,9 +26,9 @@ const STEPS: Step[] = [
   },
   {
     step: 4,
-    title: "Rigorous 24-Hour Burn-In Test",
+    title: "8-Hour Lighting & Quality Test",
     description:
-      "Every single letter is lit for 24 hours straight. We video-record the final test of YOUR sign and send it to you before crating.",
+      "Every sign is continuously lit for 8 hours before final inspection. Testing photos or videos can be provided upon request before crating.",
     highlight: true,
   },
 ];
