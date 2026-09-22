@@ -36,7 +36,6 @@ CREATE DATABASE yulux DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
 | `ADMIN_PASSWORD` | 后台登录密码 | `admin123` |
 | `CORS_ALLOWED_ORIGINS` | 允许的前端来源（逗号分隔） | `http://localhost:3000` |
 | `UPLOAD_DIR` | 上传图片本地存储目录 | `./uploads` |
-| `PUBLIC_BASE_URL` | 后端对外 URL（拼接上传图绝对地址） | `http://localhost:8080` |
 
 生产环境务必覆盖 `ADMIN_API_KEY`、`ADMIN_USERNAME`、`ADMIN_PASSWORD` 和数据库密码。
 
@@ -87,7 +86,7 @@ X-Api-Key: <ADMIN_API_KEY>
 GET /api/site-images
 ```
 
-返回 `{ "ok": true, "data": { "/images/hero-background.webp": "http://localhost:8080/uploads/..." } }`
+返回 `{ "ok": true, "data": { "/images/hero-background.webp": "/uploads/..." } }`（上传图统一返回相对路径，不写死域名，由前端负责代理/拼接）
 
 ## 后台管理（Thymeleaf）
 
@@ -99,7 +98,7 @@ GET /api/site-images
 | `http://localhost:8080/admin/inquiries` | 询盘列表、筛选、详情 |
 | `http://localhost:8080/admin/images` | 全站图片配置：上传即转 WebP、限宽 2000px |
 
-上传的图片保存在 `UPLOAD_DIR`，通过 `http://localhost:8080/uploads/**` 访问。前端 `web` 通过 `GET /api/site-images` 拉取映射，未替换的图回退到默认 `/images/*.webp`。
+上传的图片保存在 `UPLOAD_DIR`，通过 `/uploads/**` 访问（数据库里只存相对路径，不含域名）。前端 `web` 通过 `GET /api/site-images` 拉取映射，未替换的图回退到默认 `/images/*.webp`；`/uploads/**` 由 `web/next.config.ts` 的 rewrites 代理到 `NEXT_PUBLIC_API_URL`/`API_URL` 指向的后端，后台预览页则与后端同源直接加载。
 
 ## 本地联调验证
 

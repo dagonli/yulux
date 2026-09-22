@@ -32,11 +32,13 @@ public class ImageUploadService {
     @Value("${yulux.upload-dir}")
     private String uploadDir;
 
-    @Value("${yulux.public-base-url}")
-    private String publicBaseUrl;
-
     /**
-     * 保存上传图片，转 WebP 后落盘，返回可公开访问的绝对 URL
+     * 保存上传图片，转 WebP 后落盘，返回 /uploads/xxx.webp 相对路径。
+     * 不在此处拼接域名：上传图片始终由本服务的 /uploads/** 静态资源提供，
+     * 无论前台站点部署在哪个域名，都通过 Next.js rewrites 代理到本服务；
+     * 后台预览页也和本服务同源。写成绝对地址反而会把当时的访问域名
+     * （如本地开发的 http://localhost:8080）硬编码进数据库，一旦部署环境/域名变化
+     * 或换机器访问就会失效。
      */
     public String storeAsWebp(String imageKey, MultipartFile file) throws IOException {
         BufferedImage source = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
@@ -55,10 +57,7 @@ public class ImageUploadService {
 
         writeWebp(rgb, outFile);
 
-        String base = publicBaseUrl.endsWith("/")
-                ? publicBaseUrl.substring(0, publicBaseUrl.length() - 1)
-                : publicBaseUrl;
-        return base + "/uploads/" + filename;
+        return "/uploads/" + filename;
     }
 
     private BufferedImage resizeIfNeeded(BufferedImage src) {

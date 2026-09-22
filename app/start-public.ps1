@@ -11,8 +11,10 @@ Remove-Item Env:\DB_URL -ErrorAction SilentlyContinue
 $env:FRONTEND_BASE_URL = "https://yulux.vercel.app"
 $env:CORS_ALLOWED_ORIGINS = "https://yulux.vercel.app,http://localhost:3000"
 
-# 如果有固定的 ngrok 域名，可以取消下面的注释并修改
-# $env:PUBLIC_BASE_URL = "https://你的ngrok地址.ngrok-free.app"
+# 注意：上传图片的 URL 不再需要 PUBLIC_BASE_URL。
+# 后端只存相对路径（/uploads/xxx.webp），前台站点通过 Next.js rewrites
+# 把 /uploads/** 代理到后端（取决于前端构建时配置的 NEXT_PUBLIC_API_URL），
+# 后台预览页与本服务同源，两边都不需要在后端写死域名。
 
 Write-Host "============================================" -ForegroundColor Green
 Write-Host "  启动后端（公网访问模式）" -ForegroundColor Green
@@ -20,9 +22,6 @@ Write-Host "============================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "Frontend Base URL: $env:FRONTEND_BASE_URL" -ForegroundColor Cyan
 Write-Host "CORS Origins:      $env:CORS_ALLOWED_ORIGINS" -ForegroundColor Cyan
-if ($env:PUBLIC_BASE_URL) {
-    Write-Host "Public Base URL:   $env:PUBLIC_BASE_URL" -ForegroundColor Cyan
-}
 Write-Host ""
 
 # 启动服务
