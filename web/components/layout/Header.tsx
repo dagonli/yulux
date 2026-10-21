@@ -3,12 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { NAV_LINKS } from "@/content/site";
-import { useCart } from "@/lib/cart-context";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const { count, openCart } = useCart();
 
   const toggleDropdown = (label: string) => {
     setOpenDropdown((current) => (current === label ? null : label));
@@ -18,7 +16,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-card-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 lg:px-8">
         <Link href="/" className="text-xl font-bold tracking-tight">
-          Yulux<span className="text-accent"> Signs</span>
+          Yulux<span className="text-accent"> Sign</span>
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex xl:gap-8" aria-label="Main navigation">
@@ -73,20 +71,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={openCart}
-            className="relative rounded-full p-2 text-white hover:text-[#8B5CF6]"
-            aria-label="Open cart"
-          >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-            {count > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-xs font-bold text-white">
-                {count}
-              </span>
-            )}
-          </button>
           <Link href="/get-a-quote" className="btn-primary hidden text-sm sm:inline-flex">
             Get a Free Quote
           </Link>

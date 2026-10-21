@@ -5,13 +5,23 @@ package com.yulux.inquiry;
  */
 public enum InquiryType {
     /** 通用报价表单 */
-    QUOTE,
+    QUOTE("General Quote"),
     /** Logo 霓虹定制询盘 */
-    LOGO,
+    LOGO("Logo Neon Inquiry"),
     /** 灯箱标识询盘 */
-    LIGHTBOX,
+    LIGHTBOX("Lightbox Inquiry"),
     /** 在线定制霓虹（加购/询价） */
-    CUSTOM_NEON,
+    CUSTOM_NEON("Online Neon Customizer"),
     /** 商品下单询盘（Order Request） */
-    ORDER_REQUEST
+    ORDER_REQUEST("Product Order Request");
+
+    private final String label;
+
+    InquiryType(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }

@@ -26,7 +26,7 @@
             <label>Type</label>
             <select name="type">
                 <option value="">All</option>
-                <option th:each="t : ${types}" th:value="${t}" th:text="${t}"
+                <option th:each="t : ${types}" th:value="${t}" th:text="${t.label}"
                         th:selected="${t == selectedType}"></option>
             </select>
         </div>
@@ -46,6 +46,7 @@
         <tr>
             <th>ID</th>
             <th>Type</th>
+            <th>Source</th>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
@@ -61,7 +62,8 @@
         </tr>
         <tr th:each="r : ${records}">
             <td th:text="${r.id}">1</td>
-            <td th:text="${r.type}">QUOTE</td>
+            <td th:text="${r.type.label}">QUOTE</td>
+            <td th:text="${r.sourcePage} ?: '—'">/get-a-quote</td>
             <td th:text="${r.name}">Name</td>
             <td><a th:href="'mailto:' + ${r.email}" th:text="${r.email}">a@b.com</a></td>
             <td th:text="${r.phone}"></td>

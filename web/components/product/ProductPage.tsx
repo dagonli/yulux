@@ -190,7 +190,7 @@ export function ProductPage({ product }: { product: Product }) {
             >
               Order This Sign
             </button>
-            <p className="mt-2 text-xs text-muted">Delivered in 7-10 business days · Free global shipping · 2-Year Limited Warranty</p>
+            <p className="mt-2 text-xs text-muted">Ships in 7-10 business days · Free global shipping · 2-Year Limited Warranty</p>
 
             {/* Accordion specs below cart */}
             <div className="mt-8 border-t border-card-border">

@@ -59,17 +59,6 @@ export function RealWorldProjects() {
                     className="object-cover transition duration-300 group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <p className="font-semibold text-white">{project.name}</p>
-                    <p className="text-sm text-accent">{project.craft}</p>
-                    <p className="text-xs text-white/70">{project.location}</p>
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100">
-                    <span className="rounded-full bg-white/10 backdrop-blur-sm border border-white/30 px-4 py-2 text-sm font-semibold text-white">
-                      + View Details
-                    </span>
-                  </div>
                 </div>
               </button>
             ))}
@@ -131,20 +120,9 @@ export function RealWorldProjects() {
                   sizes="(max-width: 768px) 100vw, 80vw"
                 />
               </div>
-
-              <div
-                className={`pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-5 transition-opacity duration-300 ${
-                  isZoomed ? "opacity-0" : "opacity-100"
-                }`}
-              >
-                <p className="text-xs font-semibold uppercase tracking-widest text-accent">{selected.craft}</p>
-                <h3 className="mt-1 text-xl font-bold text-white md:text-2xl">{selected.name}</h3>
-                <p className="mt-1 text-sm text-white/70">{selected.location}</p>
-              </div>
             </div>
 
-            <div className="flex flex-col gap-4 border-t border-card-border p-5 md:flex-row md:items-center md:justify-between">
-              <p className="max-w-2xl text-sm leading-relaxed text-muted">{selected.description}</p>
+            <div className="flex justify-center border-t border-card-border p-5">
               <Link
                 href="/get-a-quote"
                 className="btn-primary shrink-0 text-center"

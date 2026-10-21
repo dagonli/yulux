@@ -1,5 +1,4 @@
 import { SmartImage } from "@/components/shared/SmartImage";
-import Link from "next/link";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 
 const TRUST_ITEMS = [
@@ -19,7 +18,7 @@ export function QuoteFormSection() {
               <p className="text-sm font-semibold uppercase tracking-widest text-accent">Yulux Sign</p>
               <h2 className="mt-2 text-3xl font-bold md:text-4xl">Premium Quality.<br />Global Delivery.</h2>
               <p className="mt-4 text-muted leading-relaxed">
-                Over 10,000 custom signs delivered to businesses worldwide. Our factory combines precision engineering
+                Over 1,000 custom signs delivered to businesses worldwide. Our factory combines precision engineering
                 with artistic craftsmanship — every sign is built to last and built to impress.
               </p>
             </div>
@@ -92,12 +91,6 @@ export function QuoteFormSection() {
                 </div>
               </div>
               <QuoteForm />
-              <p className="mt-5 text-center text-sm text-muted">
-                Want to see an instant preview?{" "}
-                <Link href="/custom-neon-signs" className="text-accent hover:underline font-medium">
-                  Click here to use our 3D Customizer →
-                </Link>
-              </p>
             </div>
           </div>
         </div>

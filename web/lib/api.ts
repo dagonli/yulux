@@ -21,6 +21,15 @@ export type InquiryPayload = {
   file?: File | null;
 };
 
+/**
+ * 当前页面路径 + 查询参数（截断到 200 字符，匹配后端 @Size 与 DB 列宽），
+ * 作为询盘 sourcePage 提交，供后管识别来源页面/产品。
+ */
+export function currentSourcePage(): string {
+  if (typeof window === "undefined") return "";
+  return (window.location.pathname + window.location.search).slice(0, 200);
+}
+
 type ApiResult<T> = {
   ok: boolean;
   data?: T;

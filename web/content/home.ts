@@ -100,9 +100,9 @@ export const CRAFTSMANSHIP_LAB = {
       label: "Jelly-Lit",
       subLabel: "Luscious Glow",
       definition:
-        "Jelly-Lit signs use a translucent acrylic face that diffuses light evenly across the entire surface, giving letters a soft, glossy, 'jelly-like' finish popular in retail and cafe branding.",
+        "Jelly-Lit signs are crafted with engineering-grade resin poured over integrated LED modules, creating a smooth, rounded, glossy finish — popular for retail, cafe, and playful branding.",
       image: "/images/craft-jelly-lit.webp",
-      alt: "Jelly-Lit resin neon sign with luscious glow texture",
+      alt: "Jelly-Lit resin sign with rounded glossy glow",
     },
     {
       id: "full-lit",

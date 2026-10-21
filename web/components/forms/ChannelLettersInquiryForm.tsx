@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { SmartImage } from "@/components/shared/SmartImage";
-import { submitInquiry } from "@/lib/api";
+import { currentSourcePage, submitInquiry } from "@/lib/api";
 
 const TECH_OPTIONS = [
   { id: "front-lit", label: "Front-lit" },
@@ -55,7 +55,7 @@ export function ChannelLettersInquiryForm() {
         phone: common.phone,
         address: common.address,
         payload,
-        sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+        sourcePage: currentSourcePage() || undefined,
         file,
       });
       setSubmitted(true);

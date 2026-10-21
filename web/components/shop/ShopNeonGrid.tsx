@@ -78,31 +78,6 @@ export function ShopNeonGrid({ products }: { products: Product[] }) {
           );
         })}
       </div>
-
-      {/* Coming Soon */}
-      <div className="mt-20 rounded-2xl border border-card-border bg-card/50 py-14 px-6 text-center">
-        <h2 className="text-2xl font-bold md:text-3xl">More Designs, Coming Soon.</h2>
-        <p className="mt-3 text-sm" style={{ color: "#aaa", fontSize: 14 }}>
-          Drop your email to get notified when new premium signs drop.
-        </p>
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
-        >
-          <input
-            type="email"
-            required
-            placeholder="Enter your email"
-            className="w-full max-w-xs rounded-lg border border-card-border bg-background px-4 py-3 text-sm focus:border-accent focus:outline-none sm:w-72"
-          />
-          <button
-            type="submit"
-            className="rounded-lg bg-accent px-8 py-3 text-sm font-bold text-white transition hover:bg-accent-hover"
-          >
-            Notify Me
-          </button>
-        </form>
-      </div>
     </>
   );
 }

@@ -124,7 +124,7 @@ export const TECHNIQUES: Technique[] = [
     subhead:
       "Unique rounded resin texture with a soft, vibrant glow — perfect for trendy cafes, bars, and playful branding.",
     craft:
-      "Jelly-Lit signs use engineering-grade resin with integrated LED illumination for a rounded, luscious glow effect unlike traditional flat channel letters.",
+      "Jelly-Lit signs are crafted with engineering-grade resin poured over integrated LED modules, creating a smooth, rounded, glossy finish — popular for retail, cafe, and playful branding.",
     whyChoose: "Distinctive texture, playful branding, Instagram-worthy aesthetics.",
     faq: [
       {

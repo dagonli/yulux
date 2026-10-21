@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useState, useRef } from "react";
-import { submitInquiry } from "@/lib/api";
+import { currentSourcePage, submitInquiry } from "@/lib/api";
 
 const PROJECT_TYPES = [
   "Custom Neon Signs",
@@ -35,7 +35,7 @@ export function QuoteForm() {
         country: String(form.get("country") ?? ""),
         message: String(form.get("message") ?? ""),
         payload: { customerType, projectType },
-        sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+        sourcePage: currentSourcePage() || undefined,
         file,
       });
       setSubmitted(true);

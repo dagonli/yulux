@@ -1,4 +1,4 @@
-import { SITE } from "@/content/site";
+import { CONTACT, SITE } from "@/content/site";
 
 export function organizationSchema() {
   return {
@@ -9,6 +9,7 @@ export function organizationSchema() {
     logo: `${SITE.url}/images/og-cover.webp`,
     description: "Custom LED neon signs and 3D channel letter signage for global businesses.",
     email: SITE.email,
+    telephone: CONTACT.phone,
     sameAs: [
       "https://www.instagram.com/yuluxsign",
       "https://www.facebook.com/yuluxsign",

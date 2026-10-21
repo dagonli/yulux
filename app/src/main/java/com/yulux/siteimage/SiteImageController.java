@@ -26,14 +26,15 @@ public class SiteImageController {
 
     /**
      * 返回 imageKey -> url 映射，供前端按需覆盖硬编码图片。
-     * url 经 {@link ImageUrlResolver} 归一化：/uploads/xxx.webp 始终返回相对路径，
-     * 即使历史数据里误写了绝对域名（如 http://localhost:8080/...）也会自动还原。
+     * url 经 {@link ImageUrlResolver#resolveForFrontend} 归一化：全部保持相对路径
+     * （/images/... 是前端本地资源；/uploads/xxx.webp 即使历史数据里误写了
+     * 绝对域名也会自动还原），避免 next/image 因未配置远程域名而报错。
      */
     @GetMapping("/site-images")
     public ApiResult<Map<String, String>> all() {
         Map<String, String> map = new LinkedHashMap<>();
         for (SiteImage img : siteImageMapper.selectList(null)) {
-            map.put(img.getImageKey(), imageUrlResolver.resolve(img.getUrl()));
+            map.put(img.getImageKey(), imageUrlResolver.resolveForFrontend(img.getUrl()));
         }
         return ApiResult.success(map);
     }

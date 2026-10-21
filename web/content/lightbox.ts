@@ -10,24 +10,6 @@ export const LIGHTBOX_HERO = {
   cta: "Get a free quote",
 };
 
-export const LIGHTBOX_CAPABILITIES = [
-  {
-    title: "Unlimited Architectural Shapes",
-    description:
-      "From ultra-sleek circular projecting lightboxes to custom-contoured, irregular geometric silhouettes. Our high-precision laser-cutting CNC systems can bring any complex logo silhouette to life with millimeter accuracy.",
-  },
-  {
-    title: "Avant-Garde Material Palette",
-    description:
-      "We don't just use plastic. Match your architectural facade with premium marine-grade 304/316 stainless steel, copper-plated luxury finishes, heavy-duty structural aluminum, or hand-distressed vintage Corten rust steel.",
-  },
-  {
-    title: "Advanced Illumination Aesthetics",
-    description:
-      "Go beyond simple backlighting. We engineer dual-emission lighting (front & halo lit), animated scrolling LEDs, intelligent smart-dimming, and edge-lit acrylic systems that deliver perfectly uniform, glare-free luminescence.",
-  },
-];
-
 export const LIGHTBOX_FAQ = [
   {
     question: "How do you design custom lightboxes to withstand extreme outdoor weather and prevent water ingress?",
@@ -62,12 +44,12 @@ export const LIGHTBOX_FAQ = [
 ];
 
 export const LIGHTBOX_FORM_FIELDS = [
-  { id: "artwork", label: "Upload Artwork", type: "file", placeholder: "Supported formats: JPG, PNG, JPEG, TIFF, AI, PDF", required: false },
+  { id: "artwork", label: "Upload Artwork", type: "file", placeholder: "Supported formats: JPG, PNG, JPEG, TIFF, AI, PDF", required: false, fullWidth: true },
   { id: "name", label: "Name", type: "text", required: true },
   { id: "email", label: "Email", type: "email", required: true },
   { id: "mobile", label: "Mobile Phone", type: "text", required: true },
   { id: "address", label: "Delivery Address", type: "text", required: true },
-  { id: "message", label: "Message", type: "textarea", required: false },
+  { id: "message", label: "Message", type: "textarea", required: false, fullWidth: true, rows: 3 },
 ];
 
 export const LIGHTBOX_CTA = {

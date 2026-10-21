@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useRef, useState } from "react";
-import { submitInquiry, type InquiryType } from "@/lib/api";
+import { currentSourcePage, submitInquiry, type InquiryType } from "@/lib/api";
 import { SmartImage } from "@/components/shared/SmartImage";
 
 export type Field = {
@@ -15,6 +15,8 @@ export type Field = {
   defaultValue?: string;
   /** 双列表单布局下是否独占整行（默认占一列） */
   fullWidth?: boolean;
+  /** textarea 行数（默认 4） */
+  rows?: number;
 };
 
 const COMMON_KEYS = new Set(["name", "email", "company", "country", "phone", "address", "message"]);
@@ -80,7 +82,7 @@ export function InquiryForm({
         address: common.address,
         message: common.message,
         payload,
-        sourcePage: typeof window !== "undefined" ? window.location.pathname : undefined,
+        sourcePage: currentSourcePage() || undefined,
         file,
       });
       setSubmitted(true);
@@ -145,7 +147,7 @@ export function InquiryForm({
               name={field.id}
               required={field.required}
               placeholder={field.placeholder}
-              rows={4}
+              rows={field.rows ?? 4}
               className="w-full rounded-lg border border-card-border bg-background px-4 py-2.5 text-sm"
             />
           ) : field.type === "file" ? (

@@ -131,7 +131,7 @@ export const CUSTOM_NEON_FAQ = {
     {
       question: "What is the typical lead time for a custom project?",
       answer:
-        "Our streamlined process ensures production in 3-5 business days. With global express shipping, most clients receive their custom signs within 10-14 days from design approval.",
+        "Our streamlined process ensures production in 7-10 business days. With global express shipping taking 3-5 business days, most clients receive their custom signs within 10-15 business days from design approval.",
     },
     {
       question: "Is professional installation required?",
