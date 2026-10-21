@@ -41,9 +41,9 @@ export const LAB_FAQ = [
       "Front-lit channel letters maximize visibility and are ideal for retail storefronts. Back-lit (halo) signs create a premium floating effect suited for corporate headquarters and luxury brands seeking architectural elegance.",
   },
   {
-    question: "Are Yulux signs UL and CE certified?",
+    question: "Are Yulux Sign products UL and CE certified?",
     answer:
-      "Yes. All Yulux signs use CE, UL, and RoHS certified 12V power transformers and components, ensuring safe operation worldwide and compliance with commercial installation standards.",
+      "Yes. All Yulux Sign products use CE, UL, and RoHS certified 12V power transformers and components, ensuring safe operation worldwide and compliance with commercial installation standards.",
   },
   {
     question: "How long do LED custom signs typically last?",

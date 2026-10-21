@@ -10,7 +10,7 @@ export const HOME_META = {
 export const HERO = {
   h1: "Custom Illuminated Signage, Built for International Projects",
   subhead:
-    "From 3D channel letters and illuminated logos to custom LED neon and light boxes, Yulux Signs works with businesses, sign companies, contractors and exhibition builders to deliver custom signage from China.",
+    "From 3D channel letters and illuminated logos to custom LED neon and light boxes, Yulux Sign works with businesses, sign companies, contractors and exhibition builders to deliver custom signage from China.",
   ctas: [
     { label: "Design Your Own Neon", href: "/custom-neon-signs", variant: "primary" as const },
     { label: "Get a Free Quote", href: "/get-a-quote", variant: "secondary" as const },

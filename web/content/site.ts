@@ -78,7 +78,7 @@ export const MATERIAL_QUALITY = [
   {
     title: "Certified Power & Safety Systems",
     description:
-      "Safety is our priority. All Yulux signs are powered by CE, UL, and RoHS certified 12V transformers. We use reinforced, transparent wiring and high-quality connectors for a discreet look and secure, flicker-free power supply worldwide.",
+      "Safety is our priority. All Yulux Sign products are powered by CE, UL, and RoHS certified 12V transformers. We use reinforced, transparent wiring and high-quality connectors for a discreet look and secure, flicker-free power supply worldwide.",
     tags: ["12V Low Voltage", "CE/UL/RoHS", "Reinforced Wiring"],
     alt: "CE and UL certified 12V power transformer for LED neon signs",
   },
@@ -153,7 +153,7 @@ export const PRODUCT_TEMPLATE = {
         "Absolutely. As a professional neon sign maker, we specialize in transforming complex business logos into stunning neon art. Simply upload your vector file, and our engineering team will provide a free technical drawing to ensure every detail is captured perfectly.",
     },
     {
-      question: "Are Yulux signs energy-efficient and safe for commercial environments?",
+      question: "Are Yulux Sign products energy-efficient and safe for commercial environments?",
       answer:
         "Our factory-direct LED neon signs are designed to provide energy-efficient illumination compared with traditional glass neon. They operate on a low-voltage 12V system and are well-suited for exhibitions, retail spaces, and other commercial environments. UL-listed power supplies are available for US applications, with CE and RoHS-compliant options available for other markets.",
     },
