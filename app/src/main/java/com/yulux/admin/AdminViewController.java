@@ -8,7 +8,9 @@ import com.yulux.inquiry.InquiryType;
 import com.yulux.inquiry.dto.InquiryResponse;
 import com.yulux.siteimage.ImageUrlResolver;
 import com.yulux.siteimage.SiteImage;
+import com.yulux.siteimage.SiteImageCatalog;
 import com.yulux.siteimage.SiteImageService;
+import com.yulux.siteimage.dto.ImagesPageView;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -31,6 +33,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 后台页面（Thymeleaf 服务端渲染）
@@ -44,6 +50,9 @@ public class AdminViewController {
 
     @Value("${yulux.upload-dir}")
     private String uploadDir;
+
+    @Value("${yulux.frontend-base-url}")
+    private String frontendBaseUrl;
 
     public AdminViewController(InquiryService inquiryService, SiteImageService siteImageService,
                                ImageUrlResolver imageUrlResolver) {
@@ -122,14 +131,68 @@ public class AdminViewController {
 
     @GetMapping("/admin/images")
     public String images(Model model) {
-        java.util.List<SiteImage> images = siteImageService.listAll();
-        java.util.Map<String, String> displayUrls = new java.util.LinkedHashMap<>();
-        for (SiteImage img : images) {
-            displayUrls.put(img.getImageKey(), imageUrlResolver.resolve(img.getUrl()));
-        }
-        model.addAttribute("images", images);
-        model.addAttribute("displayUrls", displayUrls);
+        List<SiteImage> images = siteImageService.listAll();
+        model.addAttribute("groups", buildGroups(images));
         return "images";
+    }
+
+    /**
+     * DB 状态 + Catalog 元数据 -> 分组视图模型。
+     * 未收录进 Catalog 的 key 落入「其他（未收录）」组兜底（上传替换不受影响）；
+     * Catalog 有而 DB 无的组直接跳过，不渲染空区块。
+     */
+    private List<ImagesPageView.GroupView> buildGroups(List<SiteImage> images) {
+        Map<String, List<ImagesPageView.CardView>> buckets = new LinkedHashMap<>();
+        for (SiteImageCatalog.Group group : SiteImageCatalog.groups()) {
+            buckets.put(group.getId(), new ArrayList<>());
+        }
+        List<ImagesPageView.CardView> others = new ArrayList<>();
+
+        for (SiteImage img : images) {
+            String displayUrl = imageUrlResolver.resolve(img.getUrl());
+            SiteImageCatalog.Entry meta = SiteImageCatalog.byKey(img.getImageKey());
+            if (meta == null) {
+                others.add(new ImagesPageView.CardView(img, fallbackEntry(img.getImageKey()), displayUrl, null));
+            } else {
+                buckets.get(meta.getGroupId()).add(new ImagesPageView.CardView(
+                        img, meta, displayUrl, frontendPreviewUrl(meta.getFrontendPath())));
+            }
+        }
+
+        List<ImagesPageView.GroupView> result = new ArrayList<>();
+        for (SiteImageCatalog.Group group : SiteImageCatalog.groups()) {
+            List<ImagesPageView.CardView> cards = buckets.get(group.getId());
+            if (!cards.isEmpty()) {
+                result.add(new ImagesPageView.GroupView(
+                        group.getId(), group.getTitle(), group.getDescription(),
+                        group.isReferenced(), cards));
+            }
+        }
+        if (!others.isEmpty()) {
+            result.add(new ImagesPageView.GroupView(
+                    SiteImageCatalog.OTHER_GROUP_ID, "其他（未收录）",
+                    "数据库中存在但 Catalog 未收录的图片位，请补充 SiteImageCatalog 元数据",
+                    false, others));
+        }
+        return result;
+    }
+
+    /** 未收录 key 的合成元数据（模板因此永远拿到非 null meta） */
+    private SiteImageCatalog.Entry fallbackEntry(String imageKey) {
+        return new SiteImageCatalog.Entry(imageKey, SiteImageCatalog.OTHER_GROUP_ID,
+                imageKey, "未收录的图片位（元数据缺失）",
+                "前端新增的图片位，请在 SiteImageCatalog 中补充元数据", null);
+    }
+
+    /** frontend-base-url + 前端路由；无路由返回 null（模板不渲染链接） */
+    private String frontendPreviewUrl(String frontendPath) {
+        if (!StringUtils.hasText(frontendPath)) {
+            return null;
+        }
+        String base = frontendBaseUrl.endsWith("/")
+                ? frontendBaseUrl.substring(0, frontendBaseUrl.length() - 1)
+                : frontendBaseUrl;
+        return base + frontendPath;
     }
 
     @PostMapping("/admin/images/upload")
@@ -141,10 +204,10 @@ public class AdminViewController {
             if (file.isEmpty()) {
                 throw new IllegalArgumentException("Please choose a file");
             }
-            String url = siteImageService.replaceImage(imageKey, file);
+            siteImageService.replaceImage(imageKey, file);
             redirectAttributes.addFlashAttribute("message", "Updated: " + imageKey);
-            redirectAttributes.addFlashAttribute("updatedKey", imageKey);
-            redirectAttributes.addFlashAttribute("updatedUrl", url);
+            // 上传后直接定位回刚替换的卡片锚点
+            return "redirect:/admin/images#" + SiteImageCatalog.anchorIdOf(imageKey);
         } catch (IOException | IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }

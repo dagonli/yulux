@@ -48,3 +48,52 @@ details summary { cursor: pointer; color: #a855f7; font-size: 13px; }
 .img-card .alt { font-size: 11px; color: #9ca3af; margin-bottom: 10px; }
 .img-card input[type=file] { width: 100%; font-size: 12px; color: #9ca3af; margin-bottom: 8px; }
 .muted { color: #9ca3af; font-size: 13px; }
+
+/* ===== Site Images 分组化改造 ===== */
+
+/* 顶部分组快捷导航（零 JS 锚点） */
+.group-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px;
+             padding: 12px 14px; border: 1px solid #2a2a3a; border-radius: 12px; background: #12121a; }
+.group-nav a { padding: 4px 12px; border-radius: 999px; border: 1px solid #2a2a3a;
+               font-size: 12px; color: #cbd5e1; }
+.group-nav a:hover { color: #a855f7; border-color: rgba(168,85,247,.45); text-decoration: none; }
+
+/* 分组区块；scroll-margin-top 抵消 sticky topbar 的遮挡 */
+.group { margin-bottom: 36px; scroll-margin-top: 72px; }
+.group-head h2 { font-size: 16px; margin: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.group-count { font-size: 12px; font-weight: 400; color: #9ca3af; }
+.group-desc { margin: 6px 0 14px; font-size: 13px; color: #9ca3af; }
+
+/* 卡片信息层级 */
+.img-card .name { display: flex; align-items: center; justify-content: space-between;
+                  gap: 8px; margin-bottom: 4px; }
+.img-card .display-name { font-size: 14px; font-weight: 600; color: #f5f5f7; }
+.img-card .key { font-size: 11px; font-weight: 400; color: #9ca3af; word-break: break-all;
+                 margin-bottom: 6px; font-family: ui-monospace, Consolas, monospace; }
+.img-card .loc { font-size: 12px; color: #cbd5e1; margin-bottom: 8px; }
+
+/* 共用警告条与徽章（琥珀警示 / 青色已替换 / 灰色未接入） */
+.warn { display: flex; gap: 6px; align-items: baseline; font-size: 12px; color: #fbbf24;
+        background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.25);
+        border-radius: 8px; padding: 6px 8px; margin-bottom: 10px; }
+.badge-warn { color: #fbbf24; border-color: rgba(251,191,36,.4); white-space: nowrap; }
+.badge-replaced { color: #22d3ee; border-color: rgba(34,211,238,.4); }
+.badge-off { color: #9ca3af; border-color: #2a2a3a; }
+
+/* 卡片底部：前端查看链接 + 更新时间 */
+.meta-row { display: flex; justify-content: space-between; align-items: center; gap: 8px;
+            margin-bottom: 10px; font-size: 12px; flex-wrap: wrap; }
+.view-link { color: #a855f7; font-size: 12px; }
+.view-link:hover { text-decoration: underline; }
+
+/* 未接入组：整组灰显降饱和 */
+.group-unassigned .thumb { opacity: .45; filter: grayscale(.9); }
+
+/* ===== Logout 确认弹窗（原生 <dialog>） ===== */
+.confirm-dialog { border: 1px solid #2a2a3a; border-radius: 12px; background: #12121a;
+                  color: #f5f5f7; padding: 20px; width: min(360px, calc(100vw - 48px));
+                  box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.confirm-dialog::backdrop { background: rgba(0,0,0,.65); }
+.confirm-dialog .confirm-title { margin: 0 0 6px; font-size: 15px; font-weight: 600; }
+.confirm-dialog .confirm-text { margin: 0 0 18px; font-size: 13px; color: #9ca3af; line-height: 1.5; }
+.confirm-dialog .confirm-actions { display: flex; justify-content: flex-end; gap: 10px; }

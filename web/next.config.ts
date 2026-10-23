@@ -43,6 +43,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // dev 下 fetch 的 HMR 缓存会把后管刚替换的 site-images 映射缓存到热更新间隙，
+  // 导致「替换后刷新仍见旧图」；关掉换取后管替换后的严格实时可见（仅影响本地开发）
+  experimental: {
+    serverComponentsHmrCache: false,
+  },
   async rewrites() {
     return [
       { source: "/api/:path*", destination: `${apiUrl}/api/:path*` },

@@ -12,7 +12,7 @@
     <nav>
         <a th:href="@{/admin/inquiries}" class="active">Inquiries</a>
         <a th:href="@{/admin/images}">Site Images</a>
-        <form th:action="@{/admin/logout}" method="post">
+        <form th:action="@{/admin/logout}" method="post" class="logout-form">
             <button type="submit" class="link">Logout</button>
         </form>
     </nav>
@@ -103,5 +103,6 @@
            th:href="@{/admin/inquiries(page=${page.current + 1}, size=${page.size}, type=${selectedType}, status=${selectedStatus})}">Next</a>
     </div>
 </div>
+<script th:src="@{/js/admin.js}" defer></script>
 </body>
 </html>

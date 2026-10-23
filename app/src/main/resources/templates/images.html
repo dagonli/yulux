@@ -12,32 +12,69 @@
     <nav>
         <a th:href="@{/admin/inquiries}">Inquiries</a>
         <a th:href="@{/admin/images}" class="active">Site Images</a>
-        <form th:action="@{/admin/logout}" method="post">
+        <form th:action="@{/admin/logout}" method="post" class="logout-form">
             <button type="submit" class="link">Logout</button>
         </form>
     </nav>
 </div>
 
 <div class="container">
-    <h1>Site Images <span class="muted">(upload to replace, auto-converted to WebP)</span></h1>
+    <h1>Site Images <span class="muted">(grouped by page · upload to replace, auto-converted to WebP)</span></h1>
 
     <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
     <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
 
-    <div class="grid">
-        <div class="img-card" th:each="img : ${images}">
-            <img class="thumb" th:src="${displayUrls[img.imageKey]}" th:alt="${img.altText}" loading="lazy"/>
-            <div class="body">
-                <div class="key" th:text="${img.imageKey}">home.hero.background</div>
-                <div class="alt" th:text="${img.altText}">alt text</div>
-                <form th:action="@{/admin/images/upload}" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="imageKey" th:value="${img.imageKey}"/>
-                    <input type="file" name="file" accept="image/*" required/>
-                    <button type="submit" class="btn">Upload &amp; Replace</button>
-                </form>
-            </div>
+    <!-- 分组快捷导航：纯 HTML 锚点，零 JS -->
+    <nav class="group-nav" aria-label="Image groups">
+        <a th:each="g : ${groups}" th:href="'#' + ${g.id}"
+           th:text="${g.title} + ' (' + ${g.cards.size()} + ')'">首页 · 主视觉 (1)</a>
+    </nav>
+
+    <section th:each="g : ${groups}" class="group" th:id="${g.id}"
+             th:classappend="${!g.referenced} ? 'group-unassigned'">
+        <div class="group-head">
+            <h2>
+                <span th:text="${g.title}">首页 · 主视觉</span>
+                <span class="group-count" th:text="${g.cards.size()} + ' 张'">1 张</span>
+                <span th:if="${!g.referenced}" class="badge badge-off">前端未接入</span>
+            </h2>
+            <p class="group-desc" th:text="${g.description}">Hero 区全屏背景图</p>
         </div>
-    </div>
+
+        <div class="grid">
+            <article class="img-card" th:each="c : ${g.cards}" th:id="${c.anchorId}">
+                <img class="thumb" th:src="${c.displayUrl}"
+                     th:alt="${c.image.altText != null ? c.image.altText : c.meta.displayName}"
+                     loading="lazy"/>
+                <div class="body">
+                    <div class="name">
+                        <span class="display-name" th:text="${c.meta.displayName}">首页主视觉背景</span>
+                        <span th:if="${c.replaced}" class="badge badge-replaced">已替换</span>
+                    </div>
+                    <div class="key" th:text="${c.image.imageKey}">/images/hero-background.webp</div>
+                    <div class="loc" th:text="${c.meta.pageLocation}">首页 Hero 区全屏背景</div>
+                    <div class="warn" th:if="${c.meta.warning != null}">
+                        <span class="badge badge-warn">&#9888; 共用</span>
+                        <span th:text="${c.meta.warning}">此图在 3 处共用</span>
+                    </div>
+                    <div class="meta-row">
+                        <a th:if="${c.frontendPreviewUrl != null}" class="view-link"
+                           th:href="${c.frontendPreviewUrl}" target="_blank" rel="noopener">在前端查看效果 ↗</a>
+                        <span th:if="${c.frontendPreviewUrl == null}" class="muted">无前端入口</span>
+                        <span class="muted" th:text="${c.replaced
+                            ? '更新于 ' + #temporals.format(c.image.updatedAt, 'yyyy-MM-dd HH:mm')
+                            : '默认图（未替换过）'}">默认图</span>
+                    </div>
+                    <form th:action="@{/admin/images/upload}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="imageKey" th:value="${c.image.imageKey}"/>
+                        <input type="file" name="file" accept="image/*" required/>
+                        <button type="submit" class="btn">Upload &amp; Replace</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+    </section>
 </div>
+<script th:src="@{/js/admin.js}" defer></script>
 </body>
 </html>
