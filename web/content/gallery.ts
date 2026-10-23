@@ -3,23 +3,17 @@ import { REAL_WORLD_PROJECTS, INSPIRATION_GALLERY } from "./home";
 export const GALLERY_ITEMS = [
   ...REAL_WORLD_PROJECTS.projects.map((p) => ({
     id: p.slug,
-    title: p.name,
-    subtitle: `${p.craft} · ${p.location}`,
-    caption: p.caption,
-    href: p.href,
     image: p.image,
     alt: p.alt,
   })),
   ...INSPIRATION_GALLERY.items.map((item) => ({
     id: item.id,
-    title: item.alt.split(" for ")[0] ?? item.alt,
-    subtitle: item.category,
-    caption: item.alt,
-    href: item.href,
     image: item.image,
     alt: item.alt,
   })),
 ];
+
+export type GalleryItem = (typeof GALLERY_ITEMS)[number];
 
 export const ITEMS_PER_PAGE = 8;
 

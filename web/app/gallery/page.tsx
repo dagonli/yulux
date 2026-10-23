@@ -1,7 +1,7 @@
 ﻿import type { Metadata } from "next";
-import { SmartImage } from "@/components/shared/SmartImage";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
+import { GalleryGrid } from "@/components/gallery/GalleryGrid";
 import { buildMetadata } from "@/lib/metadata";
 import { getGalleryPage } from "@/content/gallery";
 
@@ -25,22 +25,7 @@ export default async function GalleryPage({ searchParams }: Props) {
         <h1 className="text-4xl font-bold">Project Gallery</h1>
         <p className="mt-4 text-muted">{total} projects showcasing our global craftsmanship.</p>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((item) => (
-            <div key={item.id} className="overflow-hidden rounded-xl border border-card-border bg-card">
-              <div className="relative aspect-square">
-                <SmartImage src={item.image} alt={item.alt} fill loading="lazy" className="object-cover" sizes="25vw" />
-              </div>
-              <div className="p-4">
-                <h2 className="font-semibold text-sm">{item.title}</h2>
-                <p className="mt-1 text-xs text-muted">{item.subtitle}</p>
-                <Link href={item.href} className="mt-2 inline-block text-xs text-accent hover:underline">
-                  View →
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
+        <GalleryGrid items={items} />
 
         {totalPages > 1 && (
           <nav className="mt-12 flex justify-center gap-2" aria-label="Gallery pagination">
