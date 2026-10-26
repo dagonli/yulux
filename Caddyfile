@@ -1,0 +1,15 @@
+# Caddy 反向代理配置
+#
+# {$API_DOMAIN} 在 Caddyfile 解析前替换为环境变量 API_DOMAIN 的值
+# （由 docker-compose 从根目录 .env 注入，如 api.yuluxsign.com）。
+# 未设置时 Caddy 启动即报错退出。
+#
+# Caddy 自动处理：HTTP→HTTPS 跳转、Let's Encrypt 证书申请与续期。
+# 如需证书到期通知邮箱，在站块上方加全局块：
+#   {
+#       email you@example.com
+#   }
+
+{$API_DOMAIN} {
+    reverse_proxy backend:8080
+}

@@ -12,14 +12,18 @@
 
 ## 前置准备
 
-1. 安装并启动 MySQL（5.7+ 或 8.0，需支持 JSON 类型）
-2. 创建数据库：
+启动 MySQL（二选一）：
+
+- 推荐：仓库根目录 `docker compose up -d mysql` —— 自动建库和应用账号（`yulux_app` / `yulux_app_pass`），与 `application.yml` 默认值一致，后端零配置直连
+- 或自装 MySQL 8.0+（需支持 JSON 类型），手动建库建账号：
 
 ```sql
-CREATE DATABASE yulux DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE yulux DEFAULT CHARSET utf8mb4;
+CREATE USER 'yulux_app'@'localhost' IDENTIFIED BY 'yulux_app_pass';
+GRANT ALL PRIVILEGES ON yulux.* TO 'yulux_app'@'localhost';
 ```
 
-表结构由 Flyway 在应用启动时自动创建（见 `src/main/resources/db/migration/V1__init.sql`），无需手动建表。
+表结构由 Flyway 在应用启动时自动创建（见 `src/main/resources/db/migration/`），无需手动建表。生产部署见仓库根目录《部署指南.md》。
 
 ## 配置
 
@@ -27,21 +31,24 @@ CREATE DATABASE yulux DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
 
 | 环境变量 | 说明 | 默认值 |
 |---|---|---|
-| `DB_URL` | MySQL 连接串 | `jdbc:mysql://localhost:3306/yulux?...` |
-| `DB_USERNAME` | 数据库用户名 | `root` |
-| `DB_PASSWORD` | 数据库密码 | `root` |
+| `DB_URL` | MySQL 连接串 | `jdbc:mysql://localhost:3306/yulux?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true` |
+| `DB_USERNAME` | 数据库用户名 | `yulux_app` |
+| `DB_PASSWORD` | 数据库密码 | `yulux_app_pass` |
 | `SERVER_PORT` | 服务端口 | `8080` |
 | `ADMIN_API_KEY` | 脚本调用 `/api/admin/**` 的密钥 | `dev-admin-key-change-me` |
 | `ADMIN_USERNAME` | 后台登录用户名 | `admin` |
 | `ADMIN_PASSWORD` | 后台登录密码 | `admin123` |
 | `CORS_ALLOWED_ORIGINS` | 允许的前端来源（逗号分隔） | `http://localhost:3000` |
 | `UPLOAD_DIR` | 上传图片本地存储目录 | `./uploads` |
+| `FRONTEND_BASE_URL` | 前端站点地址（后台预览默认图用） | `http://localhost:3000` |
 
-生产环境务必覆盖 `ADMIN_API_KEY`、`ADMIN_USERNAME`、`ADMIN_PASSWORD` 和数据库密码。
+数据库驱动由 Spring Boot 从 `jdbc:mysql://` URL 自动推断，无需配置 driver-class-name。
+生产环境务必覆盖 `ADMIN_API_KEY`、`ADMIN_USERNAME`、`ADMIN_PASSWORD` 和数据库密码（Docker 部署时由仓库根目录 `.env` 注入，见《部署指南.md》）。
 
 ## 运行
 
 ```bash
+# 前置：MySQL 已启动（见「前置准备」）
 # 开发模式
 mvn spring-boot:run
 
@@ -102,7 +109,7 @@ GET /api/site-images
 
 ## 本地联调验证
 
-1. 启动 MySQL 并创建 `yulux` 库
+1. 启动 MySQL：仓库根目录 `docker compose up -d mysql`（或自装 MySQL 建库，见「前置准备」）
 2. 启动后端：`mvn spring-boot:run`
 3. 用 curl 测试落库：
 

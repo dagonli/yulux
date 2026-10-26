@@ -15,7 +15,9 @@ import org.springframework.util.StringUtils;
  *   起到自愈效果，不需要手动改库。
  * - /images/...（前台 Next.js public 目录下的默认图）：仅在后台预览页里需要
  *   拼上 frontend-base-url，因为后台页面本身跑在后端域名下，而这些默认图
- *   实际存放在前端站点。因此两个入口按用途区分：
+ *   实际存放在前端站点（本地开发时 base 为 http://localhost:3000，同样拼
+ *   绝对地址指向本地 dev server，保证直开后端域名的后管页也能显示默认图）。
+ *   因此两个入口按用途区分：
  *   {@link #resolve}（拼绝对地址）仅供后台预览页使用；
  *   {@link #resolveForFrontend}（保持相对路径）供公开接口 /api/site-images
  *   返回给前台站点使用——/images/** 对前台而言是本地资源，绝对地址会被
@@ -46,8 +48,10 @@ public class ImageUrlResolver {
             return url;
         }
 
-        // 本地开发或未配置前端域名时，返回相对路径，让浏览器根据当前 host 加载
-        if (!StringUtils.hasText(frontendBaseUrl) || frontendBaseUrl.contains("localhost")) {
+        // 未配置前端域名时的兜底：返回相对路径。
+        // 其余情况（含 localhost，即本地前端 dev server）一律拼绝对地址——
+        // 后台预览页跑在后端域名下，/images/** 只有前端能提供，相对路径必然 404。
+        if (!StringUtils.hasText(frontendBaseUrl)) {
             return url.startsWith("/") ? url : "/" + url;
         }
         String base = frontendBaseUrl.endsWith("/")

@@ -1,11 +1,8 @@
 # 启动后端（公网访问模式）
 # 用于 ngrok 暴露后端时，配置正确的前端地址和 CORS 白名单
 # 使用方式: .\start-public.ps1
-
-# 清理可能残留的数据库环境变量
-Remove-Item Env:\DB_PASSWORD -ErrorAction SilentlyContinue
-Remove-Item Env:\DB_USERNAME -ErrorAction SilentlyContinue
-Remove-Item Env:\DB_URL -ErrorAction SilentlyContinue
+# 前置：本地 MySQL 已启动（仓库根目录 docker compose up -d mysql），
+#       数据源默认值见 application.yml（yulux_app / yulux_app_pass，与 .env.example 一致）
 
 # 设置公网访问配置
 $env:FRONTEND_BASE_URL = "https://yulux.vercel.app"
