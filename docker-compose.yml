@@ -22,8 +22,9 @@ services:
       MYSQL_USER: ${MYSQL_USER:-yulux_app}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:?请在 .env 中设置 MYSQL_PASSWORD}
       TZ: Asia/Shanghai
-    # 会话默认时区用 offset 形式（官方镜像未填充 named 时区表，'Asia/Shanghai' 会失效）
-    command: --default-time-zone=+08:00
+    # 会话默认时区用 offset 形式（官方镜像未填充 named 时区表，'Asia/Shanghai' 会失效）；
+    # 后三项为 1GB 小内存机型瘦身（稳态 ~230MB）：关 performance_schema、缩 buffer pool、限连接数
+    command: --default-time-zone=+08:00 --performance-schema=OFF --innodb-buffer-pool-size=64M --max-connections=50
     # 仅绑定本机回环：本地开发（宿主机跑后端）需要连 3306；服务器上不对公网暴露
     # （安全组应只开 22/80/443，此处 loopback 绑定再加一道保险）
     ports:
@@ -57,8 +58,8 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:?请在 .env 中设置 ADMIN_PASSWORD}
       UPLOAD_DIR: /app/uploads
       TZ: Asia/Shanghai
-      # 小内存服务器可在此调整 JVM 堆上限
-      JAVA_OPTS: -Xmx512m
+      # 适配 1GB 内存机型（RSS ~400MB）；2GB+ 机型可调回 -Xmx512m
+      JAVA_OPTS: -Xmx256m
     volumes:
       - uploads:/app/uploads
     # 仅绑定本机回环，供 SSH 隧道/本机调试直连；公网流量一律走 caddy (80/443)
