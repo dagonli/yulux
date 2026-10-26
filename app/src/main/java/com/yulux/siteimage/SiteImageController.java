@@ -1,26 +1,31 @@
 package com.yulux.siteimage;
 
 import com.yulux.common.ApiResult;
+import com.yulux.siteimage.dto.GalleryImageView;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * 站点图片配置（图片配置化地基）。
- * 本期仅提供公开读取接口，前端动态读图与后台编辑留待后续阶段。
+ * 站点图片配置（公开读取接口，供 Next.js 前端动态读图）。
  */
 @RestController
 @RequestMapping("/api")
 public class SiteImageController {
 
     private final SiteImageMapper siteImageMapper;
+    private final SiteImageService siteImageService;
     private final ImageUrlResolver imageUrlResolver;
 
-    public SiteImageController(SiteImageMapper siteImageMapper, ImageUrlResolver imageUrlResolver) {
+    public SiteImageController(SiteImageMapper siteImageMapper, SiteImageService siteImageService,
+                               ImageUrlResolver imageUrlResolver) {
         this.siteImageMapper = siteImageMapper;
+        this.siteImageService = siteImageService;
         this.imageUrlResolver = imageUrlResolver;
     }
 
@@ -37,5 +42,21 @@ public class SiteImageController {
             map.put(img.getImageKey(), imageUrlResolver.resolveForFrontend(img.getUrl()));
         }
         return ApiResult.success(map);
+    }
+
+    /**
+     * 画廊图集（gallery_order 非空行按序），供 /gallery 页动态渲染。
+     * key 为图片位标识（新增图即 /uploads/ 路径），前端 SmartImage 以 key 为 src
+     * 查 site-images map 解析当前 url。
+     */
+    @GetMapping("/gallery-images")
+    public ApiResult<List<GalleryImageView>> galleryImages() {
+        List<GalleryImageView> list = new ArrayList<>();
+        for (SiteImage img : siteImageService.listGallery()) {
+            list.add(new GalleryImageView(img.getImageKey(),
+                    imageUrlResolver.resolveForFrontend(img.getUrl()),
+                    img.getAltText() == null ? "" : img.getAltText()));
+        }
+        return ApiResult.success(list);
     }
 }

@@ -17,16 +17,20 @@ public final class ImagesPageView {
         /** 锚点 id（= Catalog Group.id 或 "other"） */
         String id;
         String title;
+        /** 页面路由（如 "/about"），渲染为组头 URL 提示；null = 不显示 */
+        String route;
         String description;
         /** 前端是否已引用（false：模板整组灰显） */
         boolean referenced;
+        /** 画廊动态组标记（卡片来自 DB gallery_order，渲染「添加图片」表单） */
+        boolean gallery;
         /** 组内卡片（组内顺序 = Catalog 声明顺序） */
         List<CardView> cards;
     }
 
     @Value
     public static class CardView {
-        /** DB 实体（imageKey/url/altText/updatedAt） */
+        /** DB 实体（imageKey/url/altText/galleryOrder/updatedAt） */
         SiteImage image;
         /** 元数据（兜底时为合成 Entry，永不为 null，模板免判空） */
         SiteImageCatalog.Entry meta;
@@ -38,6 +42,11 @@ public final class ImagesPageView {
         /** 已替换标记：seed 时 url == imageKey，上传后变为 /uploads/... 即视为已替换 */
         public boolean isReplaced() {
             return image.getUrl() != null && !image.getUrl().equals(image.getImageKey());
+        }
+
+        /** 新上传型画廊图（key 即 /uploads/ 路径）：模板显示「上传于」而非「默认图」 */
+        public boolean isUploaded() {
+            return image.getImageKey() != null && image.getImageKey().startsWith("/uploads/");
         }
 
         /** 卡片锚点 id（sanitize 后的 imageKey，供上传后 redirect 定位） */

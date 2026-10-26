@@ -89,6 +89,25 @@ details summary { cursor: pointer; color: #a855f7; font-size: 13px; }
 /* 未接入组：整组灰显降饱和 */
 .group-unassigned .thumb { opacity: .45; filter: grayscale(.9); }
 
+/* ===== 画廊动态组 & 组头路由提示 ===== */
+
+/* 组标题旁的页面路由芯片（等宽小字） */
+.group-route { font-size: 12px; color: #22d3ee; background: rgba(34,211,238,.08);
+               border: 1px solid rgba(34,211,238,.25); border-radius: 6px; padding: 1px 8px;
+               font-family: ui-monospace, Consolas, monospace; }
+
+/* 画廊组「添加图片」表单（虚线框横排） */
+.gallery-add { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; padding: 12px;
+               margin-bottom: 14px; border: 1px dashed #2a2a3a; border-radius: 10px; background: #0f0f18; }
+.gallery-add input[type=file] { font-size: 12px; color: #9ca3af; max-width: 260px; width: auto; margin-bottom: 0; }
+.gallery-add input[type=text] { flex: 1; min-width: 200px; padding: 8px 10px; border-radius: 8px;
+               border: 1px solid #2a2a3a; background: #12121a; color: #f5f5f7; font-size: 13px; }
+
+/* 画廊卡片「移出画廊」按钮 */
+.gallery-remove { margin-top: 8px; }
+.btn-danger-ghost { border-color: rgba(239,68,68,.4); color: #f87171; }
+.btn-danger-ghost:hover { background: rgba(239,68,68,.1); }
+
 /* ===== Logout 确认弹窗（原生 <dialog>） ===== */
 .confirm-dialog { border: 1px solid #2a2a3a; border-radius: 12px; background: #12121a;
                   color: #f5f5f7; padding: 20px; width: min(360px, calc(100vw - 48px));

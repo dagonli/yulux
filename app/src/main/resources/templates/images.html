@@ -35,11 +35,21 @@
         <div class="group-head">
             <h2>
                 <span th:text="${g.title}">首页 · 主视觉</span>
+                <code class="group-route" th:if="${g.route != null}" th:text="${g.route}">/about</code>
                 <span class="group-count" th:text="${g.cards.size()} + ' 张'">1 张</span>
                 <span th:if="${!g.referenced}" class="badge badge-off">前端未接入</span>
             </h2>
             <p class="group-desc" th:text="${g.description}">Hero 区全屏背景图</p>
         </div>
+
+        <!-- 画廊动态组：添加新图（追加到画廊末尾，不做排序） -->
+        <form th:if="${g.gallery}" class="gallery-add" th:action="@{/admin/images/gallery/add}"
+              method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required/>
+            <input type="text" name="altText" maxlength="255"
+                   placeholder="Alt text (optional, shown on /gallery)"/>
+            <button type="submit" class="btn">Add to Gallery</button>
+        </form>
 
         <div class="grid">
             <article class="img-card" th:each="c : ${g.cards}" th:id="${c.anchorId}">
@@ -52,6 +62,8 @@
                         <span th:if="${c.replaced}" class="badge badge-replaced">已替换</span>
                     </div>
                     <div class="key" th:text="${c.image.imageKey}">/images/hero-background.webp</div>
+                    <div class="alt" th:if="${g.gallery and c.image.altText != null}"
+                         th:text="'Alt: ' + ${c.image.altText}">Alt: ...</div>
                     <div class="loc" th:text="${c.meta.pageLocation}">首页 Hero 区全屏背景</div>
                     <div class="warn" th:if="${c.meta.warning != null}">
                         <span class="badge badge-warn">&#9888; 共用</span>
@@ -63,12 +75,20 @@
                         <span th:if="${c.frontendPreviewUrl == null}" class="muted">无前端入口</span>
                         <span class="muted" th:text="${c.replaced
                             ? '更新于 ' + #temporals.format(c.image.updatedAt, 'yyyy-MM-dd HH:mm')
-                            : '默认图（未替换过）'}">默认图</span>
+                            : (c.uploaded
+                                ? '上传于 ' + #temporals.format(c.image.updatedAt, 'yyyy-MM-dd HH:mm')
+                                : '默认图（未替换过）')}">默认图</span>
                     </div>
                     <form th:action="@{/admin/images/upload}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="imageKey" th:value="${c.image.imageKey}"/>
                         <input type="file" name="file" accept="image/*" required/>
                         <button type="submit" class="btn">Upload &amp; Replace</button>
+                    </form>
+                    <!-- 画廊组专属：移出画廊（仅退出画廊页，共用图其他位置不受影响） -->
+                    <form th:if="${g.gallery}" class="gallery-remove"
+                          th:action="@{/admin/images/gallery/remove}" method="post">
+                        <input type="hidden" name="imageKey" th:value="${c.image.imageKey}"/>
+                        <button type="submit" class="btn btn-ghost btn-danger-ghost">Remove from Gallery</button>
                     </form>
                 </div>
             </article>

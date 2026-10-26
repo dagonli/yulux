@@ -24,5 +24,8 @@ public class SiteImage {
 
     private String altText;
 
+    /** 画廊排序（1 起）；NULL = 不在 /gallery 画廊页 */
+    private Integer galleryOrder;
+
     private LocalDateTime updatedAt;
 }

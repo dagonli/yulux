@@ -34,9 +34,11 @@ import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 后台页面（Thymeleaf 服务端渲染）
@@ -136,45 +138,112 @@ public class AdminViewController {
         return "images";
     }
 
+    /** /gallery 画廊页每页张数，须与前端 web/content/gallery.ts 的 ITEMS_PER_PAGE 保持一致 */
+    private static final int GALLERY_PAGE_SIZE = 6;
+
     /**
      * DB 状态 + Catalog 元数据 -> 分组视图模型。
-     * 未收录进 Catalog 的 key 落入「其他（未收录）」组兜底（上传替换不受影响）；
-     * Catalog 有而 DB 无的组直接跳过，不渲染空区块。
+     * 按 Catalog entries() 声明顺序遍历（组内顺序 = 声明顺序），按 key 回查 DB 行；
+     * DB 缺行的条目跳过（如迁移未执行）。画廊组卡片由 gallery_order 非空行动态生成，
+     * 即使 0 张也渲染（保留「添加图片」入口）；未收录且不在画廊的 key 落「其他」组兜底
+     * （上传替换不受影响）。
      */
     private List<ImagesPageView.GroupView> buildGroups(List<SiteImage> images) {
-        Map<String, List<ImagesPageView.CardView>> buckets = new LinkedHashMap<>();
-        for (SiteImageCatalog.Group group : SiteImageCatalog.groups()) {
-            buckets.put(group.getId(), new ArrayList<>());
-        }
-        List<ImagesPageView.CardView> others = new ArrayList<>();
-
+        Map<String, SiteImage> dbByKey = new LinkedHashMap<>();
         for (SiteImage img : images) {
-            String displayUrl = imageUrlResolver.resolve(img.getUrl());
-            SiteImageCatalog.Entry meta = SiteImageCatalog.byKey(img.getImageKey());
-            if (meta == null) {
-                others.add(new ImagesPageView.CardView(img, fallbackEntry(img.getImageKey()), displayUrl, null));
-            } else {
-                buckets.get(meta.getGroupId()).add(new ImagesPageView.CardView(
-                        img, meta, displayUrl, frontendPreviewUrl(meta.getFrontendPath())));
-            }
+            dbByKey.put(img.getImageKey(), img);
+        }
+
+        List<SiteImage> galleryImages = siteImageService.listGallery();
+        Set<String> galleryKeys = new HashSet<>();
+        for (SiteImage g : galleryImages) {
+            galleryKeys.add(g.getImageKey());
+        }
+
+        Set<String> catalogKeys = new HashSet<>();
+        for (SiteImageCatalog.Entry e : SiteImageCatalog.entries()) {
+            catalogKeys.add(e.getImageKey());
         }
 
         List<ImagesPageView.GroupView> result = new ArrayList<>();
         for (SiteImageCatalog.Group group : SiteImageCatalog.groups()) {
-            List<ImagesPageView.CardView> cards = buckets.get(group.getId());
-            if (!cards.isEmpty()) {
-                result.add(new ImagesPageView.GroupView(
-                        group.getId(), group.getTitle(), group.getDescription(),
-                        group.isReferenced(), cards));
+            if (SiteImageCatalog.GALLERY_GROUP_ID.equals(group.getId())) {
+                List<ImagesPageView.CardView> cards = new ArrayList<>();
+                for (SiteImage img : galleryImages) {
+                    cards.add(galleryCard(img));
+                }
+                result.add(new ImagesPageView.GroupView(group.getId(), group.getTitle(), group.getRoute(),
+                        group.getDescription(), group.isReferenced(), true, cards));
+                continue;
             }
+            List<ImagesPageView.CardView> cards = new ArrayList<>();
+            for (SiteImageCatalog.Entry entry : SiteImageCatalog.entries()) {
+                if (!entry.getGroupId().equals(group.getId())) {
+                    continue;
+                }
+                SiteImage img = dbByKey.get(entry.getImageKey());
+                if (img == null) {
+                    continue;
+                }
+                cards.add(new ImagesPageView.CardView(img, entry,
+                        imageUrlResolver.resolve(img.getUrl()),
+                        frontendPreviewUrl(entry.getFrontendPath())));
+            }
+            if (!cards.isEmpty()) {
+                result.add(new ImagesPageView.GroupView(group.getId(), group.getTitle(), group.getRoute(),
+                        group.getDescription(), group.isReferenced(), false, cards));
+            }
+        }
+
+        List<ImagesPageView.CardView> others = new ArrayList<>();
+        for (SiteImage img : images) {
+            String key = img.getImageKey();
+            if (catalogKeys.contains(key) || galleryKeys.contains(key)) {
+                continue;
+            }
+            others.add(new ImagesPageView.CardView(img, fallbackEntry(key),
+                    imageUrlResolver.resolve(img.getUrl()), null));
         }
         if (!others.isEmpty()) {
             result.add(new ImagesPageView.GroupView(
-                    SiteImageCatalog.OTHER_GROUP_ID, "其他（未收录）",
-                    "数据库中存在但 Catalog 未收录的图片位，请补充 SiteImageCatalog 元数据",
-                    false, others));
+                    SiteImageCatalog.OTHER_GROUP_ID, "其他（未收录）", null,
+                    "数据库中存在但 Catalog 未收录、也不在画廊中的图片位，请补充 SiteImageCatalog 元数据",
+                    false, false, others));
         }
         return result;
+    }
+
+    /**
+     * 画廊动态卡片：合成 Entry。共用图的 warning 列出 Catalog 中其他静态引用位置；
+     * 页码/位次按 GALLERY_PAGE_SIZE 计算。
+     */
+    private ImagesPageView.CardView galleryCard(SiteImage img) {
+        int order = img.getGalleryOrder();
+        int pageNo = (order - 1) / GALLERY_PAGE_SIZE + 1;
+        int posInPage = (order - 1) % GALLERY_PAGE_SIZE + 1;
+
+        String warning = null;
+        List<SiteImageCatalog.Entry> elsewhere = SiteImageCatalog.entriesByKey(img.getImageKey());
+        if (!elsewhere.isEmpty()) {
+            StringBuilder sb = new StringBuilder("此图同时用于：");
+            for (int i = 0; i < elsewhere.size(); i++) {
+                if (i > 0) {
+                    sb.append("；");
+                }
+                sb.append(elsewhere.get(i).getPageLocation());
+            }
+            sb.append("。替换后全部同时生效；「移除」仅使其退出画廊页，不影响上述位置");
+            warning = sb.toString();
+        }
+
+        SiteImageCatalog.Entry meta = new SiteImageCatalog.Entry(img.getImageKey(),
+                SiteImageCatalog.GALLERY_GROUP_ID,
+                "画廊图 #" + order,
+                "/gallery 画廊页第 " + pageNo + " 页第 " + posInPage + " 张",
+                warning,
+                "/gallery?page=" + pageNo);
+        return new ImagesPageView.CardView(img, meta,
+                imageUrlResolver.resolve(img.getUrl()), frontendPreviewUrl(meta.getFrontendPath()));
     }
 
     /** 未收录 key 的合成元数据（模板因此永远拿到非 null meta） */
@@ -212,5 +281,38 @@ public class AdminViewController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/admin/images";
+    }
+
+    /** 画廊添加：上传新图转 WebP，追加到画廊末尾（不做排序） */
+    @PostMapping("/admin/images/gallery/add")
+    public String addGalleryImage(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(value = "altText", required = false) String altText,
+            RedirectAttributes redirectAttributes) {
+        try {
+            if (file.isEmpty()) {
+                throw new IllegalArgumentException("Please choose a file");
+            }
+            SiteImage added = siteImageService.addToGallery(file, altText);
+            redirectAttributes.addFlashAttribute("message", "Added to gallery: " + added.getImageKey());
+            return "redirect:/admin/images#" + SiteImageCatalog.anchorIdOf(added.getImageKey());
+        } catch (IOException | IllegalArgumentException | IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/admin/images#" + SiteImageCatalog.GALLERY_GROUP_ID;
+    }
+
+    /** 画廊移除：仅退出画廊页（gallery_order 置 NULL），共用图的其他页面不受影响 */
+    @PostMapping("/admin/images/gallery/remove")
+    public String removeGalleryImage(
+            @RequestParam("imageKey") String imageKey,
+            RedirectAttributes redirectAttributes) {
+        try {
+            siteImageService.removeFromGallery(imageKey);
+            redirectAttributes.addFlashAttribute("message", "Removed from gallery: " + imageKey);
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/admin/images#" + SiteImageCatalog.GALLERY_GROUP_ID;
     }
 }
