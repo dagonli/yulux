@@ -3,7 +3,7 @@ export const SITE = {
   url: "https://yuluxsign.com",
   description:
     "Precision-crafted 3D channel letters & custom LED neon signs for global businesses.",
-  email: "sofia.li93828@gmail.com",
+  email: "info@yuluxsign.com",
 } as const;
 
 /** 全站对外联系方式（页头 / 页脚 / 右下角悬浮插件共用） */
@@ -11,7 +11,7 @@ export const CONTACT = {
   phone: "+8618012392821",
   phoneHref: "tel:+8618012392821",
   whatsappHref: "https://wa.me/8618012392821",
-  email: "sofia.li93828@gmail.com",
+  email: "info@yuluxsign.com",
 } as const;
 
 export const NAV_LINKS = [
