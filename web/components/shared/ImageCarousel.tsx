@@ -43,7 +43,7 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
         >
           {images.map((img, i) => (
             <div key={i} className="relative h-full w-full shrink-0 snap-center overflow-hidden">
-              <SmartImage src={img.src} alt={img.alt} fill className="object-contain" sizes="60vw" />
+              <SmartImage src={img.src} alt={img.alt} slot="lightbox-carousel" fill className="object-contain" sizes="60vw" />
             </div>
           ))}
         </div>
@@ -86,7 +86,7 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
                 : "border-white/10 opacity-50 hover:opacity-90"
             }`}
           >
-            <SmartImage src={img.src} alt={img.alt} fill className="object-cover" sizes="15vw" />
+            <SmartImage src={img.src} alt={img.alt} slot="lightbox-carousel" fill className="object-cover" sizes="15vw" />
           </button>
         ))}
       </div>

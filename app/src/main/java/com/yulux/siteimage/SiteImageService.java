@@ -61,7 +61,7 @@ public class SiteImageService {
      * 新增画廊图：转 WebP 落盘后插入 site_image，排到画廊末尾。
      * image_key 直接取生成的 /uploads/ 路径（key == url）：
      * 1) SmartImage 在 site-images map 缺失时兜底 src=/uploads/... 经前端 rewrites 仍可加载；
-     * 2) isReplaced()（url != key）对新图保持 false，不误显「已替换」。
+     * 2) isReplaced()（url 与 meta.imageKey 一致）对新图保持 false，不误显「已替换」。
      */
     @Transactional
     public SiteImage addToGallery(MultipartFile file, String altText) throws IOException {
@@ -86,7 +86,7 @@ public class SiteImageService {
     }
 
     /**
-     * 移出画廊：仅将 gallery_order 置 NULL。行保留（共用图在其他页面的替换功能不受影响），
+     * 移出画廊：仅将 gallery_order 置 NULL。行保留（仅退出画廊页，不影响其他页面槽位行），
      * 也不删磁盘文件（与 replaceImage 的无清理策略一致）。
      */
     public void removeFromGallery(String imageKey) {

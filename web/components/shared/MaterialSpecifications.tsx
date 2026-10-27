@@ -27,7 +27,8 @@ const MATERIAL_SPECS = [
   },
 ] as const;
 
-export function MaterialSpecifications() {
+/** slot = 模块槽位 id（= 后管分组 id），两处调用各自独立：channel-letters-materials / lightbox-materials */
+export function MaterialSpecifications({ slot }: { slot?: string }) {
   return (
     <section className="section-padding bg-card/30">
       <div className="mx-auto max-w-7xl">
@@ -44,6 +45,7 @@ export function MaterialSpecifications() {
                 <SmartImage
                   src={item.image}
                   alt={item.title}
+                  slot={slot}
                   fill
                   className="object-cover opacity-70"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

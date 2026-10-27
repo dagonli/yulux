@@ -270,7 +270,7 @@ export function NeonCustomizer() {
 
         <p className="mt-12 max-w-3xl text-sm leading-relaxed text-muted">{CUSTOMIZER_SEO_TEXT}</p>
       </div>
-      <MaterialQuality />
+      <MaterialQuality slot="neon-signs-material" />
       <HowItWorks />
 
       {/* Quote form modal */}

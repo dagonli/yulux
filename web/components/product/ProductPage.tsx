@@ -58,7 +58,7 @@ export function ProductPage({ product }: { product: Product }) {
           {/* Image gallery */}
           <div>
             <div className="relative aspect-square overflow-hidden rounded-xl border border-card-border">
-              <SmartImage src={mainImage} alt={product.alt} fill priority className="object-cover" sizes="50vw" />
+              <SmartImage src={mainImage} alt={product.alt} slot={product.imageSlot} fill priority className="object-cover" sizes="50vw" />
             </div>
             {images.length > 1 && (
               <div className="mt-3 flex gap-2 overflow-x-auto">
@@ -70,7 +70,7 @@ export function ProductPage({ product }: { product: Product }) {
                       i === activeImageIdx ? "border-accent" : "border-card-border opacity-60 hover:opacity-100"
                     }`}
                   >
-                    <SmartImage src={img} alt={`${product.name} view ${i + 1}`} fill className="object-cover" sizes="64px" />
+                    <SmartImage src={img} alt={`${product.name} view ${i + 1}`} slot={product.imageSlot} fill className="object-cover" sizes="64px" />
                   </button>
                 ))}
               </div>
@@ -229,6 +229,7 @@ export function ProductPage({ product }: { product: Product }) {
               <SmartImage
                 src="/images/product-whats-in-box.webp"
                 alt="Yulux Sign packaging contents"
+                slot={`${product.imageSlot}-generic`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -261,7 +262,7 @@ export function ProductPage({ product }: { product: Product }) {
             ].map((s) => (
               <div key={s.step} className="flex flex-col items-center text-center">
                 <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl">
-                  <SmartImage src={s.img} alt={`Step ${s.step}: ${s.title}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+                  <SmartImage src={s.img} alt={`Step ${s.step}: ${s.title}`} slot={`${product.imageSlot}-generic`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
                 </div>
                 <div className="mt-4">
                   <p className="text-sm font-bold text-accent uppercase tracking-wide">Step {s.step}</p>

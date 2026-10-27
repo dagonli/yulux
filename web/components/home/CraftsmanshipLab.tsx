@@ -12,7 +12,7 @@ export function CraftsmanshipLab() {
           {CRAFTSMANSHIP_LAB.techniques.map((tech) => (
             <div key={tech.id} className="group rounded-xl border border-card-border bg-card overflow-hidden">
               <div className="relative aspect-square">
-                <SmartImage src={tech.image} alt={tech.alt} fill loading="lazy" className="object-cover" sizes="20vw" />
+                <SmartImage src={tech.image} alt={tech.alt} slot="home-craft" fill loading="lazy" className="object-cover" sizes="20vw" />
               </div>
               <div className="p-4">
                 <h3 className="font-semibold">{tech.label}</h3>

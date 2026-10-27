@@ -31,6 +31,8 @@ public class SiteImageController {
 
     /**
      * 返回 imageKey -> url 映射，供前端按需覆盖硬编码图片。
+     * 键两种：模块槽位行 groupId::图片路径（前端 SmartImage 传 slot 按同格式解析）、
+     * 画廊行 / 旧裸路径（前端直接按 src 兜底解析）。
      * url 经 {@link ImageUrlResolver#resolveForFrontend} 归一化：全部保持相对路径
      * （/images/... 是前端本地资源；/uploads/xxx.webp 即使历史数据里误写了
      * 绝对域名也会自动还原），避免 next/image 因未配置远程域名而报错。

@@ -9,10 +9,12 @@ const ZOOM_SCALE = 1.8;
 type ImageLightboxProps = {
   image: string;
   alt: string;
+  /** 模块槽位 id（= 后管分组 id）；画廊页不传（裸 key 解析），首页项目放大图传 home-projects */
+  slot?: string;
   onClose: () => void;
 };
 
-export function ImageLightbox({ image, alt, onClose }: ImageLightboxProps) {
+export function ImageLightbox({ image, alt, slot, onClose }: ImageLightboxProps) {
   const [zoomOrigin, setZoomOrigin] = useState("50% 50%");
   const [isZoomed, setIsZoomed] = useState(false);
   const zoomContainerRef = useRef<HTMLDivElement | null>(null);
@@ -71,6 +73,7 @@ export function ImageLightbox({ image, alt, onClose }: ImageLightboxProps) {
             <SmartImage
               src={image}
               alt={alt}
+              slot={slot}
               fill
               priority
               className="object-contain"

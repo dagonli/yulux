@@ -45,6 +45,7 @@ export function ShopNeonGrid({ products }: { products: Product[] }) {
                 <SmartImage
                   src={getImage(product.slug)}
                   alt={product.alt}
+                  slot="shop-neon"
                   fill
                   loading="lazy"
                   className="object-cover transition duration-300 group-hover:scale-105"

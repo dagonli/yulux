@@ -135,6 +135,7 @@ export function ChannelLettersInquiryForm() {
                 <SmartImage
                   src={`/images/craft-${tech.id}.webp`}
                   alt={tech.label}
+                  slot="channel-letters-form"
                   fill
                   className="object-cover opacity-70"
                   sizes="40px"

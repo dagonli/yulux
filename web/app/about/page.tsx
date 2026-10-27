@@ -63,6 +63,7 @@ export default function AboutPage() {
                 <SmartImage
                   src={section.image}
                   alt={"imageAlt" in section ? section.imageAlt : ""}
+                  slot={"imageSlot" in section ? section.imageSlot : undefined}
                   fill
                   loading="lazy"
                   className="object-cover"

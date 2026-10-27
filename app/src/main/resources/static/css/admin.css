@@ -51,11 +51,18 @@ details summary { cursor: pointer; color: #a855f7; font-size: 13px; }
 
 /* ===== Site Images 分组化改造 ===== */
 
-/* 顶部分组快捷导航（零 JS 锚点） */
-.group-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px;
-             padding: 12px 14px; border: 1px solid #2a2a3a; border-radius: 12px; background: #12121a; }
-.group-nav a { padding: 4px 12px; border-radius: 999px; border: 1px solid #2a2a3a;
-               font-size: 12px; color: #cbd5e1; }
+/* 页面页签（一级导航）：按页面切换，服务端只渲染选中页面的模块组 */
+.page-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px;
+            padding: 12px 14px; border: 1px solid #2a2a3a; border-radius: 12px; background: #12121a; }
+.page-nav a { padding: 5px 14px; border-radius: 999px; border: 1px solid #2a2a3a;
+              font-size: 13px; color: #cbd5e1; }
+.page-nav a:hover { color: #a855f7; border-color: rgba(168,85,247,.45); text-decoration: none; }
+.page-nav a.active { background: #a855f7; color: #fff; border-color: #a855f7; font-weight: 600; }
+
+/* 当前页面模块组快捷导航（次级，零 JS 锚点） */
+.group-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+.group-nav a { padding: 3px 10px; border-radius: 999px; border: 1px solid #2a2a3a;
+               font-size: 12px; color: #9ca3af; }
 .group-nav a:hover { color: #a855f7; border-color: rgba(168,85,247,.45); text-decoration: none; }
 
 /* 分组区块；scroll-margin-top 抵消 sticky topbar 的遮挡 */

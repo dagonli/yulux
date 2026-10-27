@@ -9,11 +9,13 @@ type CtaBannerProps = {
   cta: { label: string; href: string };
   /** Optional background image path; defaults to the shared CTA background. */
   bgImage?: string;
+  /** 模块槽位 id（= 后管分组 id），按 `slot::bgImage` 解析该模块独立的替换图 */
+  slot?: string;
   ariaLabel?: string;
 };
 
-export function CtaBanner({ h2, subhead, cta, bgImage = "/images/cta-background.webp", ariaLabel }: CtaBannerProps) {
-  const bg = useResolvedImage(bgImage);
+export function CtaBanner({ h2, subhead, cta, bgImage = "/images/cta-background.webp", slot, ariaLabel }: CtaBannerProps) {
+  const bg = useResolvedImage(bgImage, slot);
   return (
     <section
       className="relative overflow-hidden py-24 text-center"

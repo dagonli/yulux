@@ -5,7 +5,7 @@ import { FINAL_CTA } from "@/content/home";
 import { useResolvedImage } from "@/lib/site-images-context";
 
 export function FinalCTA() {
-  const bg = useResolvedImage("/images/cta-background.webp");
+  const bg = useResolvedImage("/images/cta-background.webp", "home-cta");
   return (
     <section
       className="relative overflow-hidden py-24 text-center"

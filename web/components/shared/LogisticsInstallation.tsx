@@ -14,6 +14,7 @@ export function LogisticsInstallation() {
               <SmartImage
                 src="/images/lightbox/yulux_lightbox_frameless.png"
                 alt="100% Shockproof Wooden Crating"
+                slot="channel-letters-logistics"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"

@@ -57,7 +57,7 @@ export default function LightboxPage() {
           </div>
         </section>
 
-        <MaterialSpecifications />
+        <MaterialSpecifications slot="lightbox-materials" />
         <HowItWorks />
         <PrecisionManufacturing />
 

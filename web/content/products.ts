@@ -17,6 +17,8 @@ export type Product = {
   colors: string[];
   image: string;
   alt: string;
+  /** 后管模块槽位 id（product-* 分组）：图册按 `imageSlot::image`、装箱/安装图按 `imageSlot-generic::image` 解析 */
+  imageSlot: string;
   variants: ProductVariant[];
   relatedHref?: string;
   relatedLabel?: string;
@@ -44,6 +46,7 @@ export const PRODUCTS: Product[] = [
     colors: ["Warm White", "Pink"],
     image: "/images/products/better-together-white-main.webp",
     alt: "Better Together LED Neon Sign - Pink Glow on White Brick Wall",
+    imageSlot: "product-better-together",
     variants: [
       {
         color: "Warm White",
@@ -88,6 +91,7 @@ export const PRODUCTS: Product[] = [
     colors: ["Warm White", "Pink"],
     image: "/images/products/good-vibes-white-main.webp",
     alt: "Good Vibes Only neon sign showing high-quality silicone tubing in bedroom",
+    imageSlot: "product-good-vibes",
     variants: [
       {
         color: "Warm White",
@@ -132,6 +136,7 @@ export const PRODUCTS: Product[] = [
     colors: ["Warm White", "Pink"],
     image: "/images/products/this-must-be-white-main.webp",
     alt: "This Must Be The Place neon sign in living room wall decor setting",
+    imageSlot: "product-this-must-be",
     variants: [
       {
         color: "Warm White",
@@ -174,6 +179,7 @@ export const PRODUCTS: Product[] = [
     colors: ["Warm White", "Pink"],
     image: "/images/products/cheers-white-main.webp",
     alt: "Cheers LED neon bar sign for home bar and kitchen party decor",
+    imageSlot: "product-cheers",
     variants: [
       {
         color: "Warm White",

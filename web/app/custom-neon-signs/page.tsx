@@ -19,7 +19,7 @@ export default function CustomNeonSignsPage() {
       <JsonLd data={[faqSchema(CUSTOM_NEON_FAQ.items)]} />
       <Breadcrumb items={[{ label: "Custom Neon Signs" }]} />
       <NeonCustomizer />
-      <YuluxAdvantage />
+      <YuluxAdvantage slot="neon-signs-advantage" />
       <FAQ h2={CUSTOM_NEON_FAQ.h2} items={CUSTOM_NEON_FAQ.items} />
     </>
   );

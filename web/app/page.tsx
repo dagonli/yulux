@@ -24,7 +24,7 @@ export default function HomePage() {
       <ProductFinder />
       <CraftsmanshipLab />
       <RealWorldProjects />
-      <YuluxAdvantage />
+      <YuluxAdvantage slot="home-advantage" />
       <FAQ h2={HOME_FAQ.h2} items={HOME_FAQ.items} />
       <FinalCTA />
     </>

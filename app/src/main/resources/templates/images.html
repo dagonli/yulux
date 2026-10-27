@@ -19,13 +19,20 @@
 </div>
 
 <div class="container">
-    <h1>Site Images <span class="muted">(grouped by page · upload to replace, auto-converted to WebP)</span></h1>
+    <h1>Site Images <span class="muted">(by page · upload to replace, auto-converted to WebP)</span></h1>
 
     <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
     <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
 
-    <!-- 分组快捷导航：纯 HTML 锚点，零 JS -->
-    <nav class="group-nav" aria-label="Image groups">
+    <!-- 页面页签：按页面（路由归并的模块组）导航，服务端过滤只渲染选中页面 -->
+    <nav class="page-nav" aria-label="Pages">
+        <a th:each="p : ${pages}" th:href="@{/admin/images(page=${p.key})}"
+           th:classappend="${p.active} ? 'active'"
+           th:text="${p.title} + ' (' + ${p.cardCount} + ')'">首页 (22)</a>
+    </nav>
+
+    <!-- 当前页面的模块组快捷导航（次级）：纯 HTML 锚点，零 JS -->
+    <nav class="group-nav" th:if="${groups.size()} > 1" aria-label="Modules on this page">
         <a th:each="g : ${groups}" th:href="'#' + ${g.id}"
            th:text="${g.title} + ' (' + ${g.cards.size()} + ')'">首页 · 主视觉 (1)</a>
     </nav>
@@ -45,6 +52,7 @@
         <!-- 画廊动态组：添加新图（追加到画廊末尾，不做排序） -->
         <form th:if="${g.gallery}" class="gallery-add" th:action="@{/admin/images/gallery/add}"
               method="post" enctype="multipart/form-data">
+            <input type="hidden" name="page" th:value="${currentPageKey}"/>
             <input type="file" name="file" accept="image/*" required/>
             <input type="text" name="altText" maxlength="255"
                    placeholder="Alt text (optional, shown on /gallery)"/>
@@ -81,13 +89,15 @@
                     </div>
                     <form th:action="@{/admin/images/upload}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="imageKey" th:value="${c.image.imageKey}"/>
+                        <input type="hidden" name="page" th:value="${currentPageKey}"/>
                         <input type="file" name="file" accept="image/*" required/>
                         <button type="submit" class="btn">Upload &amp; Replace</button>
                     </form>
-                    <!-- 画廊组专属：移出画廊（仅退出画廊页，共用图其他位置不受影响） -->
+                    <!-- 画廊组专属：移出画廊（仅退出画廊页，其他页面槽位不受影响） -->
                     <form th:if="${g.gallery}" class="gallery-remove"
                           th:action="@{/admin/images/gallery/remove}" method="post">
                         <input type="hidden" name="imageKey" th:value="${c.image.imageKey}"/>
+                        <input type="hidden" name="page" th:value="${currentPageKey}"/>
                         <button type="submit" class="btn btn-ghost btn-danger-ghost">Remove from Gallery</button>
                     </form>
                 </div>

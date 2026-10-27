@@ -21,6 +21,8 @@ export const ABOUT_SECTIONS = [
     body: "We are not just a storefront; we are a collective of master craftsmen, electrical engineers, and design perfectionists. Operating from our own specialized manufacturing facility, we maintain 100% control over every weld, every LED module, and every acrylic cut — from custom channel letters and illuminated lightbox signs to fully bespoke neon installations.\n\nNo Middlemen.\nNo Compromises.\nDirect Engineering Support.",
     image: "/images/image4.webp",
     imageAlt: "Yulux factory workshop with master craftsmen precision welding signage",
+    /** 后管模块槽位 id（about-workbench 分组），SmartImage 按 `imageSlot::image` 解析独立替换图 */
+    imageSlot: "about-workbench",
     links: [
       { label: "custom channel letters", href: "/channel-letters-logos" },
       { label: "illuminated lightbox signs", href: "/custom-lightbox-signs" },
@@ -32,6 +34,8 @@ export const ABOUT_SECTIONS = [
     body: 'What does our quality standard mean to us?\nIt means selecting 304/316 stainless steel where the project requires enhanced corrosion resistance, and using quality LED components selected according to the application and performance requirements. Every custom sign is carefully inspected and tested before shipment for illumination, finish, and functionality. We focus on building signage that is made for reliable long-term use—not just for the grand opening.',
     image: "/images/image6.webp",
     imageAlt: "Premium stainless steel and LED components for engineering-grade custom signage",
+    /** 后管模块槽位 id（about-standard 分组），SmartImage 按 `imageSlot::image` 解析独立替换图 */
+    imageSlot: "about-standard",
   },
   {
     id: "global",

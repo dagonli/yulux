@@ -38,6 +38,7 @@ export default function ChannelLettersHubPage() {
             <SmartImage
               src="/images/lightbox/yulux_lightbox_frameless.png"
               alt="Yulux channel letters craftsmanship"
+              slot="channel-letters-quote"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -65,6 +66,7 @@ export default function ChannelLettersHubPage() {
                   <SmartImage
                     src={`/images/craft-${tech.slug}.webp`}
                     alt={tech.label}
+                    slot="channel-letters-craft"
                     fill
                     className="object-cover opacity-60"
                     sizes="33vw"
@@ -80,7 +82,7 @@ export default function ChannelLettersHubPage() {
         </section>
       </div>
 
-      <MaterialSpecifications />
+      <MaterialSpecifications slot="channel-letters-materials" />
       <HowItWorks />
       <PrecisionManufacturing />
       <LogisticsInstallation />

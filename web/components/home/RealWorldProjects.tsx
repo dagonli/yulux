@@ -36,6 +36,7 @@ export function RealWorldProjects() {
                   <SmartImage
                     src={project.image}
                     alt={project.alt}
+                    slot="home-projects"
                     fill
                     loading="lazy"
                     className="object-cover transition duration-300 group-hover:scale-105"
@@ -54,7 +55,7 @@ export function RealWorldProjects() {
       </section>
 
       {selected && (
-        <ImageLightbox image={selected.image} alt={selected.alt} onClose={closeProject} />
+        <ImageLightbox image={selected.image} alt={selected.alt} slot="home-projects" onClose={closeProject} />
       )}
     </>
   );

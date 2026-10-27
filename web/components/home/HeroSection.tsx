@@ -8,6 +8,7 @@ export function HeroSection() {
       <SmartImage
         src={HERO.image}
         alt={HERO.imageAlt}
+        slot="home-hero"
         fill
         priority
         className="object-cover"

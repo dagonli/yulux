@@ -18,6 +18,7 @@ export function ProductFinder() {
                 <SmartImage
                   src={card.image}
                   alt={card.alt}
+                  slot="home-finder"
                   fill
                   loading="lazy"
                   className="object-cover transition group-hover:scale-105"

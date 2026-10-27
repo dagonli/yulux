@@ -115,7 +115,8 @@ export function InquiryForm({
       {productSummary && (
         <div className={`${twoColumn ? "sm:col-span-2" : ""} flex items-center gap-4 rounded-lg border border-card-border bg-background/60 p-3`}>
           <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md border border-card-border">
-            <SmartImage src={productSummary.image} alt={productSummary.name} fill className="object-cover" sizes="64px" />
+            {/* 商品摘要图仅 /order-request 传入 productSummary 渲染，按订单页槽位解析 */}
+            <SmartImage src={productSummary.image} alt={productSummary.name} slot="order-request" fill className="object-cover" sizes="64px" />
           </div>
           <div>
             <p className="text-xs uppercase tracking-wide text-muted">Ordering</p>

@@ -26,7 +26,8 @@ export const FALLBACK_GALLERY_ITEMS: GalleryItem[] = [
   })),
 ];
 
-export const ITEMS_PER_PAGE = 6;
+/** /gallery 每页张数（lg:grid-cols-4 网格，8 张 = 整 2 行）；须与后端 AdminViewController.GALLERY_PAGE_SIZE 保持一致 */
+export const ITEMS_PER_PAGE = 8;
 
 /** 分页（clamp + slice）；items 由调用方传入（DB 动态列表或静态兜底） */
 export function getGalleryPage(items: GalleryItem[], page: number) {

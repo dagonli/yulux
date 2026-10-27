@@ -38,6 +38,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -131,22 +132,65 @@ public class AdminViewController {
                 .body(resource);
     }
 
+    /** /admin/images 默认页签（首页） */
+    private static final String DEFAULT_PAGE_KEY = "home";
+
+    /**
+     * 图片管理页：顶部页签按页面（路由归并的模块组）导航，默认首页，
+     * 仅渲染选中页面的模块组（不一次全量铺开）。page 参数为 SiteImageCatalog.Page.key。
+     */
     @GetMapping("/admin/images")
-    public String images(Model model) {
+    public String images(Model model,
+                         @RequestParam(value = "page", required = false) String pageKey) {
         List<SiteImage> images = siteImageService.listAll();
-        model.addAttribute("groups", buildGroups(images));
+        List<ImagesPageView.GroupView> allGroups = buildGroups(images);
+        SiteImageCatalog.Page current = resolvePage(pageKey);
+
+        List<ImagesPageView.PageView> pages = new ArrayList<>();
+        for (SiteImageCatalog.Page p : SiteImageCatalog.pages()) {
+            int count = 0;
+            for (ImagesPageView.GroupView g : allGroups) {
+                if (Objects.equals(g.getRoute(), p.getRoute())) {
+                    count += g.getCards().size();
+                }
+            }
+            pages.add(new ImagesPageView.PageView(p.getKey(), p.getTitle(), p.equals(current), count));
+        }
+
+        List<ImagesPageView.GroupView> shown = new ArrayList<>();
+        for (ImagesPageView.GroupView g : allGroups) {
+            if (Objects.equals(g.getRoute(), current.getRoute())) {
+                shown.add(g);
+            }
+        }
+
+        model.addAttribute("pages", pages);
+        model.addAttribute("currentPageKey", current.getKey());
+        model.addAttribute("groups", shown);
         return "images";
     }
 
+    /** 校验页签 key：缺失/非法回退默认页（首页） */
+    private SiteImageCatalog.Page resolvePage(String pageKey) {
+        SiteImageCatalog.Page page = SiteImageCatalog.pageOfKey(pageKey);
+        return page != null ? page : SiteImageCatalog.pageOfKey(DEFAULT_PAGE_KEY);
+    }
+
+    /** 上传/画廊操作后回到原页签（可选卡片锚点） */
+    private String imagesRedirect(String pageKey, String anchor) {
+        String page = resolvePage(pageKey).getKey();
+        return "redirect:/admin/images?page=" + page + (anchor == null ? "" : "#" + anchor);
+    }
+
     /** /gallery 画廊页每页张数，须与前端 web/content/gallery.ts 的 ITEMS_PER_PAGE 保持一致 */
-    private static final int GALLERY_PAGE_SIZE = 6;
+    private static final int GALLERY_PAGE_SIZE = 8;
 
     /**
      * DB 状态 + Catalog 元数据 -> 分组视图模型。
-     * 按 Catalog entries() 声明顺序遍历（组内顺序 = 声明顺序），按 key 回查 DB 行；
-     * DB 缺行的条目跳过（如迁移未执行）。画廊组卡片由 gallery_order 非空行动态生成，
-     * 即使 0 张也渲染（保留「添加图片」入口）；未收录且不在画廊的 key 落「其他」组兜底
-     * （上传替换不受影响）。
+     * 按 Catalog entries() 声明顺序遍历（组内顺序 = 声明顺序），按槽位键
+     * （groupId::图片路径，见 SiteImageCatalog.slotKey）回查 DB 行；DB 缺行的条目跳过
+     * （如迁移未执行）。画廊组卡片由 gallery_order 非空行动态生成，即使 0 张也渲染
+     * （保留「添加图片」入口）；未收录且不在画廊的 key 落「其他」组兜底（上传替换不受影响）。
      */
     private List<ImagesPageView.GroupView> buildGroups(List<SiteImage> images) {
         Map<String, SiteImage> dbByKey = new LinkedHashMap<>();
@@ -162,7 +206,7 @@ public class AdminViewController {
 
         Set<String> catalogKeys = new HashSet<>();
         for (SiteImageCatalog.Entry e : SiteImageCatalog.entries()) {
-            catalogKeys.add(e.getImageKey());
+            catalogKeys.add(SiteImageCatalog.slotKey(e.getGroupId(), e.getImageKey()));
         }
 
         List<ImagesPageView.GroupView> result = new ArrayList<>();
@@ -181,7 +225,7 @@ public class AdminViewController {
                 if (!entry.getGroupId().equals(group.getId())) {
                     continue;
                 }
-                SiteImage img = dbByKey.get(entry.getImageKey());
+                SiteImage img = dbByKey.get(SiteImageCatalog.slotKey(entry.getGroupId(), entry.getImageKey()));
                 if (img == null) {
                     continue;
                 }
@@ -214,33 +258,19 @@ public class AdminViewController {
     }
 
     /**
-     * 画廊动态卡片：合成 Entry。共用图的 warning 列出 Catalog 中其他静态引用位置；
-     * 页码/位次按 GALLERY_PAGE_SIZE 计算。
+     * 画廊动态卡片：合成 Entry。画廊行与其他页面槽位行互不影响（替换仅本页生效，
+     * 「移除」仅退出画廊页）；页码/位次按 GALLERY_PAGE_SIZE 计算。
      */
     private ImagesPageView.CardView galleryCard(SiteImage img) {
         int order = img.getGalleryOrder();
         int pageNo = (order - 1) / GALLERY_PAGE_SIZE + 1;
         int posInPage = (order - 1) % GALLERY_PAGE_SIZE + 1;
 
-        String warning = null;
-        List<SiteImageCatalog.Entry> elsewhere = SiteImageCatalog.entriesByKey(img.getImageKey());
-        if (!elsewhere.isEmpty()) {
-            StringBuilder sb = new StringBuilder("此图同时用于：");
-            for (int i = 0; i < elsewhere.size(); i++) {
-                if (i > 0) {
-                    sb.append("；");
-                }
-                sb.append(elsewhere.get(i).getPageLocation());
-            }
-            sb.append("。替换后全部同时生效；「移除」仅使其退出画廊页，不影响上述位置");
-            warning = sb.toString();
-        }
-
         SiteImageCatalog.Entry meta = new SiteImageCatalog.Entry(img.getImageKey(),
                 SiteImageCatalog.GALLERY_GROUP_ID,
                 "画廊图 #" + order,
                 "/gallery 画廊页第 " + pageNo + " 页第 " + posInPage + " 张",
-                warning,
+                null,
                 "/gallery?page=" + pageNo);
         return new ImagesPageView.CardView(img, meta,
                 imageUrlResolver.resolve(img.getUrl()), frontendPreviewUrl(meta.getFrontendPath()));
@@ -268,6 +298,7 @@ public class AdminViewController {
     public String uploadImage(
             @RequestParam("imageKey") String imageKey,
             @RequestParam("file") MultipartFile file,
+            @RequestParam(value = "page", required = false) String page,
             RedirectAttributes redirectAttributes) {
         try {
             if (file.isEmpty()) {
@@ -275,12 +306,12 @@ public class AdminViewController {
             }
             siteImageService.replaceImage(imageKey, file);
             redirectAttributes.addFlashAttribute("message", "Updated: " + imageKey);
-            // 上传后直接定位回刚替换的卡片锚点
-            return "redirect:/admin/images#" + SiteImageCatalog.anchorIdOf(imageKey);
+            // 上传后回到原页签并直接定位到刚替换的卡片锚点
+            return imagesRedirect(page, SiteImageCatalog.anchorIdOf(imageKey));
         } catch (IOException | IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        return "redirect:/admin/images";
+        return imagesRedirect(page, SiteImageCatalog.anchorIdOf(imageKey));
     }
 
     /** 画廊添加：上传新图转 WebP，追加到画廊末尾（不做排序） */
@@ -288,6 +319,7 @@ public class AdminViewController {
     public String addGalleryImage(
             @RequestParam("file") MultipartFile file,
             @RequestParam(value = "altText", required = false) String altText,
+            @RequestParam(value = "page", required = false) String page,
             RedirectAttributes redirectAttributes) {
         try {
             if (file.isEmpty()) {
@@ -295,17 +327,18 @@ public class AdminViewController {
             }
             SiteImage added = siteImageService.addToGallery(file, altText);
             redirectAttributes.addFlashAttribute("message", "Added to gallery: " + added.getImageKey());
-            return "redirect:/admin/images#" + SiteImageCatalog.anchorIdOf(added.getImageKey());
+            return imagesRedirect(page, SiteImageCatalog.anchorIdOf(added.getImageKey()));
         } catch (IOException | IllegalArgumentException | IllegalStateException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        return "redirect:/admin/images#" + SiteImageCatalog.GALLERY_GROUP_ID;
+        return imagesRedirect(page, SiteImageCatalog.GALLERY_GROUP_ID);
     }
 
-    /** 画廊移除：仅退出画廊页（gallery_order 置 NULL），共用图的其他页面不受影响 */
+    /** 画廊移除：仅退出画廊页（gallery_order 置 NULL），其他页面槽位行不受影响 */
     @PostMapping("/admin/images/gallery/remove")
     public String removeGalleryImage(
             @RequestParam("imageKey") String imageKey,
+            @RequestParam(value = "page", required = false) String page,
             RedirectAttributes redirectAttributes) {
         try {
             siteImageService.removeFromGallery(imageKey);
@@ -313,6 +346,6 @@ public class AdminViewController {
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        return "redirect:/admin/images#" + SiteImageCatalog.GALLERY_GROUP_ID;
+        return imagesRedirect(page, SiteImageCatalog.GALLERY_GROUP_ID);
     }
 }

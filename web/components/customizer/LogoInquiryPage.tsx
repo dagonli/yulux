@@ -43,9 +43,9 @@ export function LogoInquiryPage() {
           <InquiryForm inquiryType="LOGO" fields={LOGO_FIELDS} submitLabel="Submit Inquiry" twoColumn centerSubmit />
         </div>
       </div>
-      <MaterialQuality />
+      <MaterialQuality slot="neon-logo-material" />
       <HowItWorks />
-      <YuluxAdvantage />
+      <YuluxAdvantage slot="neon-logo-advantage" />
       <FAQ h2={CUSTOM_NEON_FAQ.h2} items={CUSTOM_NEON_FAQ.items} />
       <JsonLd data={[faqSchema(CUSTOM_NEON_FAQ.items)]} />
     </>

@@ -7,7 +7,8 @@ const ICON_MAP: Record<string, string> = {
   "Certified Power & Safety Systems": "/images/icons/yulux_icon_safety.png",
 };
 
-export function MaterialQuality() {
+/** slot = 模块槽位 id（= 后管分组 id），两处调用各自独立：neon-signs-material / neon-logo-material */
+export function MaterialQuality({ slot }: { slot?: string }) {
   return (
     <section className="section-padding">
       <div className="mx-auto max-w-7xl">
@@ -22,6 +23,7 @@ export function MaterialQuality() {
                 <SmartImage
                   src={ICON_MAP[item.title] || "/images/icons/yulux_icon_quality.png"}
                   alt={item.title}
+                  slot={slot}
                   width={80}
                   height={80}
                   className="object-contain"

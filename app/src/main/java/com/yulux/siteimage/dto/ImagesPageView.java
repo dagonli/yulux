@@ -12,6 +12,16 @@ import java.util.List;
  */
 public final class ImagesPageView {
 
+    /** 页签视图（/admin/images 顶部按页面导航；cardCount = 该页全部模块组的卡数和） */
+    @Value
+    public static class PageView {
+        String key;
+        String title;
+        /** 是否当前选中页 */
+        boolean active;
+        int cardCount;
+    }
+
     @Value
     public static class GroupView {
         /** 锚点 id（= Catalog Group.id 或 "other"） */
@@ -39,9 +49,12 @@ public final class ImagesPageView {
         /** frontend-base-url + meta.frontendPath；可为 null（模板显示「无前端入口」） */
         String frontendPreviewUrl;
 
-        /** 已替换标记：seed 时 url == imageKey，上传后变为 /uploads/... 即视为已替换 */
+        /**
+         * 已替换标记：seed 时 url == meta.imageKey（裸路径），上传后变为 /uploads/... 即视为已替换。
+         * 槽位行的 image_key 是 groupId::路径，不能与本行 key 比较，须与 meta.imageKey 比。
+         */
         public boolean isReplaced() {
-            return image.getUrl() != null && !image.getUrl().equals(image.getImageKey());
+            return image.getUrl() != null && !image.getUrl().equals(meta.getImageKey());
         }
 
         /** 新上传型画廊图（key 即 /uploads/ 路径）：模板显示「上传于」而非「默认图」 */

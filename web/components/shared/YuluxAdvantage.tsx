@@ -27,7 +27,8 @@ const ADVANTAGES = [
   },
 ] as const;
 
-export function YuluxAdvantage() {
+/** slot = 模块槽位 id（= 后管分组 id），三处调用各自独立：home-advantage / neon-signs-advantage / neon-logo-advantage */
+export function YuluxAdvantage({ slot }: { slot?: string }) {
   return (
     <section className="section-padding">
       <div className="mx-auto max-w-7xl">
@@ -39,6 +40,7 @@ export function YuluxAdvantage() {
                 <SmartImage
                   src={item.icon}
                   alt={item.title}
+                  slot={slot}
                   width={40}
                   height={40}
                   className="object-contain"

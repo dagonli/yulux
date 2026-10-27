@@ -29,6 +29,7 @@ export function QuoteFormSection() {
                 <SmartImage
                   src="/images/quote/factory-2.webp"
                   alt="Yulux Sign factory production line"
+                  slot="quote-factory"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 50vw, 25vw"
@@ -38,6 +39,7 @@ export function QuoteFormSection() {
                 <SmartImage
                   src="/images/quote/factory-backview.webp"
                   alt="Yulux Sign factory back view"
+                  slot="quote-factory"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 50vw, 25vw"
@@ -47,6 +49,7 @@ export function QuoteFormSection() {
                 <SmartImage
                   src="/images/quote/project-1.webp"
                   alt="Yulux Sign completed project showcase"
+                  slot="quote-factory"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
