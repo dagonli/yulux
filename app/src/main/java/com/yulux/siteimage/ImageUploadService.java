@@ -46,8 +46,11 @@ public class ImageUploadService {
             throw new IllegalArgumentException("Unsupported or invalid image file");
         }
 
-        BufferedImage resized = resizeIfNeeded(source);
-        BufferedImage rgb = toRgb(resized);
+        // 带 alpha 的图（图标/线稿）保留透明：不再压白底；不透明图维持原有 RGB 有损路径。
+        // 必须在缩放前判断：resizeIfNeeded 旧实现固定产出 ARGB，缩放后再判会把不透明大图误判为透明
+        boolean hasAlpha = source.getColorModel().hasAlpha();
+        BufferedImage resized = resizeIfNeeded(source, hasAlpha);
+        BufferedImage encoded = hasAlpha ? toArgb(resized) : toRgb(resized);
 
         Path dir = Paths.get(uploadDir);
         Files.createDirectories(dir);
@@ -55,18 +58,20 @@ public class ImageUploadService {
         String filename = sanitize(imageKey) + "-" + System.currentTimeMillis() + ".webp";
         File outFile = dir.resolve(filename).toFile();
 
-        writeWebp(rgb, outFile);
+        writeWebp(encoded, outFile, hasAlpha);
 
         return "/uploads/" + filename;
     }
 
-    private BufferedImage resizeIfNeeded(BufferedImage src) {
+    private BufferedImage resizeIfNeeded(BufferedImage src, boolean preserveAlpha) {
         int width = src.getWidth();
         if (width <= MAX_WIDTH) {
             return src;
         }
         int height = (int) Math.round((double) src.getHeight() * MAX_WIDTH / width);
-        BufferedImage dst = new BufferedImage(MAX_WIDTH, height, BufferedImage.TYPE_INT_ARGB);
+        // 缩放目标类型跟随源：透明图 ARGB、不透明图 RGB（避免给照片凭空加 alpha 通道）
+        int targetType = preserveAlpha ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
+        BufferedImage dst = new BufferedImage(MAX_WIDTH, height, targetType);
         Graphics2D g = dst.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -89,7 +94,19 @@ public class ImageUploadService {
         return rgb;
     }
 
-    private void writeWebp(BufferedImage image, File outFile) throws IOException {
+    /** 带 alpha 的图统一转 TYPE_INT_ARGB（编码器 RGBA 直通路径），不压白底、不丢透明 */
+    private BufferedImage toArgb(BufferedImage src) {
+        if (src.getType() == BufferedImage.TYPE_INT_ARGB) {
+            return src;
+        }
+        BufferedImage argb = new BufferedImage(src.getWidth(), src.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = argb.createGraphics();
+        g.drawImage(src, 0, 0, null);
+        g.dispose();
+        return argb;
+    }
+
+    private void writeWebp(BufferedImage image, File outFile, boolean hasAlpha) throws IOException {
         Iterator<ImageWriter> writers = ImageIO.getImageWritersByMIMEType("image/webp");
         if (!writers.hasNext()) {
             throw new IllegalStateException("No WebP ImageWriter available");
@@ -97,8 +114,15 @@ public class ImageUploadService {
         ImageWriter writer = writers.next();
         WebPWriteParam param = new WebPWriteParam(writer.getLocale());
         param.setCompressionMode(WebPWriteParam.MODE_EXPLICIT);
-        param.setCompressionType(param.getCompressionTypes()[WebPWriteParam.LOSSY_COMPRESSION]);
-        param.setCompressionQuality(WEBP_QUALITY);
+        if (hasAlpha) {
+            // 带 alpha 的多为图标/线稿：VP8L 无损原生支持 alpha，边缘锐利且可精确还原。
+            // 本库 0.1.6 有损路径同样支持 alpha（encodeRGBA + setAlphaQuality/setAlphaCompression），
+            // 若未来大尺寸透明图体积成问题可改回有损，一行切换
+            param.setCompressionType(param.getCompressionTypes()[WebPWriteParam.LOSSLESS_COMPRESSION]);
+        } else {
+            param.setCompressionType(param.getCompressionTypes()[WebPWriteParam.LOSSY_COMPRESSION]);
+            param.setCompressionQuality(WEBP_QUALITY);
+        }
 
         try (ImageOutputStream ios = ImageIO.createImageOutputStream(outFile)) {
             writer.setOutput(ios);

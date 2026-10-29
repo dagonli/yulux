@@ -61,7 +61,8 @@
 
         <div class="grid">
             <article class="img-card" th:each="c : ${g.cards}" th:id="${c.anchorId}">
-                <img class="thumb" th:src="${c.displayUrl}"
+                <img class="thumb" th:classappend="${g.preview == 'circle'} ? 'thumb-circle'"
+                     th:src="${c.displayUrl}"
                      th:alt="${c.image.altText != null ? c.image.altText : c.meta.displayName}"
                      loading="lazy"/>
                 <div class="body">

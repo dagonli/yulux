@@ -32,6 +32,8 @@ public final class ImagesPageView {
         String description;
         /** 前端是否已引用（false：模板整组灰显） */
         boolean referenced;
+        /** 后管缩略图渲染提示：wide（16:9 cover）/ circle（圆形），对齐前端渲染口径 */
+        String preview;
         /** 画廊动态组标记（卡片来自 DB gallery_order，渲染「添加图片」表单） */
         boolean gallery;
         /** 组内卡片（组内顺序 = Catalog 声明顺序） */

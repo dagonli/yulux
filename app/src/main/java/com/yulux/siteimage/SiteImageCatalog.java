@@ -31,7 +31,7 @@ import java.util.Map;
  * DB 的 gallery_order 非空行动态生成（支持添加/移除），行保持裸路径 key，
  * 与所有槽位行互不影响。
  *
- * imageKey 必须与迁移脚本（V2/V5/V6）及前端 SmartImage/useResolvedImage 引用的路径
+ * imageKey 必须与迁移脚本（V2/V5/V6/V7）及前端 SmartImage/useResolvedImage 引用的路径
  * 逐字符一致（含前导 / 与 .webp/.png/.jpg 后缀）。
  */
 public final class SiteImageCatalog {
@@ -88,6 +88,8 @@ public final class SiteImageCatalog {
         String description;
         /** 前端是否已引用（false = 整组灰显 + 「前端未接入」badge） */
         boolean referenced;
+        /** 后管缩略图渲染提示（对齐前端口径）：wide = 16:9 满铺 cover（默认）；circle = 圆形头像（优势图标组） */
+        String preview;
     }
 
     /** 单个图片位静态元数据（warning / frontendPath 为 null 表示「无」） */
@@ -107,60 +109,60 @@ public final class SiteImageCatalog {
     }
 
     private static final List<Group> GROUPS = Collections.unmodifiableList(Arrays.asList(
-            new Group("home-hero",                     "首页 · 主视觉",     "/", "Hero 区全屏背景图", true),
-            new Group("home-finder",                   "首页 · 产品导航卡", "/", "首页 Product Finder 四张导航卡", true),
-            new Group("home-craft",                    "首页 · 工艺展示",   "/", "首页 Craftsmanship Lab 区六种打灯工艺样图", true),
-            new Group("home-projects",                 "首页 · 真实项目",   "/", "首页 Real-World Projects 区 6 张实拍", true),
-            new Group("home-advantage",                "首页 · 优势图标",   "/", "Why Industry Leaders Choose Yulux 区 4 枚图标", true),
-            new Group("home-cta",                      "首页 · 底部 CTA",   "/", "首页底部 Call-to-Action 区背景图", true),
+            new Group("home-hero",                     "首页 · 主视觉",     "/", "Hero 区全屏背景图", true, "wide"),
+            new Group("home-finder",                   "首页 · 产品导航卡", "/", "首页 Product Finder 四张导航卡", true, "wide"),
+            new Group("home-craft",                    "首页 · 工艺展示",   "/", "首页 Craftsmanship Lab 区六种打灯工艺样图", true, "wide"),
+            new Group("home-projects",                 "首页 · 真实项目",   "/", "首页 Real-World Projects 区 6 张实拍", true, "wide"),
+            new Group("home-advantage",                "首页 · 优势图标",   "/", "Why Industry Leaders Choose Yulux 区 4 枚图标", true, "circle"),
+            new Group("home-cta",                      "首页 · 底部 CTA",   "/", "首页底部 Call-to-Action 区背景图", true, "wide"),
             new Group(GALLERY_GROUP_ID,                "画廊页 · 画廊图集", "/gallery",
-                    "画廊页全部展示图（动态组）：支持添加/移除，不做排序、新图追加末尾；与其他页面图片位互不影响", true),
-            new Group("about-workbench",               "关于页 · 工厂区块", "/about", "From Our Workbench to Your Facade 区块配图", true),
-            new Group("about-standard",                "关于页 · 理念区块", "/about", "The Custom-Built Standard 区块配图", true),
-            new Group("shop-neon",                     "成品集合页 · 商品网格", "/shop-neon", "/shop-neon 商品网格 4 款 × 白粉两变体主图", true),
+                    "画廊页全部展示图（动态组）：支持添加/移除，不做排序、新图追加末尾；与其他页面图片位互不影响", true, "wide"),
+            new Group("about-workbench",               "关于页 · 工厂区块", "/about", "From Our Workbench to Your Facade 区块配图", true, "wide"),
+            new Group("about-standard",                "关于页 · 理念区块", "/about", "The Custom-Built Standard 区块配图", true, "wide"),
+            new Group("shop-neon",                     "成品集合页 · 商品网格", "/shop-neon", "/shop-neon 商品网格 4 款 × 白粉两变体主图", true, "wide"),
             new Group("product-better-together",       "产品详情页 · Better Together 图册",
-                    "/products/better-together-wedding-neon-sign", "白/粉两套变体，详情页切换颜色时成组切换", true),
+                    "/products/better-together-wedding-neon-sign", "白/粉两套变体，详情页切换颜色时成组切换", true, "wide"),
             new Group("product-better-together-generic", "产品详情页 · Better Together 通用流程图",
-                    "/products/better-together-wedding-neon-sign", "本详情页装箱/安装流程图", true),
+                    "/products/better-together-wedding-neon-sign", "本详情页装箱/安装流程图", true, "wide"),
             new Group("product-good-vibes",            "产品详情页 · Good Vibes Only 图册",
-                    "/products/good-vibes-only-neon-sign", "白/粉两套变体，详情页切换颜色时成组切换", true),
+                    "/products/good-vibes-only-neon-sign", "白/粉两套变体，详情页切换颜色时成组切换", true, "wide"),
             new Group("product-good-vibes-generic",    "产品详情页 · Good Vibes Only 通用流程图",
-                    "/products/good-vibes-only-neon-sign", "本详情页装箱/安装流程图", true),
+                    "/products/good-vibes-only-neon-sign", "本详情页装箱/安装流程图", true, "wide"),
             new Group("product-this-must-be",          "产品详情页 · This Must Be The Place 图册",
-                    "/products/this-must-be-the-place-neon-sign", "白/粉两套变体，详情页切换颜色时成组切换", true),
+                    "/products/this-must-be-the-place-neon-sign", "白/粉两套变体，详情页切换颜色时成组切换", true, "wide"),
             new Group("product-this-must-be-generic",  "产品详情页 · This Must Be The Place 通用流程图",
-                    "/products/this-must-be-the-place-neon-sign", "本详情页装箱/安装流程图", true),
+                    "/products/this-must-be-the-place-neon-sign", "本详情页装箱/安装流程图", true, "wide"),
             new Group("product-cheers",                "产品详情页 · Cheers 图册",
-                    "/products/cheers-neon-bar-sign", "白/粉两套变体，详情页切换颜色时成组切换", true),
+                    "/products/cheers-neon-bar-sign", "白/粉两套变体，详情页切换颜色时成组切换", true, "wide"),
             new Group("product-cheers-generic",        "产品详情页 · Cheers 通用流程图",
-                    "/products/cheers-neon-bar-sign", "本详情页装箱/安装流程图", true),
-            new Group("quote-factory",                 "询价页 · 工厂实拍", "/get-a-quote", "/get-a-quote 页工厂实拍区块", true),
+                    "/products/cheers-neon-bar-sign", "本详情页装箱/安装流程图", true, "wide"),
+            new Group("quote-factory",                 "询价页 · 工厂实拍", "/get-a-quote", "/get-a-quote 页工厂实拍区块", true, "wide"),
             new Group("order-request",                 "订单请求页 · 产品摘要图", "/order-request",
-                    "订单表单上方产品摘要卡（仅 URL 带 ?product= 时显示）", true),
+                    "订单表单上方产品摘要卡（仅 URL 带 ?product= 时显示）", true, "wide"),
             new Group("channel-letters-quote",         "商业标识页 · 询价配图", "/channel-letters-logos",
-                    "Get a Quote 区左图", true),
+                    "Get a Quote 区左图", true, "wide"),
             new Group("channel-letters-craft",         "商业标识页 · 工艺选择", "/channel-letters-logos",
-                    "Craftsmanship Lab 工艺卡 6 张", true),
+                    "Craftsmanship Lab 工艺卡 6 张", true, "wide"),
             new Group("channel-letters-form",          "商业标识页 · 询价技术选择", "/channel-letters-logos",
-                    "Get a Quote 询价表单技术选择器 6 张缩略图", true),
+                    "Get a Quote 询价表单技术选择器 6 张缩略图", true, "wide"),
             new Group("channel-letters-materials",     "商业标识页 · 材质规格", "/channel-letters-logos",
-                    "Quality Materials 区 4 张材质卡", true),
+                    "Quality Materials 区 4 张材质卡", true, "wide"),
             new Group("channel-letters-logistics",     "商业标识页 · 物流安装", "/channel-letters-logos",
-                    "Heavy-Duty Protection & Effortless Installation 区第 1 卡配图", true),
+                    "Heavy-Duty Protection & Effortless Installation 区两卡配图", true, "wide"),
             new Group("lightbox-carousel",             "灯箱页 · 主图轮播", "/custom-lightbox-signs",
-                    "首屏主图轮播 4 张", true),
+                    "首屏主图轮播 4 张", true, "wide"),
             new Group("lightbox-materials",            "灯箱页 · 材质规格", "/custom-lightbox-signs",
-                    "Quality Materials 区 4 张材质卡", true),
+                    "Quality Materials 区 4 张材质卡", true, "wide"),
             new Group("neon-signs-material",           "定制霓虹页 · 材质品质", "/custom-neon-signs",
-                    "Material & Quality 区 3 张材质卡", true),
+                    "Material & Quality 区 3 张材质卡", true, "wide"),
             new Group("neon-signs-advantage",          "定制霓虹页 · 优势图标", "/custom-neon-signs",
-                    "Why Industry Leaders Choose Yulux 区 4 枚图标", true),
+                    "Why Industry Leaders Choose Yulux 区 4 枚图标", true, "circle"),
             new Group("neon-logo-material",            "霓虹 Logo 页 · 材质品质", "/custom-neon-logo",
-                    "Material & Quality 区 3 张材质卡", true),
+                    "Material & Quality 区 3 张材质卡", true, "wide"),
             new Group("neon-logo-advantage",           "霓虹 Logo 页 · 优势图标", "/custom-neon-logo",
-                    "优势区 4 枚图标", true),
+                    "优势区 4 枚图标", true, "circle"),
             new Group("unassigned",                    "预留位（前端未接入）", null,
-                    "前端尚未引用的预留图片位，替换后不会出现在站点上", false)
+                    "前端尚未引用的预留图片位，替换后不会出现在站点上", false, "wide")
     ));
 
     private static final List<Entry> ENTRIES = Collections.unmodifiableList(Arrays.asList(
@@ -419,6 +421,8 @@ public final class SiteImageCatalog {
             // —— 商业标识页 · 物流安装 ——
             new Entry("/images/lightbox/yulux_lightbox_frameless.png", "channel-letters-logistics", "物流安装 · 木箱包装",
                     "「100% Shockproof Wooden Crating」卡配图", null, "/channel-letters-logos"),
+            new Entry("/images/product-whats-in-box.webp", "channel-letters-logistics", "物流安装 · 1:1 安装模板",
+                    "「Free 1:1 Installation Template」卡配图（默认为线稿占位，替换后满铺显示）", null, "/channel-letters-logos"),
 
             // —— 灯箱页 · 主图轮播 ——
             new Entry("/images/lightbox/yulux_lightbox_frameless.png", "lightbox-carousel", "轮播图 1 · 无边框灯箱",

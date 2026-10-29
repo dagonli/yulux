@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * SiteImageCatalog 静态结构不变量：32 组 / 130 条 Entry / 73 个唯一 key。
+ * SiteImageCatalog 静态结构不变量：32 组 / 131 条 Entry / 73 个唯一 key。
  * 目录是手写的 100+ 条常量表，用结构断言兜住笔误（groupId 拼错、漏卡、
  * 组内重复、同图漏组、槽位键冲突等）。
  */
@@ -48,7 +48,7 @@ class SiteImageCatalogTest {
     @Test
     void entryCountAndDistinctKeys() {
         List<SiteImageCatalog.Entry> entries = SiteImageCatalog.entries();
-        assertThat(entries).hasSize(130);
+        assertThat(entries).hasSize(131);
         // 静态条目去重 73 = DB 全量 77（V2 60 + V5 17）- 4 张画廊专属图（image1/2/3/5，
         // 仅 /gallery 使用、无其他页面模块，由画廊动态组管理，无静态条目）
         assertThat(entries.stream().map(SiteImageCatalog.Entry::getImageKey).distinct())
@@ -185,6 +185,17 @@ class SiteImageCatalogTest {
             assertThat(anchors.add(SiteImageCatalog.anchorIdOf(slot)))
                     .as("槽位锚点冲突: %s", slot).isTrue();
         }
-        assertThat(slots).hasSize(130);
+        assertThat(slots).hasSize(131);
+    }
+
+    @Test
+    void previewStyleMatchesFrontendRendering() {
+        // 优势图标组前端为 64px 圆形头像 → 后管圆形预览；其余组默认 16:9 宽图
+        for (SiteImageCatalog.Group g : SiteImageCatalog.groups()) {
+            boolean circle = "home-advantage".equals(g.getId())
+                    || "neon-signs-advantage".equals(g.getId())
+                    || "neon-logo-advantage".equals(g.getId());
+            assertThat(g.getPreview()).isEqualTo(circle ? "circle" : "wide");
+        }
     }
 }

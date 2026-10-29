@@ -217,7 +217,7 @@ public class AdminViewController {
                     cards.add(galleryCard(img));
                 }
                 result.add(new ImagesPageView.GroupView(group.getId(), group.getTitle(), group.getRoute(),
-                        group.getDescription(), group.isReferenced(), true, cards));
+                        group.getDescription(), group.isReferenced(), group.getPreview(), true, cards));
                 continue;
             }
             List<ImagesPageView.CardView> cards = new ArrayList<>();
@@ -235,7 +235,7 @@ public class AdminViewController {
             }
             if (!cards.isEmpty()) {
                 result.add(new ImagesPageView.GroupView(group.getId(), group.getTitle(), group.getRoute(),
-                        group.getDescription(), group.isReferenced(), false, cards));
+                        group.getDescription(), group.isReferenced(), group.getPreview(), false, cards));
             }
         }
 
@@ -252,7 +252,7 @@ public class AdminViewController {
             result.add(new ImagesPageView.GroupView(
                     SiteImageCatalog.OTHER_GROUP_ID, "其他（未收录）", null,
                     "数据库中存在但 Catalog 未收录、也不在画廊中的图片位，请补充 SiteImageCatalog 元数据",
-                    false, false, others));
+                    false, "wide", false, others));
         }
         return result;
     }

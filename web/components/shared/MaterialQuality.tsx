@@ -1,5 +1,8 @@
-import { SmartImage } from "@/components/shared/SmartImage";
+"use client";
+
+import Image from "next/image";
 import { MATERIAL_QUALITY } from "@/content/site";
+import { useResolvedImage } from "@/lib/site-images-context";
 
 const ICON_MAP: Record<string, string> = {
   "High-Efficiency LED Neon Flex": "/images/icons/yulux_icon_neon_flex.png",
@@ -19,16 +22,11 @@ export function MaterialQuality({ slot }: { slot?: string }) {
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {MATERIAL_QUALITY.map((item) => (
             <div key={item.title} className="rounded-xl border border-card-border bg-card overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-neon-purple/20 to-card flex items-center justify-center">
-                <SmartImage
-                  src={ICON_MAP[item.title] || "/images/icons/yulux_icon_quality.png"}
-                  alt={item.title}
-                  slot={slot}
-                  width={80}
-                  height={80}
-                  className="object-contain"
-                />
-              </div>
+              <MaterialCardImage
+                src={ICON_MAP[item.title] || "/images/icons/yulux_icon_quality.png"}
+                alt={item.alt}
+                slot={slot}
+              />
               <div className="p-6">
                 <h3 className="font-semibold">{item.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{item.description}</p>
@@ -45,5 +43,32 @@ export function MaterialQuality({ slot }: { slot?: string }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * 材质卡头图：后管已替换的实拍图满铺卡片顶部（fill + cover，对齐后管预览的满铺口径）；
+ * 未替换时回退默认透明图标（居中 contain，渐变底从透明处透出）——
+ * 1920×1920 方形默认图标若走 16:9 cover 会被裁掉近半，默认态保留原居中展示。
+ * useResolvedImage 是 hook，须在子组件顶层调用，不能写在 map 回调里。
+ */
+function MaterialCardImage({ src, alt, slot }: { src: string; alt: string; slot?: string }) {
+  const resolved = useResolvedImage(src, slot);
+  // resolved === src 即未被后管替换（上传图 url 恒为 /uploads/...，不会与默认路径相同）
+  const uploaded = resolved !== src;
+  return (
+    <div className="relative flex aspect-video items-center justify-center bg-gradient-to-br from-neon-purple/20 to-card">
+      {uploaded ? (
+        <Image
+          src={resolved}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 33vw"
+        />
+      ) : (
+        <Image src={src} alt={alt} width={80} height={80} className="object-contain" />
+      )}
+    </div>
   );
 }

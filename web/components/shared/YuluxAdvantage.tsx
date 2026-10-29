@@ -1,4 +1,7 @@
-import { SmartImage } from "@/components/shared/SmartImage";
+"use client";
+
+import Image from "next/image";
+import { useResolvedImage } from "@/lib/site-images-context";
 
 const ADVANTAGES = [
   {
@@ -36,16 +39,7 @@ export function YuluxAdvantage({ slot }: { slot?: string }) {
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {ADVANTAGES.map((item) => (
             <div key={item.title} className="flex flex-col items-center text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
-                <SmartImage
-                  src={item.icon}
-                  alt={item.title}
-                  slot={slot}
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-              </div>
+              <AdvantageIcon src={item.icon} alt={item.title} slot={slot} />
               <h3 className="mt-4 text-lg font-bold">{item.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{item.description}</p>
             </div>
@@ -53,5 +47,25 @@ export function YuluxAdvantage({ slot }: { slot?: string }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * 优势圆形图标：后管已替换的图满铺 64px 圆（fill + cover，overflow-hidden 裁成圆形）；
+ * 未替换时保持原 40×40 居中 contain 小图标（透明底透出 bg-accent/10）。
+ * useResolvedImage 是 hook，须在子组件顶层调用，不能写在 map 回调里。
+ */
+function AdvantageIcon({ src, alt, slot }: { src: string; alt: string; slot?: string }) {
+  const resolved = useResolvedImage(src, slot);
+  // resolved === src 即未被后管替换（上传图 url 恒为 /uploads/...，不会与默认路径相同）
+  const uploaded = resolved !== src;
+  return (
+    <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-accent/10">
+      {uploaded ? (
+        <Image src={resolved} alt={alt} fill sizes="64px" className="object-cover" />
+      ) : (
+        <Image src={src} alt={alt} width={40} height={40} className="object-contain" />
+      )}
+    </div>
   );
 }
